@@ -1,0 +1,67 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# Source secrets
+source ~/.zsh_secrets
+
+# Customize to your needs...
+
+export DEFAULT_USER=$USER
+export EDITOR=vim
+export VISUAL="$EDITOR"
+
+
+# ALIASES
+alias vim='nvim'
+alias cat='bat'
+alias ls='exa'
+
+alias gu='cd $(git rev-parse --show-toplevel)'
+alias gs='git status'
+alias gaa='git add .'
+alias gbr="git branch | grep -v "master" | grep -v "develop" | xargs git branch -D"
+alias gcb='git checkout -b'
+alias gcaa='git commit --all --amend'
+alias gcm='git checkout master'
+alias gpm='git pull --rebase origin master'
+alias gpd='git pull --rebase origin develop'
+alias gcd='git checkout develop'
+alias pr='gh pr create --base develop'
+alias draft='gh pr create --base develop -d'
+alias prv='gh pr view --web'
+alias checks='gh pr checks'
+alias merge='gh pr checks && gh pr merge && gcd && gpd'
+
+# for m in $(pids sbt); do kill -9 $m; done
+pids() {
+  ps -efww | rg $1 | rg -v 'rg ' | tr -s " " | cut -d " " -f 2
+}
+
+to() {
+  bloop test $1 -o "*$2*"
+}
+
+tow() {
+  bloop test $1 -o "*$2*" -w
+}
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+#[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [[ -z "${STARSHIP_SHELL}" ]]; then
+  eval "$(starship init zsh)"
+fi
+
+eval "$(zoxide init zsh --cmd cd)"
