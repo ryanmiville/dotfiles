@@ -1,0 +1,91 @@
+let mapleader = " "
+
+" Plugins
+set surround
+set NERDTree
+set exchange
+set commentary
+set multiple-cursors
+set easymotion
+set argtextobj
+set textobj-indent
+
+" NERDTree
+nnoremap <silent> <leader>e :NERDTreeToggle<cr>
+nnoremap <silent> <leader>E :NERDTreeFind<cr>
+
+" Numbers
+set relativenumber
+set number
+
+" Searchin
+set ignorecase
+set smartcase
+
+" accelerated scrolling
+set scrolljump=-15
+
+" Replace <C-j> with <Esc>
+inoremap <C-j> <Esc>
+vnoremap <C-j> <Esc>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+nnoremap <leader><C-w>l :action MoveTabRight<CR>
+nnoremap <leader><C-h> :action MoveEditorToOppositeTabGroup<CR>
+nnoremap <leader><C-l> :action MoveEditorToOppositeTabGroup<CR>
+
+MoveTabRight
+nnoremap <A-h> gT
+nnoremap <A-l> gt
+
+nnoremap <leader>h ^
+nnoremap <leader>l $
+vnoremap <leader>h ^
+vnoremap <leader>l $
+noremap <leader>h ^
+noremap <leader>l $
+
+nnoremap <leader>w [w
+vnoremap <leader>w [w
+nnoremap <leader>e ]w
+vnoremap <leader>e ]w
+nnoremap <leader>b [b
+vnoremap <leader>b [b
+
+vnoremap p pgvy
+
+nnoremap <leader>o moo<Esc>`o
+nnoremap <leader>O mOO<Esc>`O
+
+nnoremap gH :action ShowErrorDescription<CR>
+nnoremap gh :action QuickJavaDoc<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gD :action GotoImplementation<CR>
+nnoremap gp :action QuickImplementations<CR>
+nnoremap <leader>r :action RenameElement<CR>
+nnoremap <leader>t :action ToggleTypeHints<CR>
+nnoremap <leader>fr :action FindUsages<CR>
+
+command! nav <Action>ShowNavBar
+
+" TODO
+" breakpoint
+" next/prev error
+" next/prev git change
+
+" Yank to clipboard
+set clipboard+=unnamed
+set highlightedyank
+
+
+set visualbell
+set noerrorbells
+
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Do incremental searching.
+set incsearch
