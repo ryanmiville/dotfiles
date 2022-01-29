@@ -1,0 +1,26 @@
+format = """
+$username\
+$hostname\
+$directory\
+$vcsh\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$nix_shell\
+$env_var\
+$custom\
+$cmd_duration\
+$line_break\
+$time\
+$character"""
+
+[line_break]
+disabled = true
+
+[directory]
+truncation_length = 1
+fish_style_pwd_dir_length = 1
+truncate_to_repo = false
