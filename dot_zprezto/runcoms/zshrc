@@ -25,6 +25,7 @@ alias vim='nvim'
 alias cat='bat'
 alias ls='exa'
 
+alias lg='lazygit'
 alias gu='cd $(git rev-parse --show-toplevel)'
 alias gs='git status'
 alias gaa='git add .'
@@ -58,10 +59,14 @@ tow() {
 #[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$PATH
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-if [[ -z "${STARSHIP_SHELL}" ]]; then
-  eval "$(starship init zsh)"
-fi
+# if [[ -z "$INTELLIJ_ENVIRONMENT_READER" ]] && [[ -z "${STARSHIP_SHELL}" ]]; then
+#   eval "$(starship init zsh)"
+# fi
 
+eval "$(starship init zsh)"
 eval "$(zoxide init zsh --cmd cd)"
