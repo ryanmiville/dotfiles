@@ -1,10 +1,9 @@
 # Dotfiles
 
-Managed with chezmoi
+managed with stow
 
-## Installation
 ```sh
-brew install chezmoi
-chezmoi init --apply --verbose https://github.com/ryanmiville/dotfiles.git
+stow nvim
+stow zsh
+# etc.
 ```
-
