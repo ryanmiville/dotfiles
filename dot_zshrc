@@ -94,6 +94,7 @@ alias zshrc="nvim ~/.zshrc && source ~/.zshrc"
 alias zsource="source ~/.zshrc"
 alias tf="terraform"
 alias vim="nvim"
+alias nvc="cd ~/.config/nvim && nvim && cd -"
 
 alias gs="git status"
 alias ammend="git commit --amend --no-edit"
@@ -185,4 +186,13 @@ sts() {
     aws configure set aws_session_token "$sessionToken" --profile sts
     aws configure set region us-east-1 --profile sts
 
+}
+
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
 }

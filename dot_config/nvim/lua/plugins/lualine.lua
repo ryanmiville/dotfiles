@@ -11,14 +11,7 @@ return {
 				lualine_a = { "mode" },
 				lualine_b = { "diff", "diagnostics" },
 				lualine_c = { { "buffers" } },
-				lualine_x = {
-					{ "fileformat", "filetype" },
-					-- {
-					--   require("noice").api.statusline.mode.get,
-					--   cond = require("noice").api.statusline.mode.has,
-					--   color = { fg = "#ff9e64" },
-					-- },
-				},
+				lualine_x = {},
 				lualine_y = { "progress" },
 				lualine_z = { "location" },
 			},
