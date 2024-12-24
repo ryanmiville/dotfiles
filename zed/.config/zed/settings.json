@@ -1,0 +1,107 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "show_user_picture": false,
+  "file_finder": {
+    "modal_max_width": "medium"
+  },
+  "assistant": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4o"
+    },
+    "version": "2"
+  },
+  "terminal": {
+    "dock": "bottom",
+    "env": {
+      "EDITOR": "zed --wait"
+    }
+  },
+  "project_panel": {
+    "dock": "right"
+  },
+  "theme": "Monospace dark",
+  "telemetry": {
+    "metrics": false
+  },
+  "vim_mode": true,
+  "vim": {
+    "use_system_clipboard": "always",
+    "use_multiline_find": true,
+    "use_smartcase_find": true
+  },
+  "languages": {
+    "Gleam": {
+      "show_inline_completions": false
+    },
+    "Python": {
+      // "format_on_save": { "language_server": { "name": "ruff" } },
+      "format_on_save": "on",
+      // "formatter": { "language_server": { "name": "ruff" } },
+      "formatter": [
+        {
+          "language_server": {
+            "name": "ruff"
+          }
+        },
+        {
+          "code_actions": {
+            // Fix all auto-fixable lint violations
+            "source.fixAll.ruff": true,
+            // Organize imports
+            "source.organizeImports.ruff": true
+          }
+        }
+      ],
+      "language_servers": ["pyright", "ruff"]
+    }
+    // "TypeScript": {
+    //   "language_servers": [
+    //     "deno",
+    //     "!typescript-language-server",
+    //     "!vtsls",
+    //     "!eslint"
+    //   ],
+    //   "formatter": "language_server"
+    // },
+    // "TSX": {
+    //   "language_servers": [
+    //     "deno",
+    //     "!typescript-language-server",
+    //     "!vtsls",
+    //     "!eslint"
+    //   ],
+    //   "formatter": "language_server"
+    // }
+  },
+  "relative_line_numbers": true,
+  "ui_font_size": 16,
+  "ui_font_family": "Zed Sans",
+  "buffer_font_size": 16,
+  "soft_wrap": "none",
+  "jupyter": {
+    "kernel_selections": {
+      "python": "uv",
+      "typescript": "deno",
+      "javascript": "deno"
+    }
+  }
+  // "lsp": {
+  //   "deno": {
+  //     "settings": {
+  //       "deno": {
+  //         "enable": true,
+  //         "lint": true,
+  //         "fmt": true
+  //       }
+  //     }
+  //   }
+  // }
+}
