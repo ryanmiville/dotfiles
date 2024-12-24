@@ -77,7 +77,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
 		-- vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
 		-- vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-		vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
+		-- vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
 		vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Find Diagnostics" })
 		-- vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
 		vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Find Recent Files" })
@@ -96,5 +96,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		vim.keymap.set("n", "<leader>fn", function()
 			builtin.find_files({ cwd = vim.fn.stdpath("config") })
 		end, { desc = "[S]earch [N]eovim files" })
+
+		require("config.multi-grep").setup()
 	end,
 }

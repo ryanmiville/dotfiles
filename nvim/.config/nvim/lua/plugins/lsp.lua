@@ -69,6 +69,7 @@ return {
 				"cssmodules_ls",
 				"gopls",
 				"lua_ls",
+				"rust_analyzer",
 				"terraformls",
 			},
 		})

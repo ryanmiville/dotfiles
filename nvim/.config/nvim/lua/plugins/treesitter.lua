@@ -13,6 +13,7 @@ return {
 				"luadoc",
 				"markdown",
 				"markdown_inline",
+				"rust",
 				"tsx",
 				"typescript",
 				-- "scala"
