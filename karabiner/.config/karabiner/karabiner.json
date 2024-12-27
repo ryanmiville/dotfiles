@@ -4,6 +4,19 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "left_control+j to escape",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": { "mandatory": ["left_control"] }
+                                },
+                                "to": [{ "key_code": "escape" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Tap left_control for escape",
                         "manipulators": [
                             {
