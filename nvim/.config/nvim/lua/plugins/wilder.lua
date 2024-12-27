@@ -24,7 +24,11 @@ return {
 				wilder.make_hl("WilderBlue", { { a = 1 }, { a = 1 }, { foreground = colors.blue2 } })
 
 			-- Enable wilder when pressing :, / or ?
-			wilder.setup({ modes = { ":", "/", "?" } })
+			wilder.setup({
+				modes = { ":", "/", "?" },
+				next_key = "<C-n>",
+				previous_key = "<C-p>",
+			})
 
 			-- Enable fuzzy matching for commands and buffers
 			wilder.set_option("pipeline", {
