@@ -4,13 +4,12 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "caps_lock + j to escape",
-                        "enabled": false,
+                        "description": "left_control+j to escape",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "j",
-                                    "modifiers": { "mandatory": ["caps_lock"] }
+                                    "modifiers": { "mandatory": ["left_control"] }
                                 },
                                 "to": [{ "key_code": "escape" }],
                                 "type": "basic"
@@ -19,7 +18,6 @@
                     },
                     {
                         "description": "Tap left_control for escape",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -35,9 +33,9 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Change left_control to hyper.",
+                                "description": "Change caps_lock to hyper.",
                                 "from": {
-                                    "key_code": "left_control",
+                                    "key_code": "caps_lock",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [
@@ -54,6 +52,16 @@
             },
             "name": "Default profile",
             "selected": true,
+            "simple_modifications": [
+                {
+                    "from": { "key_code": "caps_lock" },
+                    "to": [{ "key_code": "left_control" }]
+                },
+                {
+                    "from": { "key_code": "left_control" },
+                    "to": [{ "key_code": "caps_lock" }]
+                }
+            ],
             "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
         }
     ]
