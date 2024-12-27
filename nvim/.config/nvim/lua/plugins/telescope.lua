@@ -21,6 +21,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
 		-- Useful for getting pretty icons, but requires a Nerd Font.
 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+		{ "jonarrien/telescope-cmdline.nvim" },
 	},
 	config = function()
 		-- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -97,6 +98,10 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			builtin.find_files({ cwd = vim.fn.stdpath("config") })
 		end, { desc = "[S]earch [N]eovim files" })
 
+		vim.keymap.set("n", "<leader>?", "<cmd>Telescope cmdline<cr>", { desc = "Command Mode" })
+
 		require("config.multi-grep").setup()
+
+		require("telescope").load_extension("cmdline")
 	end,
 }

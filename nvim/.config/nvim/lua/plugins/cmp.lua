@@ -47,8 +47,8 @@ return { -- Autocompletion
 				{ name = "buffer" },
 			},
 		})
-
-		-- `:` cmdline setup.
+		--
+		-- -- `:` cmdline setup.
 		cmp.setup.cmdline(":", {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = cmp.config.sources({
@@ -62,6 +62,7 @@ return { -- Autocompletion
 				},
 			}),
 		})
+
 		local luasnip = require("luasnip")
 		luasnip.config.setup({})
 
