@@ -56,15 +56,25 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 zinit light jeffreytse/zsh-vi-mode
 
+# For postponing loading `fzf`
+zinit ice lucid wait
+zinit snippet OMZP::fzf
+
 # Load completions
 autoload -U compinit && compinit
+
+# Open in EDITOR
+# autoload edit-command-line
+# zle -N edit-command-line
+# bindkey '^Xe' edit-command-line
 
 zinit cdreplay -q
 
 # Keybindings
-bindkey -e
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
+# bindkey -e
+# bindkey '^p' history-search-backward
+# bindkey '^n' history-search-forward
+
 # History
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
