@@ -57,6 +57,7 @@ zinit light Aloxaf/fzf-tab
 zinit light jeffreytse/zsh-vi-mode
 
 # For postponing loading `fzf`
+# needed to get ctrl-r with zsh-vi-mode
 zinit ice lucid wait
 zinit snippet OMZP::fzf
 
