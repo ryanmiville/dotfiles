@@ -35,6 +35,7 @@ return { -- Autocompletion
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-cmdline",
+		"zbirenbaum/copilot-cmp",
 	},
 	config = function()
 		-- See `:help cmp`
@@ -65,6 +66,8 @@ return { -- Autocompletion
 
 		local luasnip = require("luasnip")
 		luasnip.config.setup({})
+
+		require("copilot_cmp").setup()
 
 		cmp.setup({
 			snippet = {
@@ -132,6 +135,7 @@ return { -- Autocompletion
 					-- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
 					group_index = 0,
 				},
+				{ name = "copilot" },
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" },
 				{ name = "path" },
