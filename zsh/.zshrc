@@ -11,7 +11,7 @@ export GOPATH=/Users/ryan.miville/go
 export PATH=$PATH:$GOPATH/bin
 export GOPRIVATE=github.com/GetTerminus
 
-# export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u292-b10/OpenJDK8U-jdk_x64_mac_hotspot_8u292b10.tar.gz/jdk8u292-b10/Contents/Home"
+# export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home"
 export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17%252B35/OpenJDK17-jdk_x64_mac_hotspot_17_35.tar.gz/jdk-17+35/Contents/Home"
 export JAVA_HOMES="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium"
 export PATH="$PATH:/Users/ryan.miville/Library/Application Support/Coursier/bin"
@@ -207,3 +207,14 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+function sbt_version() {
+	local version="$(gum choose "8" "17")"
+	if [ "$version" = "8" ]; then
+		JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home" sbt
+	else
+		sbt
+	fi
+}
+
+alias sbt=sbt_version

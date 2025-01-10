@@ -1,10 +1,30 @@
 [
   {
-    "context": "Workspace",
+    "use_key_equivalents": true,
+    "bindings": {
+      "ctrl-w m": "workspace::ToggleZoom"
+    }
+  },
+  {
+    "context": "ProjectPanel",
     "bindings": {
       "ctrl-n": "workspace::ToggleRightDock"
     }
   },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-g": ["task::Spawn", { "task_name": "start lazygit" }]
+    }
+  },
+  {
+    "context": "Editor && showing_completions",
+    "use_key_equivalents": true,
+    "bindings": {
+      "ctrl-y": "editor::ConfirmCompletion"
+    }
+  },
+
   {
     "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
@@ -31,7 +51,7 @@
       "space d": "editor::GoToDiagnostic",
       "space shift-d": "diagnostics::Deploy",
       "space r": "editor::Rename",
-      "space a": "editor::ToggleCodeActions",
+      "space c a": "editor::ToggleCodeActions",
       "space h": "editor::SelectAllMatches",
       "space t": "workspace::NewCenterTerminal",
       // Misc
@@ -46,6 +66,17 @@
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
+      "space a": "pane::TogglePinTab",
+      "space 1": ["pane::ActivateItem", 0],
+      "space 2": ["pane::ActivateItem", 1],
+      "space 3": ["pane::ActivateItem", 2],
+      "space 4": ["pane::ActivateItem", 3],
+      "space 5": ["pane::ActivateItem", 4],
+      "space 6": ["pane::ActivateItem", 5],
+      "space 7": ["pane::ActivateItem", 6],
+      "space 8": ["pane::ActivateItem", 7],
+      "space 9": ["pane::ActivateItem", 8],
+      "space 0": "pane::ActivateLastItem"
       // put key-bindings here if you want them to work only in normal mode
       // "down": ["workspace::SendKeystrokes", "4 j"]
       // "up": ["workspace::SendKeystrokes", "4 k"]
@@ -144,7 +175,8 @@
       "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"],
       "ctrl-w k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-w j": ["workspace::ActivatePaneInDirection", "Down"]
+      "ctrl-w j": ["workspace::ActivatePaneInDirection", "Down"],
+      "ctrl-j": ["workspace::SendKeystrokes", "escape"]
       // ... or other keybindings
     }
   }

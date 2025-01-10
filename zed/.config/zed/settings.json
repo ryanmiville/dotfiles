@@ -8,26 +8,59 @@
 // from the command palette or from `Zed` application menu.
 {
   "show_user_picture": false,
+  "tab_bar": {
+    "show_nav_history_buttons": false,
+    "show": true
+  },
+  "pane_split_direction_vertical": "right",
+  "toolbar": {
+    "quick_actions": false,
+    "selections_menu": false
+  },
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/.jj",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings"
+  ],
   "file_finder": {
     "modal_max_width": "medium"
   },
   "assistant": {
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-4o"
+      "model": "claude-3-5-sonnet"
     },
+    "button": false,
     "version": "2"
+  },
+  "chat_panel": {
+    "button": false
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "outline_panel": {
+    "button": false
   },
   "terminal": {
     "dock": "bottom",
+    "button": false,
     "env": {
       "EDITOR": "zed --wait"
     }
   },
   "project_panel": {
-    "dock": "right"
+    "dock": "right",
+    "button": false,
+    "auto_reveal_entries": false
   },
-  "theme": "Monospace dark",
+  "theme": "Kanagawa",
   "telemetry": {
     "metrics": false
   },
@@ -39,7 +72,7 @@
   },
   "languages": {
     "Gleam": {
-      "show_inline_completions": false
+      "show_inline_completions": true
     },
     "Python": {
       // "format_on_save": { "language_server": { "name": "ruff" } },
@@ -83,7 +116,8 @@
   },
   "relative_line_numbers": true,
   "ui_font_size": 16,
-  "ui_font_family": "Zed Sans",
+  "ui_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_family": "JetBrainsMono Nerd Font",
   "buffer_font_size": 16,
   "soft_wrap": "none",
   "jupyter": {

@@ -70,8 +70,10 @@ return {
 				})
 				:find()
 		end
-
 		vim.keymap.set("n", "<leader>h", function()
+			harpoon.ui:toggle_quick_menu(harpoon:list())
+		end)
+		vim.keymap.set("n", "<leader>fH", function()
 			toggle_telescope(harpoon:list())
 		end, { desc = "Open harpoon window" })
 	end,
