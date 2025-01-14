@@ -10,6 +10,15 @@
     "hide": "always"
   },
   {
+    "label": "Open in GitHub",
+    "command": "gh browse \"$ZED_RELATIVE_FILE\":$ZED_ROW",
+    "env": {},
+    "show_summary": false,
+    "show_output": false,
+    "reveal": "never",
+    "hide": "always"
+  },
+  {
     "label": "Example task",
     "command": "for i in {1..5}; do echo \"Hello $i/5\"; sleep 1; done",
     //"args": [],

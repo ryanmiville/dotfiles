@@ -88,6 +88,7 @@
       // visual, visual line & visual block modes
       // ">": ["vim::Indent", "vim::RestoreVisualSelection"],
       // "<": ["vim::Outdent", "vim::RestoreVisualSelection"]
+      ":": "command_palette::Toggle"
     }
   },
   {
@@ -136,7 +137,8 @@
     // escape is in its own section so that it cancels a pending count.
     "context": "Editor && vim_mode == insert",
     "bindings": {
-      "ctrl-j": "vim::NormalBefore"
+      "ctrl-j": "vim::NormalBefore",
+      "ctrl-;": ["workspace::SendKeystrokes", "="]
     }
   },
   {
