@@ -18,7 +18,7 @@ export PATH="$PATH:/Users/ryan.miville/Library/Application Support/Coursier/bin"
 
 export PATH="/usr/local/sbin:$PATH"
 
-export EDITOR="nvim"
+export EDITOR="hx"
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -101,7 +101,7 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # eval "$(/opt/homebrew/bin/brew shellenv)"
 
-alias zshrc="nvim ~/.zshrc && source ~/.zshrc"
+alias zshrc="$EDITOR ~/.zshrc && source ~/.zshrc"
 alias zsource="source ~/.zshrc"
 alias tf="terraform"
 alias vim="nvim"
@@ -138,6 +138,8 @@ alias cat="bat"
 alias ls="eza"
 alias pip="pip3"
 alias pn="pnpm"
+alias docker="podman"
+export DOCKER_HOST='unix:///var/folders/vr/prvjkl395tl6zhwr1ztksghr0000gp/T/podman/podman-machine-default-api.sock'
 
 mkfiledir() {
     mkdir -p "$(dirname "$1")" && /usr/bin/touch "$1"
@@ -218,3 +220,5 @@ function sbt_version() {
 }
 
 alias sbt=sbt_version
+
+. /usr/local/opt/asdf/libexec/asdf.sh

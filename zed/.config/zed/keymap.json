@@ -6,6 +6,15 @@
     }
   },
   {
+    "context": "EmptyPane || SharedScreen || MarkdownPreview || KeyContextView || Welcome",
+    "bindings": {
+      "space f": "file_finder::Toggle",
+      "space shift-s": "project_symbols::Toggle",
+      "space shift-d": "diagnostics::Deploy",
+      "ctrl-n": "workspace::ToggleRightDock"
+    }
+  },
+  {
     "context": "ProjectPanel",
     "bindings": {
       "ctrl-n": "workspace::ToggleRightDock"
@@ -53,14 +62,15 @@
       "space r": "editor::Rename",
       "space c a": "editor::ToggleCodeActions",
       "space h": "editor::SelectAllMatches",
-      "space t": "workspace::NewCenterTerminal",
       // Misc
       "ctrl-shift-k": "editor::MoveLineUp",
       "ctrl-shift-j": "editor::MoveLineDown",
       "ctrl-c": "editor::ToggleComments",
       ">": "editor::Indent",
       "<": "editor::Outdent",
-      "ctrl-n": "workspace::ToggleRightDock"
+      "ctrl-n": "workspace::ToggleRightDock",
+      "s": ["vim::PushOperator", { "Sneak": {} }],
+      "S": ["vim::PushOperator", { "SneakBackward": {} }]
     }
   },
   {
