@@ -15,15 +15,15 @@
     }
   },
   {
-    "context": "ProjectPanel",
+    // "context": "workspace",
     "bindings": {
-      "ctrl-n": "workspace::ToggleRightDock"
+      "cmd-e": "project_panel::ToggleFocus"
     }
   },
   {
-    "context": "Workspace",
+    "context": "ProjectPanel",
     "bindings": {
-      "cmd-g": ["task::Spawn", { "task_name": "start lazygit" }]
+      "ctrl-n": "workspace::ToggleRightDock"
     }
   },
   {
@@ -41,17 +41,18 @@
       "g h": "vim::FirstNonWhitespace",
       "g l": "vim::EndOfLine",
       "K": "editor::Hover",
-      "H": "pane::ActivatePrevItem",
+      "H": "pane::ActivatePreviousItem",
       "L": "pane::ActivateNextItem",
       "g e": "vim::EndOfDocument",
       "g y": "editor::GoToTypeDefinition",
       "g r": "editor::FindAllReferences", // zed specific
-      "g t": "vim::WindowTop",
-      "g c": "vim::WindowMiddle",
-      "g b": "vim::WindowBottom",
+      "g H": "vim::WindowTop",
+      "g M": "vim::WindowMiddle",
+      "g L": "vim::WindowBottom",
       // Window mode
       "ctrl-w v": "pane::SplitRight",
       "ctrl-w d": "pane::SplitDown",
+      "ctrl-w O": "workspace::CloseAllDocks",
       // Space mode
       "space f": "file_finder::Toggle",
       "space k": "editor::Hover",
@@ -69,8 +70,10 @@
       ">": "editor::Indent",
       "<": "editor::Outdent",
       "ctrl-n": "workspace::ToggleRightDock",
-      "s": ["vim::PushOperator", { "Sneak": {} }],
-      "S": ["vim::PushOperator", { "SneakBackward": {} }]
+      "s": ["vim::PushSneak", {}],
+      "S": ["vim::PushSneakBackward", {}],
+      "space o": ["workspace::SendKeystrokes", "o escape"],
+      "space O": ["workspace::SendKeystrokes", "O escape"]
     }
   },
   {
@@ -112,7 +115,7 @@
   {
     "context": "Editor && VimControl && !VimWaiting && !menu",
     "bindings": {
-      "ctrl-j": ["vim::SwitchMode", "Normal"],
+      "ctrl-j": "vim::SwitchToNormalMode",
       "g n": "vim::SelectNext",
       "g N": "vim::SelectPrevious",
       "space w": "vim::NextSubwordStart",
@@ -120,7 +123,7 @@
       "space e": "vim::NextSubwordEnd",
       "space g e": "vim::PreviousSubwordEnd",
       "alt-l": "pane::ActivateNextItem",
-      "alt-h": "pane::ActivatePrevItem"
+      "alt-h": "pane::ActivatePreviousItem"
     }
   },
   {
@@ -134,13 +137,8 @@
     // escape is in its own section so that it cancels a pending count.
     "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
     "bindings": {
-      "ctrl-j": ["vim::SwitchMode", "Normal"],
-      "shift-s": [
-        "vim::PushOperator",
-        {
-          "AddSurrounds": {}
-        }
-      ]
+      "ctrl-j": "vim::SwitchToNormalMode",
+      "shift-s": ["vim::PushAddSurrounds", {}]
     }
   },
   {
@@ -154,7 +152,7 @@
   {
     "context": "Editor && VimWaiting",
     "bindings": {
-      "ctrl-j": ["vim::SwitchMode", "Normal"]
+      "ctrl-j": "vim::SwitchToNormalMode"
     }
   },
   {
@@ -165,7 +163,7 @@
   },
   {
     "context": "ProjectPanel && not_editing",
-    "use_layout_keys": true,
+    // "use_layout_keys": true,
     "bindings": {
       "ctrl-n": "workspace::ToggleRightDock",
       "ctrl-j": "project_panel::ToggleFocus",
@@ -184,10 +182,10 @@
   {
     "context": "Dock",
     "bindings": {
-      "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-w l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-w k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-w j": ["workspace::ActivatePaneInDirection", "Down"],
+      "ctrl-w h": "workspace::ActivatePaneLeft",
+      "ctrl-w l": "workspace::ActivatePaneRight",
+      "ctrl-w k": "workspace::ActivatePaneUp",
+      "ctrl-w j": "workspace::ActivatePaneDown",
       "ctrl-j": ["workspace::SendKeystrokes", "escape"]
       // ... or other keybindings
     }

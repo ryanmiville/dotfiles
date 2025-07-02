@@ -7,18 +7,22 @@ fi
 
 source ~/.secrets
 
+export XDG_CONFIG_HOME=/Users/ryan.miville/.config
 export GOPATH=/Users/ryan.miville/go
 export PATH=$PATH:$GOPATH/bin
 export GOPRIVATE=github.com/GetTerminus
 
-# export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home"
-export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17%252B35/OpenJDK17-jdk_x64_mac_hotspot_17_35.tar.gz/jdk-17+35/Contents/Home"
+# export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home" # export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.2%252B7/OpenJDK23U-jdk_x64_mac_hotspot_23.0.2_7.tar.gz/jdk-23.0.2+7/Contents/Home"
+# export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17%252B35/OpenJDK17-jdk_x64_mac_hotspot_17_35.tar.gz/jdk-17+35/Contents/Home"
+export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%252B7/OpenJDK21U-jdk_x64_mac_hotspot_21.0.6_7.tar.gz/jdk-21.0.6+7/Contents/Home"
 export JAVA_HOMES="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium"
 export PATH="$PATH:/Users/ryan.miville/Library/Application Support/Coursier/bin"
 
 export PATH="/usr/local/sbin:$PATH"
 
 export EDITOR="hx"
+
+# export DOCKER="podman"
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -97,8 +101,8 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Shell integrations
 source <(fzf --zsh)
-eval "$(zoxide init --cmd cd zsh)"
-
+eval "$(zoxide init zsh)"
+alias zi="__zoxide_zi"
 # eval "$(/opt/homebrew/bin/brew shellenv)"
 
 alias zshrc="$EDITOR ~/.zshrc && source ~/.zshrc"
@@ -138,8 +142,8 @@ alias cat="bat"
 alias ls="eza"
 alias pip="pip3"
 alias pn="pnpm"
-alias docker="podman"
-export DOCKER_HOST='unix:///var/folders/vr/prvjkl395tl6zhwr1ztksghr0000gp/T/podman/podman-machine-default-api.sock'
+# alias docker="podman"
+# export DOCKER_HOST='unix:///var/folders/vr/prvjkl395tl6zhwr1ztksghr0000gp/T/podman/podman-machine-default-api.sock'
 
 mkfiledir() {
     mkdir -p "$(dirname "$1")" && /usr/bin/touch "$1"
@@ -211,7 +215,7 @@ function y() {
 }
 
 function sbt_version() {
-	local version="$(gum choose "8" "17")"
+	local version="$(gum choose "8" "latest")"
 	if [ "$version" = "8" ]; then
 		JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home" sbt
 	else
@@ -219,6 +223,15 @@ function sbt_version() {
 	fi
 }
 
-alias sbt=sbt_version
+alias sbt8="cs launch --jvm 8 sbt"
+# alias sbt=sbt_version
 
 . /usr/local/opt/asdf/libexec/asdf.sh
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/ryan.miville/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# opencode
+export PATH=/Users/ryan.miville/.opencode/bin:$PATH

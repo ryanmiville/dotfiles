@@ -1,5 +1,5 @@
-theme = kanagawabones
-font-family = "JetBrainsMono Nerd Font Mono"
+theme = catppuccin-mocha
+font-family = "Maple Mono"
 font-size = 16
 
 
@@ -19,3 +19,4 @@ keybind = cmd+s>l=goto_split:right
 keybind = cmd+s>m=toggle_split_zoom
 keybind = cmd+s>e=equalize_splits
 
+keybind = shift+enter=text:\n
