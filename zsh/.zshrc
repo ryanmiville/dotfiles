@@ -20,6 +20,7 @@ export PATH="$PATH:/Users/ryan.miville/Library/Application Support/Coursier/bin"
 
 export PATH="/usr/local/sbin:$PATH"
 
+# export EDITOR="zed -nw"
 export EDITOR="hx"
 
 # export DOCKER="podman"
@@ -105,7 +106,7 @@ eval "$(zoxide init zsh)"
 alias zi="__zoxide_zi"
 # eval "$(/opt/homebrew/bin/brew shellenv)"
 
-alias zshrc="$EDITOR ~/.zshrc && source ~/.zshrc"
+alias zshrc="zed -nw ~/.zshrc && source ~/.zshrc"
 alias zsource="source ~/.zshrc"
 alias tf="terraform"
 alias vim="nvim"
@@ -187,7 +188,7 @@ sts() {
     local token=$(mfa)
 
     local stsResponse
-    stsResponse=$(aws --profile prod sts get-session-token --serial-number "arn:aws:iam::911070201873:mfa/phone" --token-code "$token" --duration-seconds 10800 --output json)
+    stsResponse=$(aws --profile prod sts get-session-token --serial-number "arn:aws:iam::911070201873:mfa/phone" --token-code "$token" --duration-seconds 43200 --output json)
 
     local accessKey
     accessKey=$(echo $stsResponse | jq '.Credentials.AccessKeyId' | tr -d '"')
