@@ -19,6 +19,7 @@ export JAVA_HOMES="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.
 export PATH="$PATH:/Users/ryan.miville/Library/Application Support/Coursier/bin"
 
 export PATH="/usr/local/sbin:$PATH"
+PATH="/Users/ryan.miville/.local/bin:$PATH"
 
 # export EDITOR="zed -nw"
 export EDITOR="hx"
@@ -139,7 +140,6 @@ gcm() {
 }
 
 # replacement tools
-alias cat="bat"
 alias ls="eza"
 alias pip="pip3"
 alias pn="pnpm"
