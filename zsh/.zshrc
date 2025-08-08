@@ -19,7 +19,7 @@ export JAVA_HOMES="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.
 export PATH="$PATH:/Users/ryan.miville/Library/Application Support/Coursier/bin"
 
 export PATH="/usr/local/sbin:$PATH"
-PATH="/Users/ryan.miville/.local/bin:$PATH"
+export PATH="$PATH:/Users/ryan.miville/.local/bin"
 
 # export EDITOR="zed -nw"
 export EDITOR="hx"
