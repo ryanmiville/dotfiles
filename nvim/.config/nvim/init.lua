@@ -1,3 +1,5 @@
-require("keymaps")
+require("globals")
 require("settings")
+require("keymaps")
+require("config.lsp")
 require("config.lazy")

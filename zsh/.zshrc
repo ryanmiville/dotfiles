@@ -236,3 +236,5 @@ compinit
 
 # opencode
 export PATH=/Users/ryan.miville/.opencode/bin:$PATH
+
+alias claude="/Users/ryan.miville/.claude/local/claude"
