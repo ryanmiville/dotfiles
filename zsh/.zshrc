@@ -22,7 +22,7 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH="$PATH:/Users/ryan.miville/.local/bin"
 
 # export EDITOR="zed -nw"
-export EDITOR="hx"
+export EDITOR="nvim"
 
 # export DOCKER="podman"
 
@@ -107,7 +107,7 @@ eval "$(zoxide init zsh)"
 alias zi="__zoxide_zi"
 # eval "$(/opt/homebrew/bin/brew shellenv)"
 
-alias zshrc="zed -nw ~/.zshrc && source ~/.zshrc"
+alias zshrc="nvim ~/.zshrc && source ~/.zshrc"
 alias zsource="source ~/.zshrc"
 alias tf="terraform"
 alias vim="nvim"

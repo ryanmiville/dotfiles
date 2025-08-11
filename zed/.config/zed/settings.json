@@ -131,6 +131,7 @@
   "ui_font_family": "Maple Mono",
   "buffer_font_family": "Maple Mono",
   "buffer_font_size": 16,
+  "agent_font_size": 16,
   "soft_wrap": "none",
   "jupyter": {
     "kernel_selections": {
@@ -139,15 +140,4 @@
       "javascript": "deno"
     }
   }
-  // "lsp": {
-  //   "deno": {
-  //     "settings": {
-  //       "deno": {
-  //         "enable": true,
-  //         "lint": true,
-  //         "fmt": true
-  //       }
-  //     }
-  //   }
-  // }
 }

@@ -1,5 +1,5 @@
 require("globals")
-require("settings")
+require("options")
 require("keymaps")
 require("config.lsp")
 require("config.lazy")
