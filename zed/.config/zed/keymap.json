@@ -1,6 +1,5 @@
 [
   {
-    "use_key_equivalents": true,
     "bindings": {
       "ctrl-w m": "workspace::ToggleZoom"
     }
@@ -173,6 +172,7 @@
     // "use_layout_keys": true,
     "bindings": {
       "ctrl-n": "workspace::ToggleRightDock",
+      "cmd-e": "workspace::ToggleRightDock",
       "ctrl-j": "project_panel::ToggleFocus",
       "a": "project_panel::NewFile",
       "d": "project_panel::Trash",
@@ -181,8 +181,8 @@
       "c": "project_panel::Copy",
       "p": "project_panel::Paste",
       "x": "project_panel::Cut",
-      "Y": "project_panel::CopyRelativePath",
-      "g y": "project_panel::CopyPath",
+      "Y": "workspace::CopyRelativePath",
+      "g y": "workspace::CopyPath",
       "W": "project_panel::CollapseAllEntries"
     }
   },
@@ -195,6 +195,53 @@
       "ctrl-w j": "workspace::ActivatePaneDown",
       "ctrl-j": ["workspace::SendKeystrokes", "escape"]
       // ... or other keybindings
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "cmd-j": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-j": "terminal_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-shift-d": "workspace::ToggleBottomDock"
+    }
+  },
+  {
+    "context": "!GitPanel",
+    "bindings": {
+      "cmd-g": "git_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "GitPanel",
+    "bindings": {
+      "cmd-g": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList)",
+    "bindings": {
+      "a": "git::StageAll"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList)",
+    "bindings": {
+      "d": [
+        "git::RestoreFile",
+        {
+          "skip_prompt": false
+        }
+      ]
     }
   }
 ]

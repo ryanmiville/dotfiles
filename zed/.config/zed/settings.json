@@ -62,7 +62,7 @@
     "button": false
   },
   "terminal": {
-    "dock": "bottom",
+    "dock": "left",
     "button": false,
     "env": {
       "EDITOR": "zed --wait"
@@ -139,5 +139,9 @@
       "typescript": "deno",
       "javascript": "deno"
     }
-  }
+  },
+  "title_bar": {
+    "show_user_picture": false
+  },
+  "auto_signature_help": true
 }
