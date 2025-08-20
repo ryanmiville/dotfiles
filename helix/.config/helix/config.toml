@@ -1,0 +1,24 @@
+theme = "tokyonight_storm"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[keys.normal]
+C-j = ["collapse_selection", "keep_primary_selection", "normal_mode"]
+"ret" = ["open_below", "normal_mode"]
+"S-ret" = ["open_above", "normal_mode"]
+V = ["select_mode", "select_line_below"]
+y = "yank_to_clipboard"
+
+[keys.insert]
+C-j = ["collapse_selection", "normal_mode"]
+
+[keys.select]
+C-j = ["collapse_selection", "normal_mode"]
+y = "yank_to_clipboard"
+i = "select_textobject_inner"
+a = "select_textobject_around"
+V = "select_line_below"
+
