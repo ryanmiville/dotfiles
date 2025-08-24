@@ -510,7 +510,7 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   },
-  "terminal.external.osxExec": "Warp.app",
+  "terminal.external.osxExec": "Ghostty.app",
   "[scala]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 2
@@ -520,7 +520,6 @@
   "jupyter.interactiveWindow.textEditor.executeSelection": true,
   "terminal.integrated.inheritEnv": false,
   "editor.detectIndentation": false,
-  "githubPullRequests.createOnPublishBranch": "never",
   "workbench.colorTheme": "Tokyo Night Storm",
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -531,11 +530,6 @@
   "git.ignoreRebaseWarning": true,
   "scm.inputFontFamily": "editor",
   "interactiveWindow.executeWithShiftEnter": true,
-  "apc.font.family": "Menlo",
-  "apc.listRow": {
-    "lists": ["explorer-folders-view", "quick-input-list", "results"],
-    "height": 30
-  },
   "window.commandCenter": false,
   "window.customTitleBarVisibility": "auto",
   "window.titleBarStyle": "custom",
@@ -546,10 +540,12 @@
   "tailwind-fold.autoFold": false,
   "workbench.activityBar.location": "hidden",
   "cursor.cpp.disabledLanguages": ["plaintext", "scminput"],
-  "lldb.suppressUpdateNotifications": true,
   "editor.fontFamily": "'Maple Mono',Menlo, Monaco, 'Courier New', monospace",
   "cursor.composer.shouldChimeAfterChatFinishes": true,
   "cursor.cpp.enablePartialAccepts": true,
   "zenMode.silentNotifications": false,
-  "makefile.configureOnOpen": false
+  "makefile.configureOnOpen": false,
+  "cursor.terminal.usePreviewBox": true,
+  "git.terminalGitEditor": true,
+  "python.terminal.shellIntegration.enabled": true
 }
