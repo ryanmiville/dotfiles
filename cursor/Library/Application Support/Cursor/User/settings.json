@@ -520,7 +520,6 @@
   "jupyter.interactiveWindow.textEditor.executeSelection": true,
   "terminal.integrated.inheritEnv": false,
   "editor.detectIndentation": false,
-  "workbench.colorTheme": "Tokyo Night Storm",
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -547,5 +546,7 @@
   "makefile.configureOnOpen": false,
   "cursor.terminal.usePreviewBox": true,
   "git.terminalGitEditor": true,
-  "python.terminal.shellIntegration.enabled": true
+  "python.terminal.shellIntegration.enabled": true,
+  "git.blame.editorDecoration.enabled": true,
+  "workbench.colorTheme": "Tokyo Night Storm"
 }
