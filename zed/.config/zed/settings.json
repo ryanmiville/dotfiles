@@ -143,5 +143,6 @@
   "title_bar": {
     "show_user_picture": false
   },
-  "auto_signature_help": true
+  "auto_signature_help": true,
+  "use_system_window_tabs": true
 }

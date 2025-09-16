@@ -548,5 +548,15 @@
     "key": "alt+l",
     "command": "editor.action.inlineDiffs.nextDiffFile",
     "when": "editorTextFocus && vim.mode != 'Insert' && @inlineDiffs.nextDiffFile.hasInlineDiffsInAnyEditor"
+  },
+  {
+    "key": "cmd+k m",
+    "command": "workbench.action.editor.changeLanguageMode",
+    "when": "!notebookEditorFocused"
+  },
+  {
+    "key": "cmd+r m",
+    "command": "-workbench.action.editor.changeLanguageMode",
+    "when": "!notebookEditorFocused"
   }
 ]
