@@ -5,9 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source ~/.secrets
 
-export XDG_CONFIG_HOME=/Users/ryan.miville/.config
 export GOPATH=/Users/ryan.miville/go
 export PATH=$PATH:$GOPATH/bin
 export GOPRIVATE=github.com/GetTerminus
@@ -227,7 +225,6 @@ function sbt_version() {
 alias sbt8="cs launch --jvm 8 sbt"
 # alias sbt=sbt_version
 
-. /usr/local/opt/asdf/libexec/asdf.sh
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/ryan.miville/.docker/completions $fpath)
 autoload -Uz compinit
