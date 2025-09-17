@@ -6,21 +6,21 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 
-export GOPATH=/Users/ryan.miville/go
+export GOPATH=/Users/ryanmiville/go
 export PATH=$PATH:$GOPATH/bin
 export GOPRIVATE=github.com/GetTerminus
 
-# export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home" # export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.2%252B7/OpenJDK23U-jdk_x64_mac_hotspot_23.0.2_7.tar.gz/jdk-23.0.2+7/Contents/Home"
-# export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17%252B35/OpenJDK17-jdk_x64_mac_hotspot_17_35.tar.gz/jdk-17+35/Contents/Home"
-export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%252B7/OpenJDK21U-jdk_x64_mac_hotspot_21.0.6_7.tar.gz/jdk-21.0.6+7/Contents/Home"
-export JAVA_HOMES="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium"
-export PATH="$PATH:/Users/ryan.miville/Library/Application Support/Coursier/bin"
+# export JAVA_HOME="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home" # export JAVA_HOME="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.2%252B7/OpenJDK23U-jdk_x64_mac_hotspot_23.0.2_7.tar.gz/jdk-23.0.2+7/Contents/Home"
+# export JAVA_HOME="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17%252B35/OpenJDK17-jdk_x64_mac_hotspot_17_35.tar.gz/jdk-17+35/Contents/Home"
+# export JAVA_HOME="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%252B7/OpenJDK21U-jdk_x64_mac_hotspot_21.0.6_7.tar.gz/jdk-21.0.6+7/Contents/Home"
+# export JAVA_HOMES="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium"
+# export PATH="$PATH:/Users/ryanmiville/Library/Application Support/Coursier/bin"
 
 export PATH="/usr/local/sbin:$PATH"
-export PATH="$PATH:/Users/ryan.miville/.local/bin"
+export PATH="$PATH:/Users/ryanmiville/.local/bin"
 
 # export EDITOR="zed -nw"
-export EDITOR="hx"
+export EDITOR="nvim"
 
 # export DOCKER="podman"
 
@@ -151,7 +151,7 @@ mkfiledir() {
 alias touch=mkfiledir
 
 # pnpm
-export PNPM_HOME="/Users/ryan.miville/Library/pnpm"
+export PNPM_HOME="/Users/ryanmiville/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -159,12 +159,12 @@ esac
 # pnpm end
 
 # deno
-export DENO_INSTALL="/Users/ryan.miville/.deno"
+export DENO_INSTALL="/Users/ryanmiville/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 # deno end
 
 # bun completions
-[ -s "/Users/ryan.miville/.bun/_bun" ] && source "/Users/ryan.miville/.bun/_bun"
+[ -s "/Users/ryanmiville/.bun/_bun" ] && source "/Users/ryanmiville/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -174,7 +174,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export AWS_ASSUME_ROLE_TTL=3600
 export AWS_SESSION_TOKEN_TTL=3600
 
-# source /Users/ryan.miville/.config/op/plugins.sh
+# source /Users/ryanmiville/.config/op/plugins.sh
 
 mfa() {
  local resp
@@ -216,7 +216,7 @@ function y() {
 function sbt_version() {
 	local version="$(gum choose "8" "latest")"
 	if [ "$version" = "8" ]; then
-		JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home" sbt
+		JAVA_HOME="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home" sbt
 	else
 		sbt
 	fi
@@ -226,12 +226,14 @@ alias sbt8="cs launch --jvm 8 sbt"
 # alias sbt=sbt_version
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/ryan.miville/.docker/completions $fpath)
+fpath=(/Users/ryanmiville/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
 
 # opencode
-export PATH=/Users/ryan.miville/.opencode/bin:$PATH
+export PATH=/Users/ryanmiville/.opencode/bin:$PATH
 
-alias claude="/Users/ryan.miville/.claude/local/claude"
+alias claude="/Users/ryanmiville/.claude/local/claude"
+
+. "$HOME/.local/bin/env"
