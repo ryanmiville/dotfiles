@@ -144,5 +144,5 @@
     "show_user_picture": false
   },
   "auto_signature_help": true,
-  "use_system_window_tabs": true
+  "use_system_window_tabs": false
 }

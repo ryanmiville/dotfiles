@@ -32,7 +32,6 @@
       "ctrl-y": "editor::ConfirmCompletion"
     }
   },
-
   {
     "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
@@ -242,6 +241,48 @@
           "skip_prompt": false
         }
       ]
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-cmd-n": "workspace::NewCenterTerminal"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "cmd-s shift-l": "pane::ActivateNextItem"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "cmd-s shift-h": "pane::ActivatePreviousItem"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-s h": "workspace::ActivatePaneLeft"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-s k": "workspace::ActivatePaneUp"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-s j": "workspace::ActivatePaneDown"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-s l": "workspace::ActivatePaneRight"
     }
   }
 ]
