@@ -10,19 +10,11 @@ export GOPATH=/Users/ryanmiville/go
 export PATH=$PATH:$GOPATH/bin
 export GOPRIVATE=github.com/GetTerminus
 
-# export JAVA_HOME="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home" # export JAVA_HOME="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.2%252B7/OpenJDK23U-jdk_x64_mac_hotspot_23.0.2_7.tar.gz/jdk-23.0.2+7/Contents/Home"
-# export JAVA_HOME="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17%252B35/OpenJDK17-jdk_x64_mac_hotspot_17_35.tar.gz/jdk-17+35/Contents/Home"
-# export JAVA_HOME="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%252B7/OpenJDK21U-jdk_x64_mac_hotspot_21.0.6_7.tar.gz/jdk-21.0.6+7/Contents/Home"
-# export JAVA_HOMES="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium"
-# export PATH="$PATH:/Users/ryanmiville/Library/Application Support/Coursier/bin"
-
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$PATH:/Users/ryanmiville/.local/bin"
 
 # export EDITOR="zed -nw"
 export EDITOR="nvim"
-
-# export DOCKER="podman"
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -139,9 +131,7 @@ gcm() {
 
 # replacement tools
 alias ls="eza"
-alias pip="pip3"
 alias pn="pnpm"
-# alias docker="podman"
 # export DOCKER_HOST='unix:///var/folders/vr/prvjkl395tl6zhwr1ztksghr0000gp/T/podman/podman-machine-default-api.sock'
 
 mkfiledir() {
@@ -157,11 +147,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-
-# deno
-export DENO_INSTALL="/Users/ryanmiville/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-# deno end
 
 # bun completions
 [ -s "/Users/ryanmiville/.bun/_bun" ] && source "/Users/ryanmiville/.bun/_bun"
@@ -212,18 +197,6 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
-
-function sbt_version() {
-	local version="$(gum choose "8" "latest")"
-	if [ "$version" = "8" ]; then
-		JAVA_HOME="/Users/ryanmiville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home" sbt
-	else
-		sbt
-	fi
-}
-
-alias sbt8="cs launch --jvm 8 sbt"
-# alias sbt=sbt_version
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/ryanmiville/.docker/completions $fpath)
