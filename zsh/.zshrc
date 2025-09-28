@@ -93,8 +93,8 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Shell integrations
 source <(fzf --zsh)
-eval "$(zoxide init zsh)"
-alias zi="__zoxide_zi"
+eval "$(zoxide init --cmd cd zsh)"
+# alias zi="__zoxide_zi"
 # eval "$(/opt/homebrew/bin/brew shellenv)"
 
 alias zshrc="$EDITOR ~/.zshrc && source ~/.zshrc"
@@ -210,3 +210,12 @@ export PATH=/Users/ryanmiville/.opencode/bin:$PATH
 alias claude="/Users/ryanmiville/.claude/local/claude"
 
 . "$HOME/.local/bin/env"
+
+BREWFILE_PATH="$HOME/.config/brew/Brewfile"
+
+function mybrew() {
+  brew "$@"
+  brew bundle dump --force --file="$BREWFILE_PATH"
+}
+
+alias brew=mybrew
