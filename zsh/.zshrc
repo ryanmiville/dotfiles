@@ -214,8 +214,12 @@ alias claude="/Users/ryanmiville/.claude/local/claude"
 BREWFILE_PATH="$HOME/.config/brew/Brewfile"
 
 function mybrew() {
-  brew "$@"
-  brew bundle dump --force --file="$BREWFILE_PATH"
+  /opt/homebrew/bin/brew "$@"
+  /opt/homebrew/bin/brew bundle dump --force --file="$BREWFILE_PATH"
 }
 
 alias brew=mybrew
+
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
