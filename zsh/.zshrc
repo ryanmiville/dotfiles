@@ -13,7 +13,6 @@ export GOPRIVATE=github.com/GetTerminus
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$PATH:/Users/ryanmiville/.local/bin"
 
-# export EDITOR="zed -nw"
 export EDITOR="nvim"
 
 ### Added by Zinit's installer
@@ -94,8 +93,6 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # Shell integrations
 source <(fzf --zsh)
 eval "$(zoxide init --cmd cd zsh)"
-# alias zi="__zoxide_zi"
-# eval "$(/opt/homebrew/bin/brew shellenv)"
 
 alias zshrc="$EDITOR ~/.zshrc && source ~/.zshrc"
 alias zsource="source ~/.zshrc"
@@ -207,7 +204,6 @@ compinit
 # opencode
 export PATH=/Users/ryanmiville/.opencode/bin:$PATH
 
-alias claude="/Users/ryanmiville/.claude/local/claude"
 
 . "$HOME/.local/bin/env"
 
