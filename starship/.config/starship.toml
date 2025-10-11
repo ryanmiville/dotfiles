@@ -6,9 +6,7 @@ format = """
 []()\
 $directory\
 $git_branch\
-$git_status\
-$line_break\
-$character"""
+$git_status"""
 
 # Right prompt matching p10k's right side
 right_format = """$cmd_duration\
@@ -34,11 +32,11 @@ symbol = ""
 # Git status (grey, matching p10k)
 [git_status]
 style = "#928374"
-format = '([$all_status$ahead_behind]($style) )'
+format = '([$all_status$ahead_behind]($style))'
 conflicted = "*"
-ahead = ":^"
-behind = ":v"
-diverged = ":v:^"
+ahead = " ⇡"
+behind = " ⇣"
+diverged = " ⇣⇡"
 untracked = "*"
 stashed = ""
 modified = "*"
@@ -82,14 +80,14 @@ style = "#928374"
 format = "[$hostname]($style) "
 
 # Prompt character (magenta on success, red on error)
-# Vi mode: > in insert, < in command/visual
+# Vi mode: ❯ in insert, ❮ in command/visual
 [character]
-success_symbol = "[>](bold #FF6AC1)"
-error_symbol = "[>](bold #FF5C57)"
-vimcmd_symbol = "[<](bold #FF6AC1)"
-vimcmd_visual_symbol = "[<](bold #FF6AC1)"
-vimcmd_replace_symbol = "[<](bold #FF6AC1)"
-vimcmd_replace_one_symbol = "[<](bold #FF6AC1)"
+success_symbol = "[❯](bold #FF6AC1)"
+error_symbol = "[❯](bold #FF5C57)"
+vimcmd_symbol = "[❮](bold #FF6AC1)"
+vimcmd_visual_symbol = "[❮](bold #FF6AC1)"
+vimcmd_replace_symbol = "[❮](bold #FF6AC1)"
+vimcmd_replace_one_symbol = "[❮](bold #FF6AC1)"
 
 # Disable modules that aren't in p10k config
 [aws]

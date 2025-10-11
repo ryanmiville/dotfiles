@@ -28,12 +28,12 @@ $env.config = {
   }
 
   edit_mode: 'vi'
-} 
+}
 
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 zoxide init --cmd cd nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
 
-$env.PROMPT_INDICATOR_VI_NORMAL = ""
-$env.PROMPT_INDICATOR_VI_INSERT = ""
+$env.PROMPT_INDICATOR_VI_NORMAL = $"(ansi { fg: '#FF6AC1' attr: b }) ❮(ansi reset) "
+$env.PROMPT_INDICATOR_VI_INSERT = $"(ansi { fg: '#FF6AC1' attr: b }) ❯(ansi reset) "
 $env.PROMPT_MULTILINE_INDICATOR = ""
