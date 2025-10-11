@@ -9,6 +9,7 @@ if [[ -f $HOME/.secrets ]]; then
     source $HOME/.secrets
 fi
 
+export XDG_CONFIG_HOME=$HOME/.config
 export GOPATH=/Users/ryanmiville/go
 export PATH=$PATH:$GOPATH/bin
 export GOPRIVATE=github.com/GetTerminus
