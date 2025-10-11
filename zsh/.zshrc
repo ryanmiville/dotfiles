@@ -5,10 +5,15 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+if [[ -f $HOME/.secrets ]]; then
+    source $HOME/.secrets
+fi
 
 export GOPATH=/Users/ryanmiville/go
 export PATH=$PATH:$GOPATH/bin
 export GOPRIVATE=github.com/GetTerminus
+
+export PATH=/Users/ryanmiville/dev/rymi-utils/scripts:$PATH
 
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$PATH:/Users/ryanmiville/.local/bin"
@@ -219,3 +224,13 @@ alias brew=mybrew
 export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+
+# ==== PostgreSQL ====
+export PG_ROOT="/opt/homebrew/opt/postgresql@16"
+
+# === Compilation and PG vars ===
+export LDFLAGS="-L$PG_ROOT/lib"
+export CPPFLAGS="-I$PG_ROOT/include"
+export PKG_CONFIG_PATH="$PG_ROOT/lib/pkgconfig"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
