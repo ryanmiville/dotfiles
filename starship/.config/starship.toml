@@ -1,0 +1,120 @@
+# Starship config matching Powerlevel10k Pure style
+# Based on p10k config with Pure theme
+
+# Overall format matching p10k's Pure style
+format = """
+[]()\
+$directory\
+$git_branch\
+$git_status\
+$line_break\
+$character"""
+
+# Right prompt matching p10k's right side
+right_format = """$cmd_duration\
+$python\
+$username"""
+
+# Add empty line before prompt (except first)
+add_newline = true
+
+# Directory (blue, matching p10k)
+[directory]
+style = "bold #57C7FF"
+format = "[$path]($style) "
+truncation_length = 100
+truncate_to_repo = false
+
+# Git branch (grey, matching p10k)
+[git_branch]
+style = "#928374"
+format = "[$symbol$branch]($style)"
+symbol = ""
+
+# Git status (grey, matching p10k)
+[git_status]
+style = "#928374"
+format = '([$all_status$ahead_behind]($style) )'
+conflicted = "*"
+ahead = ":^"
+behind = ":v"
+diverged = ":v:^"
+untracked = "*"
+stashed = ""
+modified = "*"
+staged = "*"
+renamed = "*"
+deleted = "*"
+
+# Git commit (for detached HEAD, grey with @ symbol)
+[git_commit]
+style = "#928374"
+format = '[\($hash$tag\)]($style) '
+commit_hash_length = 8
+tag_symbol = ""
+tag_disabled = false
+
+# Command duration (yellow, only show if >= 5s)
+[cmd_duration]
+min_time = 5_000
+style = "#F3F99D"
+format = "[$duration]($style) "
+show_milliseconds = false
+
+# Python virtualenv (grey)
+[python]
+style = "#928374"
+format = '[${virtualenv}]($style) '
+detect_extensions = []
+detect_files = []
+detect_folders = []
+
+# Username/context (grey, only show when root or in SSH)
+[username]
+style_user = "#928374"
+style_root = "bold #F1F1F0"
+format = "[$user]($style)[@](fg:#928374)"
+show_always = false
+
+[hostname]
+ssh_only = true
+style = "#928374"
+format = "[$hostname]($style) "
+
+# Prompt character (magenta on success, red on error)
+# Vi mode: > in insert, < in command/visual
+[character]
+success_symbol = "[>](bold #FF6AC1)"
+error_symbol = "[>](bold #FF5C57)"
+vimcmd_symbol = "[<](bold #FF6AC1)"
+vimcmd_visual_symbol = "[<](bold #FF6AC1)"
+vimcmd_replace_symbol = "[<](bold #FF6AC1)"
+vimcmd_replace_one_symbol = "[<](bold #FF6AC1)"
+
+# Disable modules that aren't in p10k config
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[rust]
+disabled = true
+
+[golang]
+disabled = true
+
+[java]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[package]
+disabled = true
