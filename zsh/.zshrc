@@ -5,8 +5,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# if [[ -f $HOME/.secrets ]]; then
+#     source $HOME/.secrets
+# fi
+
 if [[ -f $HOME/.secrets ]]; then
-    source $HOME/.secrets
+    set -a; source $HOME/.secrets; set +a
 fi
 
 export XDG_CONFIG_HOME=$HOME/.config

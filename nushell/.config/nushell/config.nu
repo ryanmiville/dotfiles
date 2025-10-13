@@ -77,8 +77,10 @@ $env.PROMPT_INDICATOR_VI_NORMAL = $"(ansi { fg: '#FF6AC1' attr: b }) ❮(ansi re
 $env.PROMPT_INDICATOR_VI_INSERT = $"(ansi { fg: '#FF6AC1' attr: b }) ❯(ansi reset) "
 $env.PROMPT_MULTILINE_INDICATOR = ""
 
+source from-env.nu
 # Environment Variables
 $env.XDG_CONFIG_HOME = $"($env.HOME)/.config"
+
 $env.GOPATH = $"($env.HOME)/go"
 $env.GOPRIVATE = "github.com/GetTerminus"
 $env.EDITOR = "nvim"

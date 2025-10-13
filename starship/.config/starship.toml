@@ -19,14 +19,14 @@ add_newline = true
 # Directory (blue, matching p10k)
 [directory]
 style = "bold #57C7FF"
-format = "[$path]($style) "
+format = "[$path]($style)"
 truncation_length = 100
 truncate_to_repo = false
 
 # Git branch (grey, matching p10k)
 [git_branch]
 style = "#928374"
-format = "[$symbol$branch]($style)"
+format = "( [$symbol$branch]($style))"
 symbol = ""
 
 # Git status (grey, matching p10k)
