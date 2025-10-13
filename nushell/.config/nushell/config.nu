@@ -28,6 +28,45 @@ $env.config = {
   }
 
   edit_mode: 'vi'
+
+  keybindings: [
+    {
+      name: accept_completion_or_move_forward
+      modifier: control
+      keycode: char_f
+      mode: [emacs, vi_insert, vi_normal]
+      event: [
+        { send: historyhintcomplete }
+        { edit: moveright }
+      ]
+    }
+    {
+       name: delete_one_word_backward
+       modifier: alt
+       keycode: backspace
+       mode: [emacs, vi_normal, vi_insert]
+       event: {edit: backspaceword}
+    }
+    {
+        name: move_left
+        modifier: control
+        keycode: char_b
+        mode: [emacs, vi_insert, vi_normal]
+        event: {
+            until: [
+                { send: menuleft }
+                { send: left }
+            ]
+        }
+    }
+    {
+        name: delete_line
+        modifier: control
+        keycode: char_u
+        mode: [emacs, vi_insert, vi_normal]
+        event: { edit: cutfromlinestart }
+    }
+  ]
 }
 
 mkdir ($nu.data-dir | path join "vendor/autoload")
@@ -37,3 +76,79 @@ zoxide init --cmd cd nushell | save -f ($nu.data-dir | path join "vendor/autoloa
 $env.PROMPT_INDICATOR_VI_NORMAL = $"(ansi { fg: '#FF6AC1' attr: b }) ❮(ansi reset) "
 $env.PROMPT_INDICATOR_VI_INSERT = $"(ansi { fg: '#FF6AC1' attr: b }) ❯(ansi reset) "
 $env.PROMPT_MULTILINE_INDICATOR = ""
+
+# Aliases
+# alias zsource = source ~/.zshrc
+alias tf = terraform
+alias vim = nvim
+# alias nvc = cd ~/.config/nvim; nvim; cd -
+
+# Git aliases
+alias gs = git status
+alias ammend = git commit --amend --no-edit
+def Force [] {
+  git add -A
+  git commit --amend --no-edit
+  git push --force-with-lease
+}
+alias gcb = git checkout -b
+alias gp = git pull
+alias gpm = git pull
+alias gpf = git push --force-with-lease
+alias gsa = git stash apply
+alias lg = lazygit
+alias gaa = git add -A
+alias gc = git commit -m
+alias gpv = gh pr view --web
+alias grv = gh repo view --web
+
+# Replacement tools
+# alias ls = eza
+alias pn = pnpm
+
+# Custom functions
+def gcm [] {
+  if (git show-ref --verify --quiet "refs/heads/main" | complete | get exit_code) == 0 {
+    git checkout main
+  } else {
+    git checkout master
+  }
+}
+
+def gu [] {
+  cd (^git rev-parse --show-toplevel)
+}
+
+def fz [] {
+  cd (^fd -t d . | ^fzf)
+}
+
+def gbr [] {
+  ^git branch | lines | where {|it| $it !~ 'master' and $it !~ 'main'} | each {|br| ^git branch -D $br}
+}
+
+def lastsha [] {
+  ^git rev-parse HEAD | tr -d '\n' | ^pbcopy
+}
+
+# def mkfiledir [path: string] {
+#   mkdir ($path | path dirname)
+#   touch $path
+# }
+
+def y [...args] {
+  let tmp = (mktemp -t "yazi-cwd.XXXXXX")
+  yazi ...$args --cwd-file=$tmp
+  let cwd = (open $tmp | str trim)
+  if $cwd != "" and $cwd != $env.PWD {
+    cd $cwd
+  }
+  rm -f $tmp
+}
+
+def mybrew [...args] {
+  /opt/homebrew/bin/brew ...$args
+  /opt/homebrew/bin/brew bundle dump --force --file=$env.BREWFILE_PATH
+}
+
+alias brew = mybrew
