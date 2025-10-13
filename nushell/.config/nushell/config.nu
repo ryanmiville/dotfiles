@@ -77,6 +77,36 @@ $env.PROMPT_INDICATOR_VI_NORMAL = $"(ansi { fg: '#FF6AC1' attr: b }) ❮(ansi re
 $env.PROMPT_INDICATOR_VI_INSERT = $"(ansi { fg: '#FF6AC1' attr: b }) ❯(ansi reset) "
 $env.PROMPT_MULTILINE_INDICATOR = ""
 
+# Environment Variables
+$env.XDG_CONFIG_HOME = $"($env.HOME)/.config"
+$env.GOPATH = $"($env.HOME)/go"
+$env.GOPRIVATE = "github.com/GetTerminus"
+$env.EDITOR = "nvim"
+$env.PNPM_HOME = $"($env.HOME)/Library/pnpm"
+$env.BUN_INSTALL = $"($env.HOME)/.bun"
+$env.AWS_ASSUME_ROLE_TTL = "3600"
+$env.AWS_SESSION_TOKEN_TTL = "3600"
+$env.NVM_DIR = $"($env.HOME)/.nvm"
+$env.BREWFILE_PATH = $"($env.HOME)/.config/brew/Brewfile"
+
+# PostgreSQL
+$env.PG_ROOT = "/opt/homebrew/opt/postgresql@16"
+$env.LDFLAGS = $"-L($env.PG_ROOT)/lib"
+$env.CPPFLAGS = $"-I($env.PG_ROOT)/include"
+$env.PKG_CONFIG_PATH = $"($env.PG_ROOT)/lib/pkgconfig"
+
+# PATH modifications
+$env.PATH = ($env.PATH | split row (char esep) | prepend [
+  $"($env.GOPATH)/bin"
+  $"($env.HOME)/dev/rymi-utils/scripts"
+  "/usr/local/sbin"
+  $"($env.HOME)/.local/bin"
+  $env.PNPM_HOME
+  $"($env.BUN_INSTALL)/bin"
+  $"($env.HOME)/.opencode/bin"
+  "/opt/homebrew/opt/postgresql@16/bin"
+] | uniq)
+
 # Aliases
 # alias zsource = source ~/.zshrc
 alias tf = terraform
