@@ -180,7 +180,7 @@ def y [...args] {
 
 def mybrew [...args] {
   /opt/homebrew/bin/brew ...$args
-  /opt/homebrew/bin/brew bundle dump --force --file=$env.BREWFILE_PATH
+  /opt/homebrew/bin/brew bundle dump --force --file=($env.BREWFILE_PATH)
 }
 
 alias brew = mybrew
