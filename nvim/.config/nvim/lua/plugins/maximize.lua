@@ -8,6 +8,5 @@ return {
 				tree = { enable = false }, -- enable nvim-tree.lua integration
 			},
 		})
-		vim.keymap.set("n", "<C-w>m", "<cmd>Maximize<CR>", { desc = "Toggle Maximize" })
 	end,
 }

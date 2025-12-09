@@ -5,7 +5,7 @@ return {
 	},
 	lazy = false,
 	keys = {
-		{ "<leader>E", "<cmd>NvimTreeFindFile<cr>", desc = "Find file in file explorer" },
+		-- { "<leader>E", "<cmd>NvimTreeFindFile<cr>", desc = "Find file in file explorer" },
 		{ "<C-n>", "<cmd>NvimTreeToggle<cr>", desc = "Toggle file explorer" },
 	},
 	opts = {

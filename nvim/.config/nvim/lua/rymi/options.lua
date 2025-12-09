@@ -10,6 +10,10 @@ vim.opt.number = true
 --  Experiment for yourself to see if you like it!
 -- vim.opt.relativenumber = true
 
+--  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = "a"
 
@@ -56,23 +60,41 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 8
 
+vim.opt.incsearch = true
 vim.opt.hlsearch = true
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.schedule(function()
-	vim.opt.clipboard = "unnamedplus"
-end)
+-- Set completeopt to have a better completion experience
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
+-- Enable 24-bit color
+vim.opt.termguicolors = true
+
+-- Enable the sign column to prevent the screen from jumping
+vim.opt.signcolumn = "yes"
+
+-- Enable access to System Clipboard
+vim.opt.clipboard = "unnamed,unnamedplus"
+
+-- Set fold settings
+-- These options were reccommended by nvim-ufo
+-- See: https://github.com/kevinhwang91/nvim-ufo#minimal-configuration
+vim.opt.foldcolumn = "0"
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldnestmax = 5
+vim.opt.foldtext = ""
+
+-- Always keep 8 lines above/below cursor unless at start/end of file
+vim.opt.scrolloff = 8
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-})
+-- vim.api.nvim_create_autocmd("TextYankPost", {
+-- 	desc = "Highlight when yanking (copying) text",
+-- 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+-- 	callback = function()
+-- 		vim.highlight.on_yank()
+-- 	end,
+-- })

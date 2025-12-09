@@ -1,7 +1,10 @@
 return {
     'saghen/blink.cmp',
     -- optional: provides snippets for the snippet source
-    dependencies = { 'rafamadriz/friendly-snippets' },
+    dependencies = { 
+	"rafamadriz/friendly-snippets",
+	"L3MON4D3/LuaSnip",
+    },
 
     -- use a release tag to download pre-built binaries
     version = '1.*',
@@ -30,17 +33,100 @@ return {
         appearance = {
             -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
             -- Adjusts spacing to ensure icons are aligned
-            nerd_font_variant = 'mono'
+	    use_nvim_cmp_as_default = false,
+            nerd_font_variant = 'mono',
         },
-
-        -- (Default) Only show the documentation popup when manually triggered
-        completion = { documentation = { auto_show = true } },
 
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         sources = {
             default = { 'lsp', 'path', 'snippets', 'buffer' },
+	    providers = {
+		lsp = {
+			score_offset = 1000, -- Extreme priority to override fuzzy matching
+		},
+		path = {
+			score_offset = 3, -- File paths moderate priority
+		},
+		snippets = {
+			score_offset = -100, -- Much lower priority
+			max_items = 2, -- Limit snippet suggestions
+			min_keyword_length = 3, -- Don't show for single chars
+		},
+		buffer = {
+			score_offset = -150, -- Lowest priority
+			min_keyword_length = 3, -- Only show after 3 chars
+		},
+	    }
         },
+
+	snippets = {
+		preset = "luasnip",
+	},
+
+	signature = {
+		enabled = true,
+		trigger = {
+			show_on_trigger_character = false,
+			show_on_insert_on_trigger_character = false,
+		},
+		window = {
+			border = "rounded",
+			show_documentation = true,
+		},
+	},
+	completion = {
+		trigger = {
+			show_on_trigger_character = true,
+		},
+		menu = {
+			border = "rounded",
+			max_height = 10,
+			draw = {
+				columns = {
+					{ "kind_icon" },
+					{ "label", "label_description", gap = 1 },
+					{ "source_name" },
+				},
+				components = {
+					-- Native icon support (no lspkind needed)
+					source_name = {
+						text = function(ctx)
+							local source_names = {
+								lsp = "[LSP]",
+								buffer = "[Buffer]",
+								path = "[Path]",
+								snippets = "[Snippet]",
+							}
+							return (source_names[ctx.source_name] or "[") .. ctx.source_name .. "]"
+						end,
+						highlight = "CmpItemMenu",
+					},
+				},
+			},
+			auto_show = true,
+		},
+		documentation = {
+			auto_show = true,
+			window = {
+				border = "rounded",
+			},
+		},
+		ghost_text = {
+			enabled = true,
+		},
+		list = {
+			selection = {
+				preselect = true,
+			},
+		},
+		accept = {
+			auto_brackets = {
+				enabled = true,
+			},
+		},
+	},
+
 
         -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
         -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
@@ -49,5 +135,5 @@ return {
         -- See the fuzzy documentation for more information
         fuzzy = { implementation = "prefer_rust_with_warning" }
     },
-    opts_extend = { "sources.default" }
+    -- opts_extend = { "sources.default" }
 }

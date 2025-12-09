@@ -1,3 +1,4 @@
 zed/.config/zed/prompts/
 zed/.config/zed/conversations/
 nushell/.config/nushell/history.txt
+.DS_Store

@@ -1,3 +1,5 @@
+local filtered_message = { "No information available" }
+
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
@@ -14,11 +16,11 @@ return {
 		notifier = {
 			enabled = true,
 			timeout = 3000,
+			style = "fancy",
 		},
-		pickers = {
-			enabled = true,
-		},
+		pickers = { enabled = true },
 		quickfile = { enabled = true },
+		rename = { enabled = true },
 		statuscolumn = {
 			enabled = true,
 			left = { "mark", "fold" }, -- priority of signs on the left (high to low)
@@ -32,20 +34,35 @@ return {
 				patterns = { "GitSign" },
 			},
 		},
+		toggle = { enabled = true },
 		words = { enabled = false },
-		styles = {
-			notification = {
-				-- wo = { wrap = true } -- Wrap notifications
-			},
-		},
+		-- styles = {
+		-- 	notification = {
+		-- 		-- wo = { wrap = true } -- Wrap notifications
+		-- 	},
+		-- },
 	},
 	keys = {
 		{
 			"<leader>f",
 			function()
-				Snacks.picker.smart()
+				Snacks.picker.files()
 			end,
 			desc = "File Picker",
+		},
+		{
+			"<leader>s",
+			function()
+				Snacks.picker.lsp_symbols()
+			end,
+			desc = "LSP Symbols",
+		},
+		{
+			"<leader>S",
+			function()
+				Snacks.picker.lsp_workspace_symbols()
+			end,
+			desc = "LSP Workspace Symbols",
 		},
 		{
 			"<leader>.",
@@ -112,6 +129,20 @@ return {
 			desc = "Lazygit Log (cwd)",
 		},
 		{
+			"<leader>td",
+			function()
+				Snacks.toggle.diagnostics():toggle()
+			end,
+			desc = "[T]oggle [D]iagnostics",
+		},
+		{
+			"<leader>tw",
+			function()
+				Snacks.toggle.option("wrap"):toggle()
+			end,
+			desc = "[T]oggle line [W]rap",
+		},
+		{
 			"<leader>un",
 			function()
 				Snacks.notifier.hide()
@@ -120,6 +151,22 @@ return {
 		},
 	},
 	init = function()
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "VeryLazy",
+			callback = function()
+				local notify = Snacks.notifier.notify
+				---@diagnostic disable-next-line: duplicate-set-field
+				Snacks.notifier.notify = function(message, level, opts)
+					for _, msg in ipairs(filtered_message) do
+						if message == msg then
+							return nil
+						end
+					end
+					return notify(message, level, opts)
+				end
+			end,
+		})
+
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "VeryLazy",
 			callback = function()
@@ -148,6 +195,15 @@ return {
 				-- Snacks.toggle.inlay_hints():map("<leader>uh")
 				-- Snacks.toggle.indent():map("<leader>ug")
 				-- Snacks.toggle.dim():map("<leader>uD")
+			end,
+		})
+
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "OilActionsPost",
+			callback = function(event)
+				if event.data.actions.type == "move" then
+					Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
+				end
 			end,
 		})
 	end,

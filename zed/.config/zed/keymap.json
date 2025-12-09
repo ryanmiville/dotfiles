@@ -199,7 +199,7 @@
   {
     "context": "Terminal",
     "bindings": {
-      "cmd-j": "workspace::ToggleLeftDock"
+      "cmd-j": "workspace::ToggleBottomDock"
     }
   },
   {

@@ -102,7 +102,12 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Shell integrations
 source <(fzf --zsh)
-eval "$(zoxide init --cmd cd zsh)"
+# Only alias cd to zoxide in interactive shells
+if [[ -o interactive ]]; then
+  eval "$(zoxide init --cmd cd zsh)"
+else
+  eval "$(zoxide init zsh)"
+fi
 
 alias zshrc="$EDITOR ~/.zshrc && source ~/.zshrc"
 alias zsource="source ~/.zshrc"
@@ -168,6 +173,9 @@ export AWS_SESSION_TOKEN_TTL=3600
 
 # source /Users/ryanmiville/.config/op/plugins.sh
 
+export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
+export REQUESTS_CA_BUNDLE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
+
 mfa() {
  local resp
  resp=$(op item get ebrv6sjr6okpwidowsh5u6bz3i --otp)
@@ -194,6 +202,29 @@ sts() {
     aws configure set aws_session_token "$sessionToken" --profile sts
     aws configure set region us-east-1 --profile sts
 
+}
+sso() {
+    case "$1" in
+        "prod")
+            export AWS_PROFILE="prod"
+            export AWS_DEFAULT_REGION="us-east-1"
+            ;;
+        "dev")
+            export AWS_PROFILE="dev"
+            export AWS_DEFAULT_REGION="us-east-1"
+            ;;
+        "eu")
+            export AWS_PROFILE="eu"
+            export AWS_DEFAULT_REGION="eu-central-1"
+            ;;
+        *)
+            echo "No matching profile and region for argument $1"
+            return 1
+            ;;
+    esac
+    echo $AWS_PROFILE
+    echo $AWS_DEFAULT_REGION
+    aws sso login --profile "$1"
 }
 
 function y() {
@@ -239,3 +270,8 @@ export LDFLAGS="-L$PG_ROOT/lib"
 export CPPFLAGS="-I$PG_ROOT/include"
 export PKG_CONFIG_PATH="$PG_ROOT/lib/pkgconfig"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+
+alias yolo='claude --dangerously-skip-permissions'
+
+export H3_CLI_HOME=/Users/ryanmiville/dev/h3-cli
+export PATH="$H3_CLI_HOME/bin:$PATH"

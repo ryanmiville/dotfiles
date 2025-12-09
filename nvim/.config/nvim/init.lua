@@ -1,5 +1,1 @@
-require("globals")
-require("options")
-require("keymaps")
-require("config.lsp")
-require("config.lazy")
+require("rymi")
