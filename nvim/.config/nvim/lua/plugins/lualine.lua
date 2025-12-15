@@ -11,7 +11,7 @@ return {
 			-- hello
 			sections = {
 				lualine_a = { "mode" },
-				lualine_b = { "diff", "diagnostics" },
+				lualine_b = { "branch", "diff", "diagnostics" },
 				lualine_c = { { "buffers" } },
 				lualine_x = {},
 				lualine_y = { "progress" },

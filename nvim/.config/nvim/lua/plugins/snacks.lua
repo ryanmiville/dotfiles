@@ -46,7 +46,7 @@ return {
 		{
 			"<leader>f",
 			function()
-				Snacks.picker.files()
+				Snacks.picker.smart()
 			end,
 			desc = "File Picker",
 		},
@@ -63,6 +63,27 @@ return {
 				Snacks.picker.lsp_workspace_symbols()
 			end,
 			desc = "LSP Workspace Symbols",
+		},
+		{
+			"<leader>/",
+			function()
+				Snacks.picker.grep()
+			end,
+			desc = "Grep",
+		},
+		{
+			"<leader><Tab>",
+			function()
+				Snacks.picker.recent()
+			end,
+			desc = "Recent",
+		},
+		{
+			"<leader>nc",
+			function()
+				Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+			end,
+			desc = "Find Config File",
 		},
 		{
 			"<leader>.",
@@ -100,13 +121,13 @@ return {
 			desc = "Git Browse",
 			mode = { "n", "v" },
 		},
-		{
-			"<leader>gb",
-			function()
-				Snacks.git.blame_line()
-			end,
-			desc = "Git Blame Line",
-		},
+		-- {
+		-- 	"<leader>gb",
+		-- 	function()
+		-- 		Snacks.git.blame_line()
+		-- 	end,
+		-- 	desc = "Git Blame Line",
+		-- },
 		{
 			"<leader>gf",
 			function()

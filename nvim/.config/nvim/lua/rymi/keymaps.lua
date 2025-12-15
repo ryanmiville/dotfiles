@@ -2,6 +2,7 @@ local prelude = require("rymi.prelude")
 
 local copy_line_diagnostics_to_clipboard = prelude.copy_line_diagnostics_to_clipboard
 local open_link = prelude.open_link
+local notify_buffer_path = prelude.notify_buffer_path
 
 local M = {}
 
@@ -17,7 +18,8 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { silent = false, desc = "Save current buffer" })
 vim.keymap.set("n", "<leader>q", "<cmd>q<cr>", { silent = false, desc = "Quit current buffer" })
 
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<", "<<", { noremap = true, silent = true })
+vim.keymap.set("n", ">", ">>", { noremap = true, silent = true })
 
 -- Split navigation
 vim.keymap.set("n", "<C-j>", function()
@@ -187,6 +189,9 @@ end, { desc = "Format the current buffer" })
 -- Open link under cursor (supports markdown links and links in parens)
 vim.keymap.set("n", "gx", open_link, { silent = true, desc = "Open link under cursor (supports markdown and parens)" })
 
+-- Show buffer path
+vim.keymap.set("n", "<leader>ls", notify_buffer_path, { desc = "Show full buffer path" })
+
 -- Harpoon keybinds --
 vim.keymap.set("n", "<leader>ho", function()
 	require("harpoon.ui").toggle_quick_menu()
@@ -278,7 +283,7 @@ vim.keymap.set("i", "<C-b>", "<Left>", { noremap = true, silent = true })
 vim.keymap.set("i", "<C-a>", "<Esc>0i", { noremap = true, silent = true })
 vim.keymap.set("i", "<C-e>", "<Esc>$a", { noremap = true, silent = true })
 
-vim.keymap.set({ "n", "v", "i" }, "<C-j>", "<Esc>", { noremap = true, silent = true })
+-- vim.keymap.set({ "n", "v", "i" }, "<C-j>", "<Esc>", { noremap = true, silent = true })
 -- vim.keymap.set("t", "<C-j>", "<C-\\><C-n>", { noremap = true, silent = true })
 
 -- vim.keymap.set({ "n", "v" }, "<C-w>m", "<C-w>|<C-w>_", { noremap = true, silent = true })

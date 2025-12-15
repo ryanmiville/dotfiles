@@ -94,4 +94,15 @@ end
 
 M.open_link = open_link
 
+local function notify_buffer_path()
+	local path = vim.api.nvim_buf_get_name(0)
+	if path == "" then
+		Snacks.notify.info("Buffer has no file path")
+	else
+		Snacks.notify.info(path)
+	end
+end
+
+M.notify_buffer_path = notify_buffer_path
+
 return M

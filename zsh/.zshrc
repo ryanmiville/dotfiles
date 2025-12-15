@@ -113,7 +113,7 @@ alias zshrc="$EDITOR ~/.zshrc && source ~/.zshrc"
 alias zsource="source ~/.zshrc"
 alias tf="terraform"
 alias vim="nvim"
-alias nvc="cd ~/.config/nvim && nvim && cd -"
+alias nvc="cd ~/.config/nvim && nvim . && cd -"
 
 alias gs="git status"
 alias ammend="git commit --amend --no-edit"
