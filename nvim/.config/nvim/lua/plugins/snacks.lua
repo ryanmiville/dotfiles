@@ -48,21 +48,21 @@ return {
 			function()
 				Snacks.picker.smart()
 			end,
-			desc = "File Picker",
+			desc = "File picker",
 		},
 		{
 			"<leader>s",
 			function()
 				Snacks.picker.lsp_symbols()
 			end,
-			desc = "LSP Symbols",
+			desc = "LSP symbols",
 		},
 		{
 			"<leader>S",
 			function()
 				Snacks.picker.lsp_workspace_symbols()
 			end,
-			desc = "LSP Workspace Symbols",
+			desc = "LSP workspace symbols",
 		},
 		{
 			"<leader>/",
@@ -83,42 +83,42 @@ return {
 			function()
 				Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
 			end,
-			desc = "Find Config File",
+			desc = "Find config file",
 		},
 		{
 			"<leader>.",
 			function()
 				Snacks.scratch()
 			end,
-			desc = "Toggle Scratch Buffer",
+			desc = "Toggle scratch buffer",
 		},
 		{
 			"<leader>n",
 			function()
 				Snacks.notifier.show_history()
 			end,
-			desc = "Notification History",
+			desc = "Notification history",
 		},
 		{
-			"<leader>bd",
+			"<leader>bq",
 			function()
 				Snacks.bufdelete()
 			end,
-			desc = "Delete Buffer",
+			desc = "Quit buffer",
 		},
 		{
 			"<leader>bo",
 			function()
 				Snacks.bufdelete.other()
 			end,
-			desc = "Delete Buffer",
+			desc = "Close all other buffers",
 		},
 		{
 			"<leader>gB",
 			function()
 				Snacks.gitbrowse()
 			end,
-			desc = "Git Browse",
+			desc = "Git browse",
 			mode = { "n", "v" },
 		},
 		-- {
@@ -133,7 +133,7 @@ return {
 			function()
 				Snacks.lazygit.log_file()
 			end,
-			desc = "Lazygit Current File History",
+			desc = "Lazygit current file history",
 		},
 		{
 			"<leader>gg",
@@ -147,7 +147,7 @@ return {
 			function()
 				Snacks.lazygit.log()
 			end,
-			desc = "Lazygit Log (cwd)",
+			desc = "Lazygit log (cwd)",
 		},
 		{
 			"<leader>td",
@@ -168,7 +168,7 @@ return {
 			function()
 				Snacks.notifier.hide()
 			end,
-			desc = "Dismiss All Notifications",
+			desc = "Dismiss all notifications",
 		},
 	},
 	init = function()

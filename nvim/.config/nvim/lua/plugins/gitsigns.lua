@@ -56,11 +56,9 @@ return {
 					-- 	gitsigns.blame_line({ full = true })
 					-- end)
 
-					map("n", "<leader>gd", gitsigns.diffthis)
-
-					map("n", "<leader>gD", function()
-						gitsigns.diffthis("~")
-					end)
+					-- Replaced by diffview.nvim
+					-- map("n", "<leader>gd", gitsigns.diffthis)
+					-- end)
 
 					map("n", "<leader>gQ", function()
 						gitsigns.setqflist("all")

@@ -106,7 +106,7 @@ vim.keymap.set({ "n", "v" }, "gl", "$", { noremap = true, silent = true })
 -- Spectre for word under cursor (visual)
 vim.keymap.set("n", "<leader>R", function()
 	require("spectre").open_visual({ select_word = true })
-end, { desc = "Sea Sh current word using Spectre" })
+end, { desc = "Search current word using Spectre" })
 -- Redo last change
 vim.keymap.set("n", "U", "<C-r>", { desc = "Redo last change" })
 
