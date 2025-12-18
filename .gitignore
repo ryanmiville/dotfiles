@@ -1,4 +1,5 @@
 zed/.config/zed/prompts/
 zed/.config/zed/conversations/
 nushell/.config/nushell/history.txt
+tmux/.config/tmux/plugins/
 .DS_Store

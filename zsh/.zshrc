@@ -173,8 +173,10 @@ export AWS_SESSION_TOKEN_TTL=3600
 
 # source /Users/ryanmiville/.config/op/plugins.sh
 
+export SSL_CERT_FILE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
 export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
 export REQUESTS_CA_BUNDLE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
+export CURL_CA_BUNDLE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
 
 mfa() {
  local resp
