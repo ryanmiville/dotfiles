@@ -27,14 +27,18 @@ keybind = cmd+;>k=goto_split:top
 keybind = cmd+;>h=goto_split:left
 keybind = cmd+;>l=goto_split:right
 
+keybind = alt+j=goto_split:bottom
+keybind = alt+k=goto_split:top
+keybind = alt+h=goto_split:left
+keybind = alt+l=goto_split:right
+
 keybind = cmd+;>m=toggle_split_zoom
 keybind = cmd+;>e=equalize_splits
 
 # resize split
-keybind = cmd+]=unbind
-keybind = cmd+]=resize_split:right,10
-keybind = cmd+[=resize_split:left,10
-keybind = cmd+{=resize_split:down,10
-keybind = cmd+}=resize_split:up,10
+keybind = alt+]=resize_split:right,10
+keybind = alt+[=resize_split:left,10
+keybind = alt+==resize_split:down,10
+keybind = alt+-=resize_split:up,10
 
 keybind = shift+enter=text:\n
