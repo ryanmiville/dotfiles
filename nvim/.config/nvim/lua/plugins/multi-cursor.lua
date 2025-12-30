@@ -9,28 +9,28 @@ return {
 		local set = vim.keymap.set
 
 		-- Add or skip cursor above/below the main cursor.
-		set({ "n", "v" }, "gk", function()
+		set({ "n", "x" }, "gk", function()
 			mc.lineAddCursor(-1)
 		end)
-		set({ "n", "v" }, "gj", function()
+		set({ "n", "x" }, "gj", function()
 			mc.lineAddCursor(1)
 		end)
 		-- Add or skip adding a new cursor by matching word/selection
-		set({ "n", "v" }, "gn", function()
+		set({ "n", "x" }, "gn", function()
 			mc.matchAddCursor(1)
 		end)
-		set({ "n", "v" }, "g>", function()
+		set({ "n", "x" }, "g>", function()
 			mc.matchSkipCursor(1)
 		end)
-		set({ "n", "v" }, "gN", function()
+		set({ "n", "x" }, "gN", function()
 			mc.matchAddCursor(-1)
 		end)
-		set({ "n", "v" }, "g<", function()
+		set({ "n", "x" }, "g<", function()
 			mc.matchSkipCursor(-1)
 		end)
 
 		-- Add all matches in the document
-		set({ "n", "v" }, "ga", mc.matchAllAddCursors)
+		set({ "n", "x" }, "ga", mc.matchAllAddCursors)
 
 		-- You can also add cursors with any motion you prefer: set("n", "<right>",
 		-- function()
@@ -41,42 +41,23 @@ return {
 		-- end)
 
 		-- Rotate the main cursor.
-		-- set({ "n", "v" }, "<left>", mc.nextCursor)
-		-- set({ "n", "v" }, "<right>", mc.prevCursor)
+		-- set({ "n", "x" }, "<left>", mc.nextCursor)
+		-- set({ "n", "x" }, "<right>", mc.prevCursor)
 
 		-- Delete the main cursor.
-		-- set({ "n", "v" }, "<leader>x", mc.deleteCursor)
+		-- set({ "n", "x" }, "<leader>x", mc.deleteCursor)
 
 		-- Add and remove cursors with control + left click.
 		set("n", "<c-leftmouse>", mc.handleMouse)
 
 		-- Easy way to add and remove cursors using the main cursor.
-		set({ "n", "v" }, "<c-q>", mc.toggleCursor)
+		set({ "n", "x" }, "<c-q>", mc.toggleCursor)
 
 		-- Clone every cursor and disable the originals.
-		set({ "n", "v" }, "<leader><c-q>", mc.duplicateCursors)
+		set({ "n", "x" }, "<leader><c-q>", mc.duplicateCursors)
 
-		set("n", "<esc>", function()
-			if not mc.cursorsEnabled() then
-				mc.enableCursors()
-			elseif mc.hasCursors() then
-				mc.clearCursors()
-			else
-				-- Default <esc> handler.
-			end
-		end)
-
-		set("n", "<c-j>", function()
-			if not mc.cursorsEnabled() then
-				mc.enableCursors()
-			elseif mc.hasCursors() then
-				mc.clearCursors()
-			else
-				-- Default <esc> handler.
-			end
-		end)
 		-- bring back cursors if you accidentally clear them
-		-- set("n", "<leader>gv", mc.restoreCursors)
+		set("n", "<leader>gv", mc.restoreCursors)
 
 		-- Align cursor columns.
 		-- set("n", "<leader>a", mc.alignCursors)
@@ -102,6 +83,25 @@ return {
 		-- Jumplist support
 		-- set({ "v", "n" }, "<c-i>", mc.jumpForward)
 		-- set({ "v", "n" }, "<c-o>", mc.jumpBackward)
+
+		mc.addKeymapLayer(function(layerSet)
+
+		    -- Select a different cursor as the main one.
+		    layerSet({"n", "x"}, "<left>", mc.prevCursor)
+		    layerSet({"n", "x"}, "<right>", mc.nextCursor)
+
+		    -- Delete the main cursor.
+		    layerSet({"n", "x"}, "<leader>x", mc.deleteCursor)
+
+		    -- Enable and clear cursors using escape.
+		    layerSet("n", "<esc>", function()
+			if not mc.cursorsEnabled() then
+			    mc.enableCursors()
+			else
+			    mc.clearCursors()
+			end
+		    end)
+		end)
 
 		-- Customize how cursors look.
 		local hl = vim.api.nvim_set_hl

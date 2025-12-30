@@ -5,26 +5,25 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source ~/.secrets
+# if [[ -f $HOME/.secrets ]]; then
+#     source $HOME/.secrets
+# fi
 
-export XDG_CONFIG_HOME=/Users/ryan.miville/.config
-export GOPATH=/Users/ryan.miville/go
+if [[ -f $HOME/.secrets ]]; then
+    set -a; source $HOME/.secrets; set +a
+fi
+
+export XDG_CONFIG_HOME=$HOME/.config
+export GOPATH=/Users/ryanmiville/go
 export PATH=$PATH:$GOPATH/bin
 export GOPRIVATE=github.com/GetTerminus
 
-# export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home" # export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin23-binaries/releases/download/jdk-23.0.2%252B7/OpenJDK23U-jdk_x64_mac_hotspot_23.0.2_7.tar.gz/jdk-23.0.2+7/Contents/Home"
-# export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin17-binaries/releases/download/jdk-17%252B35/OpenJDK17-jdk_x64_mac_hotspot_17_35.tar.gz/jdk-17+35/Contents/Home"
-export JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%252B7/OpenJDK21U-jdk_x64_mac_hotspot_21.0.6_7.tar.gz/jdk-21.0.6+7/Contents/Home"
-export JAVA_HOMES="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium"
-export PATH="$PATH:/Users/ryan.miville/Library/Application Support/Coursier/bin"
+export PATH=/Users/ryanmiville/dev/rymi-utils/scripts:$PATH
 
 export PATH="/usr/local/sbin:$PATH"
-export PATH="$PATH:/Users/ryan.miville/.local/bin"
+export PATH="$PATH:/Users/ryanmiville/.local/bin"
 
-# export EDITOR="zed -nw"
-export EDITOR="hx"
-
-# export DOCKER="podman"
+export EDITOR="nvim"
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -103,15 +102,18 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Shell integrations
 source <(fzf --zsh)
-eval "$(zoxide init zsh)"
-alias zi="__zoxide_zi"
-# eval "$(/opt/homebrew/bin/brew shellenv)"
+# Only alias cd to zoxide in interactive shells
+if [[ -o interactive ]]; then
+  eval "$(zoxide init --cmd cd zsh)"
+else
+  eval "$(zoxide init zsh)"
+fi
 
 alias zshrc="$EDITOR ~/.zshrc && source ~/.zshrc"
 alias zsource="source ~/.zshrc"
 alias tf="terraform"
 alias vim="nvim"
-alias nvc="cd ~/.config/nvim && nvim && cd -"
+alias nvc="cd ~/.config/nvim && nvim . && cd -"
 
 alias gs="git status"
 alias ammend="git commit --amend --no-edit"
@@ -141,9 +143,7 @@ gcm() {
 
 # replacement tools
 alias ls="eza"
-alias pip="pip3"
 alias pn="pnpm"
-# alias docker="podman"
 # export DOCKER_HOST='unix:///var/folders/vr/prvjkl395tl6zhwr1ztksghr0000gp/T/podman/podman-machine-default-api.sock'
 
 mkfiledir() {
@@ -153,20 +153,15 @@ mkfiledir() {
 alias touch=mkfiledir
 
 # pnpm
-export PNPM_HOME="/Users/ryan.miville/Library/pnpm"
+export PNPM_HOME="/Users/ryanmiville/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 
-# deno
-export DENO_INSTALL="/Users/ryan.miville/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-# deno end
-
 # bun completions
-[ -s "/Users/ryan.miville/.bun/_bun" ] && source "/Users/ryan.miville/.bun/_bun"
+[ -s "/Users/ryanmiville/.bun/_bun" ] && source "/Users/ryanmiville/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -176,7 +171,13 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export AWS_ASSUME_ROLE_TTL=3600
 export AWS_SESSION_TOKEN_TTL=3600
 
-# source /Users/ryan.miville/.config/op/plugins.sh
+# source /Users/ryanmiville/.config/op/plugins.sh
+
+export SSL_CERT_FILE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
+export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
+export REQUESTS_CA_BUNDLE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
+export CURL_CA_BUNDLE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
+export NODE_EXTRA_CA_CERTS=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
 
 mfa() {
  local resp
@@ -205,6 +206,29 @@ sts() {
     aws configure set region us-east-1 --profile sts
 
 }
+sso() {
+    case "$1" in
+        "prod")
+            export AWS_PROFILE="prod"
+            export AWS_DEFAULT_REGION="us-east-1"
+            ;;
+        "dev")
+            export AWS_PROFILE="dev"
+            export AWS_DEFAULT_REGION="us-east-1"
+            ;;
+        "eu")
+            export AWS_PROFILE="eu"
+            export AWS_DEFAULT_REGION="eu-central-1"
+            ;;
+        *)
+            echo "No matching profile and region for argument $1"
+            return 1
+            ;;
+    esac
+    echo $AWS_PROFILE
+    echo $AWS_DEFAULT_REGION
+    aws sso login --profile "$1"
+}
 
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -215,26 +239,42 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-function sbt_version() {
-	local version="$(gum choose "8" "latest")"
-	if [ "$version" = "8" ]; then
-		JAVA_HOME="/Users/ryan.miville/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin8-binaries/releases/download/jdk8u432-b06/OpenJDK8U-jdk_x64_mac_hotspot_8u432b06.tar.gz/jdk8u432-b06/Contents/Home" sbt
-	else
-		sbt
-	fi
-}
-
-alias sbt8="cs launch --jvm 8 sbt"
-# alias sbt=sbt_version
-
-. /usr/local/opt/asdf/libexec/asdf.sh
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/ryan.miville/.docker/completions $fpath)
+fpath=(/Users/ryanmiville/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
 
 # opencode
-export PATH=/Users/ryan.miville/.opencode/bin:$PATH
+export PATH=/Users/ryanmiville/.opencode/bin:$PATH
 
-alias claude="/Users/ryan.miville/.claude/local/claude"
+
+. "$HOME/.local/bin/env"
+
+BREWFILE_PATH="$HOME/.config/brew/Brewfile"
+
+function mybrew() {
+  /opt/homebrew/bin/brew "$@"
+  /opt/homebrew/bin/brew bundle dump --force --file="$BREWFILE_PATH"
+}
+
+alias brew=mybrew
+
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+
+# ==== PostgreSQL ====
+export PG_ROOT="/opt/homebrew/opt/postgresql@16"
+
+# === Compilation and PG vars ===
+export LDFLAGS="-L$PG_ROOT/lib"
+export CPPFLAGS="-I$PG_ROOT/include"
+export PKG_CONFIG_PATH="$PG_ROOT/lib/pkgconfig"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+
+alias yolo='claude --dangerously-skip-permissions'
+
+export H3_CLI_HOME=/Users/ryanmiville/dev/h3-cli
+export PATH="$H3_CLI_HOME/bin:$PATH"

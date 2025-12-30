@@ -1,3 +1,5 @@
+local filtered_message = { "No information available" }
+
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
@@ -14,11 +16,11 @@ return {
 		notifier = {
 			enabled = true,
 			timeout = 3000,
+			style = "fancy",
 		},
-		pickers = {
-			enabled = true,
-		},
+		pickers = { enabled = true },
 		quickfile = { enabled = true },
+		rename = { enabled = true },
 		statuscolumn = {
 			enabled = true,
 			left = { "mark", "fold" }, -- priority of signs on the left (high to low)
@@ -32,12 +34,13 @@ return {
 				patterns = { "GitSign" },
 			},
 		},
+		toggle = { enabled = true },
 		words = { enabled = false },
-		styles = {
-			notification = {
-				-- wo = { wrap = true } -- Wrap notifications
-			},
-		},
+		-- styles = {
+		-- 	notification = {
+		-- 		-- wo = { wrap = true } -- Wrap notifications
+		-- 	},
+		-- },
 	},
 	keys = {
 		{
@@ -45,57 +48,92 @@ return {
 			function()
 				Snacks.picker.smart()
 			end,
-			desc = "File Picker",
+			desc = "File picker",
+		},
+		{
+			"<leader>s",
+			function()
+				Snacks.picker.lsp_symbols()
+			end,
+			desc = "LSP symbols",
+		},
+		{
+			"<leader>S",
+			function()
+				Snacks.picker.lsp_workspace_symbols()
+			end,
+			desc = "LSP workspace symbols",
+		},
+		{
+			"<leader>/",
+			function()
+				Snacks.picker.grep()
+			end,
+			desc = "Grep",
+		},
+		{
+			"<leader><Tab>",
+			function()
+				Snacks.picker.recent()
+			end,
+			desc = "Recent",
+		},
+		{
+			"<leader>nc",
+			function()
+				Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+			end,
+			desc = "Find config file",
 		},
 		{
 			"<leader>.",
 			function()
 				Snacks.scratch()
 			end,
-			desc = "Toggle Scratch Buffer",
+			desc = "Toggle scratch buffer",
 		},
 		{
 			"<leader>n",
 			function()
 				Snacks.notifier.show_history()
 			end,
-			desc = "Notification History",
+			desc = "Notification history",
 		},
 		{
-			"<leader>bd",
+			"<leader>bx",
 			function()
 				Snacks.bufdelete()
 			end,
-			desc = "Delete Buffer",
+			desc = "Quit buffer",
 		},
 		{
 			"<leader>bo",
 			function()
 				Snacks.bufdelete.other()
 			end,
-			desc = "Delete Buffer",
+			desc = "Close all other buffers",
 		},
 		{
 			"<leader>gB",
 			function()
 				Snacks.gitbrowse()
 			end,
-			desc = "Git Browse",
+			desc = "Git browse",
 			mode = { "n", "v" },
 		},
-		{
-			"<leader>gb",
-			function()
-				Snacks.git.blame_line()
-			end,
-			desc = "Git Blame Line",
-		},
+		-- {
+		-- 	"<leader>gb",
+		-- 	function()
+		-- 		Snacks.git.blame_line()
+		-- 	end,
+		-- 	desc = "Git Blame Line",
+		-- },
 		{
 			"<leader>gf",
 			function()
 				Snacks.lazygit.log_file()
 			end,
-			desc = "Lazygit Current File History",
+			desc = "Lazygit current file history",
 		},
 		{
 			"<leader>gg",
@@ -109,17 +147,47 @@ return {
 			function()
 				Snacks.lazygit.log()
 			end,
-			desc = "Lazygit Log (cwd)",
+			desc = "Lazygit log (cwd)",
+		},
+		{
+			"<leader>td",
+			function()
+				Snacks.toggle.diagnostics():toggle()
+			end,
+			desc = "[T]oggle [D]iagnostics",
+		},
+		{
+			"<leader>tw",
+			function()
+				Snacks.toggle.option("wrap"):toggle()
+			end,
+			desc = "[T]oggle line [W]rap",
 		},
 		{
 			"<leader>un",
 			function()
 				Snacks.notifier.hide()
 			end,
-			desc = "Dismiss All Notifications",
+			desc = "Dismiss all notifications",
 		},
 	},
 	init = function()
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "VeryLazy",
+			callback = function()
+				local notify = Snacks.notifier.notify
+				---@diagnostic disable-next-line: duplicate-set-field
+				Snacks.notifier.notify = function(message, level, opts)
+					for _, msg in ipairs(filtered_message) do
+						if message == msg then
+							return nil
+						end
+					end
+					return notify(message, level, opts)
+				end
+			end,
+		})
+
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "VeryLazy",
 			callback = function()
@@ -148,6 +216,15 @@ return {
 				-- Snacks.toggle.inlay_hints():map("<leader>uh")
 				-- Snacks.toggle.indent():map("<leader>ug")
 				-- Snacks.toggle.dim():map("<leader>uD")
+			end,
+		})
+
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "OilActionsPost",
+			callback = function(event)
+				if event.data.actions.type == "move" then
+					Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
+				end
 			end,
 		})
 	end,

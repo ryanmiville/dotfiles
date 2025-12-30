@@ -7,8 +7,13 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "agent_servers": {
+    "claude": {
+      "default_mode": "plan"
+    }
+  },
   "edit_predictions": {
-    "mode": "eager",
+    "mode": "subtle",
     "copilot": {
       "proxy": null,
       "proxy_no_verify": null
@@ -16,7 +21,7 @@
     "enabled_in_text_threads": false
   },
   "features": {
-    "edit_prediction_provider": "copilot"
+    "edit_prediction_provider": "zed"
   },
   "tab_bar": {
     "show_nav_history_buttons": false,
@@ -47,8 +52,8 @@
     "always_allow_tool_actions": true,
     "default_profile": "write",
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "claude-sonnet-4"
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5-latest"
     },
     "button": false
   },
@@ -62,7 +67,7 @@
     "button": false
   },
   "terminal": {
-    "dock": "left",
+    "dock": "bottom",
     "button": false,
     "env": {
       "EDITOR": "zed --wait"
@@ -87,25 +92,8 @@
       "show_edit_predictions": true
     },
     "Python": {
-      // "format_on_save": { "language_server": { "name": "ruff" } },
-      "format_on_save": "on",
-      // "formatter": { "language_server": { "name": "ruff" } },
-      // "formatter": [
-      //   {
-      //     "language_server": {
-      //       "name": "ruff"
-      //     }
-      //   },
-      //   {
-      //     "code_actions": {
-      //       // Fix all auto-fixable lint violations
-      //       "source.fixAll.ruff": true,
-      //       // Organize imports
-      //       "source.organizeImports.ruff": true
-      //     }
-      //   }
-      // ],
-      "language_servers": ["pyright", "ruff"]
+      "language_servers": ["basedpyright"],
+      "allow_rewrap": "in_selections"
     }
     // "TypeScript": {
     //   "language_servers": [
@@ -126,12 +114,12 @@
     //   "formatter": "language_server"
     // }
   },
-  "relative_line_numbers": true,
+  "relative_line_numbers": "enabled",
   "ui_font_size": 16,
   "ui_font_family": "Maple Mono",
   "buffer_font_family": "Maple Mono",
   "buffer_font_size": 16,
-  "agent_font_size": 16,
+  "agent_ui_font_size": 16,
   "soft_wrap": "none",
   "jupyter": {
     "kernel_selections": {
