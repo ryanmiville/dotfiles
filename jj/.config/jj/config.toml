@@ -40,8 +40,8 @@ sign-on-push = true
 # 'mine()' = 'author(dmmulroy)'
 
 # Work-specific overrides for repos in ~/Code/work
-# [[--scope]]
-# --when.repositories = ["~/Code/work"]
-#
-# [--scope.user]
-# email = "dillon@cloudflare.com"
+[[--scope]]
+--when.repositories = ["~/dev/work"]
+
+[--scope.user]
+email = "ryan.miville@horizon3.ai"
