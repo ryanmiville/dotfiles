@@ -177,6 +177,7 @@ export SSL_CERT_FILE=/Library/Application\ Support/Netskope/Certs/netskope-cert-
 export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
 export REQUESTS_CA_BUNDLE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
 export CURL_CA_BUNDLE=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
+export NODE_EXTRA_CA_CERTS=/Library/Application\ Support/Netskope/Certs/netskope-cert-bundle.pem
 
 mfa() {
  local resp
