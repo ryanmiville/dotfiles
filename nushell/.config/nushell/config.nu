@@ -77,7 +77,19 @@ $env.PROMPT_INDICATOR_VI_NORMAL = $"(ansi { fg: '#FF6AC1' attr: b }) ❮(ansi re
 $env.PROMPT_INDICATOR_VI_INSERT = $"(ansi { fg: '#FF6AC1' attr: b }) ❯(ansi reset) "
 $env.PROMPT_MULTILINE_INDICATOR = ""
 
-source from-env.nu
+# Load from-env utility
+source ($nu.config-path | path dirname | path join "from-env.nu")
+
+# Load autoload scripts
+source ($nu.data-dir | path join "vendor/autoload/starship.nu")
+source ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
+source ($nu.config-path | path dirname | path join "custom.nu")
+
+# Load secrets from ~/.secrets file if it exists
+if ($"($env.HOME)/.secrets" | path exists) {
+  open $"($env.HOME)/.secrets" | from env | load-env
+}
+
 # Environment Variables
 $env.XDG_CONFIG_HOME = $"($env.HOME)/.config"
 
@@ -90,6 +102,7 @@ $env.AWS_ASSUME_ROLE_TTL = "3600"
 $env.AWS_SESSION_TOKEN_TTL = "3600"
 $env.NVM_DIR = $"($env.HOME)/.nvm"
 $env.BREWFILE_PATH = $"($env.HOME)/.config/brew/Brewfile"
+$env.H3_CLI_HOME = $"($env.HOME)/dev/h3-cli"
 
 # PostgreSQL
 $env.PG_ROOT = "/opt/homebrew/opt/postgresql@16"
@@ -107,80 +120,8 @@ $env.PATH = ($env.PATH | split row (char esep) | prepend [
   $"($env.BUN_INSTALL)/bin"
   $"($env.HOME)/.opencode/bin"
   "/opt/homebrew/opt/postgresql@16/bin"
+  $"($env.H3_CLI_HOME)/bin"
 ] | uniq)
 
-# Aliases
-# alias zsource = source ~/.zshrc
-alias tf = terraform
-alias vim = nvim
-# alias nvc = cd ~/.config/nvim; nvim; cd -
-
-# Git aliases
-alias gs = git status
-alias ammend = git commit --amend --no-edit
-def Force [] {
-  git add -A
-  git commit --amend --no-edit
-  git push --force-with-lease
-}
-alias gcb = git checkout -b
-alias gp = git pull
-alias gpm = git pull
-alias gpf = git push --force-with-lease
-alias gsa = git stash apply
-alias lg = lazygit
-alias gaa = git add -A
-alias gc = git commit -m
-alias gpv = gh pr view --web
-alias grv = gh repo view --web
-
-# Replacement tools
-# alias ls = eza
-alias pn = pnpm
-
-# Custom functions
-def gcm [] {
-  if (git show-ref --verify --quiet "refs/heads/main" | complete | get exit_code) == 0 {
-    git checkout main
-  } else {
-    git checkout master
-  }
-}
-
-def gu [] {
-  cd (^git rev-parse --show-toplevel)
-}
-
-def fz [] {
-  cd (^fd -t d . | ^fzf)
-}
-
-def gbr [] {
-  ^git branch | lines | where {|it| $it !~ 'master' and $it !~ 'main'} | each {|br| ^git branch -D $br}
-}
-
-def lastsha [] {
-  ^git rev-parse HEAD | tr -d '\n' | ^pbcopy
-}
-
-# def mkfiledir [path: string] {
-#   mkdir ($path | path dirname)
-#   touch $path
-# }
-
-def y [...args] {
-  let tmp = (mktemp -t "yazi-cwd.XXXXXX")
-  yazi ...$args --cwd-file=$tmp
-  let cwd = (open $tmp | str trim)
-  if $cwd != "" and $cwd != $env.PWD {
-    cd $cwd
-  }
-  rm -f $tmp
-}
-
-def mybrew [...args] {
-  /opt/homebrew/bin/brew ...$args
-  /opt/homebrew/bin/brew bundle dump --force --file=($env.BREWFILE_PATH)
-}
-
-alias brew = mybrew
+# Note: Custom commands and aliases are defined in the autoload/custom.nu file
+# and loaded automatically at startup

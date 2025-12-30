@@ -1,0 +1,131 @@
+# Custom commands and aliases
+
+# Get MFA token from 1Password
+def mfa [] {
+  ^op item get ebrv6sjr6okpwidowsh5u6bz3i --otp
+}
+
+# Get AWS session token with MFA
+def sts [] {
+  let token = (mfa)
+
+  let sts_response = (
+    ^aws --profile prod sts get-session-token
+      --serial-number "arn:aws:iam::911070201873:mfa/phone"
+      --token-code $token
+      --duration-seconds 43200
+      --output json
+    | from json
+  )
+
+  let access_key = $sts_response.Credentials.AccessKeyId
+  let secret_key = $sts_response.Credentials.SecretAccessKey
+  let session_token = $sts_response.Credentials.SessionToken
+
+  ^aws configure set aws_access_key_id $access_key --profile sts
+  ^aws configure set aws_secret_access_key $secret_key --profile sts
+  ^aws configure set aws_session_token $session_token --profile sts
+  ^aws configure set region us-east-1 --profile sts
+}
+
+# AWS SSO login helper
+def sso [profile: string] {
+  let config = match $profile {
+    "prod" => { profile: "prod", region: "us-east-1" },
+    "dev" => { profile: "dev", region: "us-east-1" },
+    "eu" => { profile: "eu", region: "eu-central-1" },
+    _ => {
+      print $"No matching profile and region for argument ($profile)"
+      return
+    }
+  }
+
+  $env.AWS_PROFILE = $config.profile
+  $env.AWS_DEFAULT_REGION = $config.region
+
+  print $env.AWS_PROFILE
+  print $env.AWS_DEFAULT_REGION
+
+  ^aws sso login --profile $profile
+}
+
+# Nushell config management
+def nuconfig [] {
+  ^$env.EDITOR ~/.config/nushell/config.nu
+}
+
+def nuenv [] {
+  ^$env.EDITOR ~/.config/nushell/env.nu
+}
+
+# Create directory and file (like mkdir -p + touch)
+def mkfiledir [path: string] {
+  mkdir ($path | path dirname)
+  touch $path
+}
+
+# Git checkout main or master
+def gcm [] {
+  if (git show-ref --verify --quiet "refs/heads/main" | complete | get exit_code) == 0 {
+    git checkout main
+  } else {
+    git checkout master
+  }
+}
+
+# Go to git root
+def gu [] {
+  cd (git rev-parse --show-toplevel | str trim)
+}
+
+# Fuzzy find directory
+def fz [] {
+  cd (fd --type d | fzf)
+}
+
+# Delete git branches
+def gbr [] {
+  git branch | rg -v "(^\\*|master|main)" | xargs git branch -D
+}
+
+# Copy last commit SHA
+def lastsha [] {
+  ^git rev-parse HEAD | tr -d '\n' | ^pbcopy
+}
+
+# Yazi with directory change
+def y [...args] {
+  let tmp = (mktemp -t "yazi-cwd.XXXXXX")
+  yazi ...$args --cwd-file=$tmp
+  let cwd = (open $tmp | str trim)
+  if $cwd != "" and $cwd != $env.PWD {
+    cd $cwd
+  }
+  rm -f $tmp
+}
+
+# Brew wrapper
+def mybrew [...args] {
+  /opt/homebrew/bin/brew ...$args
+  /opt/homebrew/bin/brew bundle dump --force --file=($env.BREWFILE_PATH)
+}
+
+# Aliases
+alias tf = terraform
+alias vim = nvim
+alias gs = git status
+alias ammend = git commit --amend --no-edit
+alias gcb = git checkout -b
+alias gp = git pull
+alias gpm = git pull
+alias gpf = git push --force-with-lease
+alias gsa = git stash apply
+alias lg = lazygit
+alias gaa = git add -A
+alias gc = git commit -m
+alias gpv = gh pr view --web
+alias grv = gh repo view --web
+alias pn = pnpm
+alias yolo = claude --dangerously-skip-permissions
+alias touch = mkfiledir
+alias brew = mybrew
