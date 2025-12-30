@@ -22,12 +22,12 @@ graph.style = "curved"
 # Display commit IDs as shortest unique 8-char prefix
 'format_short_id(id)' = 'id.shortest(8)'
 
-[signing]
-# Only sign commits authored by you
-behavior = "own"
-# Use SSH keys for commit signing
-backend = "ssh"
-key = "~/.ssh/key.pub"
+# [signing]
+# # Only sign commits authored by you
+# behavior = "own"
+# # Use SSH keys for commit signing
+# backend = "ssh"
+# key = "~/.ssh/key.pub"
 
 [git]
 # Keep jj and git repos in same directory for interop
