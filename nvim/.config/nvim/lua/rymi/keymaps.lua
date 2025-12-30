@@ -275,8 +275,8 @@ M.map_lsp_keybinds = function(buffer_number)
 end
 
 -- Insert Mode --
-vim.keymap.set("i", "jj", "<esc>", { desc = "Exit insert mode (jj)" })
-vim.keymap.set("i", "JJ", "<esc>", { desc = "Exit insert mode (JJ)" })
+-- vim.keymap.set("i", "jj", "<esc>", { desc = "Exit insert mode (jj)" })
+-- vim.keymap.set("i", "JJ", "<esc>", { desc = "Exit insert mode (JJ)" })
 
 vim.keymap.set("i", "<C-f>", "<Right>", { noremap = true, silent = true })
 vim.keymap.set("i", "<C-b>", "<Left>", { noremap = true, silent = true })
