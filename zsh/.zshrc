@@ -116,7 +116,8 @@ alias vim="nvim"
 alias nvc="cd ~/.config/nvim && nvim . && cd -"
 
 alias gs="git status"
-alias ammend="git commit --amend --no-edit"
+alias amend="git commit --amend --no-edit"
+alias Amend="git add -A && git commit --amend --no-edit"
 alias Force="git add -A && git commit --amend --no-edit && git push --force-with-lease"
 alias gu='cd $(git rev-parse --show-toplevel)'
 alias fz='cd $(fd -t d . | fzf)'
