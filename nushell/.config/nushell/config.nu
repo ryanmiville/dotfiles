@@ -69,9 +69,18 @@ $env.config = {
   ]
 }
 
-mkdir ($nu.data-dir | path join "vendor/autoload")
-starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
-zoxide init --cmd cd nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")
+# Homebrew setup
+if ('/opt/homebrew' | path type) == 'dir' {
+  $env.HOMEBREW_PREFIX = '/opt/homebrew'
+  $env.HOMEBREW_CELLAR = '/opt/homebrew/Cellar'
+  $env.HOMEBREW_REPOSITORY = '/opt/homebrew'
+  $env.PATH = $env.PATH? | prepend [
+    '/opt/homebrew/bin'
+    '/opt/homebrew/sbin'
+  ]
+  $env.MANPATH = $env.MANPATH? | prepend '/opt/homebrew/share/man'
+  $env.INFOPATH = $env.INFOPATH? | prepend '/opt/homebrew/share/info'
+}
 
 $env.PROMPT_INDICATOR_VI_NORMAL = $"(ansi { fg: '#FF6AC1' attr: b }) ❮(ansi reset) "
 $env.PROMPT_INDICATOR_VI_INSERT = $"(ansi { fg: '#FF6AC1' attr: b }) ❯(ansi reset) "
@@ -125,3 +134,8 @@ $env.PATH = ($env.PATH | split row (char esep) | prepend [
 
 # Note: Custom commands and aliases are defined in the autoload/custom.nu file
 # and loaded automatically at startup
+
+
+mkdir ($nu.data-dir | path join "vendor/autoload")
+starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+zoxide init --cmd cd nushell | save -f ($nu.data-dir | path join "vendor/autoload/zoxide.nu")

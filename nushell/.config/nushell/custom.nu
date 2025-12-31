@@ -75,12 +75,12 @@ def gcm [] {
 
 # Go to git root
 def gu [] {
-  cd (git rev-parse --show-toplevel | str trim)
+  ^cd (git rev-parse --show-toplevel | str trim)
 }
 
 # Fuzzy find directory
 def fz [] {
-  cd (fd --type d | fzf)
+  ^cd (fd --type d | fzf)
 }
 
 # Delete git branches

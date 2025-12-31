@@ -5,10 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# if [[ -f $HOME/.secrets ]]; then
-#     source $HOME/.secrets
-# fi
-
 if [[ -f $HOME/.secrets ]]; then
     set -a; source $HOME/.secrets; set +a
 fi
@@ -16,9 +12,6 @@ fi
 export XDG_CONFIG_HOME=$HOME/.config
 export GOPATH=/Users/ryanmiville/go
 export PATH=$PATH:$GOPATH/bin
-export GOPRIVATE=github.com/GetTerminus
-
-export PATH=/Users/ryanmiville/dev/rymi-utils/scripts:$PATH
 
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$PATH:/Users/ryanmiville/.local/bin"
