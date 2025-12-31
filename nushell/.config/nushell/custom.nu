@@ -74,13 +74,13 @@ def gcm [] {
 }
 
 # Go to git root
-def gu [] {
-  ^cd (git rev-parse --show-toplevel | str trim)
+def --env gu [] {
+  cd (^git rev-parse --show-toplevel | str trim)
 }
 
 # Fuzzy find directory
-def fz [] {
-  ^cd (fd --type d | fzf)
+def --env fz [] {
+  cd (^fd --type d | fzf)
 }
 
 # Delete git branches
@@ -94,7 +94,7 @@ def lastsha [] {
 }
 
 # Yazi with directory change
-def y [...args] {
+def --env y [...args] {
   let tmp = (mktemp -t "yazi-cwd.XXXXXX")
   yazi ...$args --cwd-file=$tmp
   let cwd = (open $tmp | str trim)
@@ -114,7 +114,6 @@ def mybrew [...args] {
 alias tf = terraform
 alias vim = nvim
 alias gs = git status
-alias ammend = git commit --amend --no-edit
 alias gcb = git checkout -b
 alias gp = git pull
 alias gpm = git pull
@@ -129,3 +128,14 @@ alias pn = pnpm
 alias yolo = claude --dangerously-skip-permissions
 alias touch = mkfiledir
 alias brew = mybrew
+
+def amend [] {
+	git add -A
+	git commit --amend --no-edit
+}
+
+def force [] {
+	git add -A
+	git commit --amend --no-edit
+	git push --force-with-lease
+}
