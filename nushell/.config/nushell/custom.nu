@@ -128,6 +128,7 @@ alias pn = pnpm
 alias yolo = claude --dangerously-skip-permissions
 alias touch = mkfiledir
 alias brew = mybrew
+alias oc = opencode
 
 def amend [] {
 	git add -A

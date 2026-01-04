@@ -75,6 +75,11 @@ vim.opt.signcolumn = "yes"
 -- Enable access to System Clipboard
 vim.opt.clipboard = "unnamed,unnamedplus"
 
+-- Tab and indent settings
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+
 -- Set fold settings
 -- These options were reccommended by nvim-ufo
 -- See: https://github.com/kevinhwang91/nvim-ufo#minimal-configuration

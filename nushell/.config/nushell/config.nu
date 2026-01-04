@@ -82,11 +82,11 @@ if ('/opt/homebrew' | path type) == 'dir' {
   $env.INFOPATH = $env.INFOPATH? | prepend '/opt/homebrew/share/info'
 }
 
-$env.SSL_CERT_FILE = "/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"
-$env.AWS_CA_BUNDLE = "/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"
-$env.REQUESTS_CA_BUNDLE = "/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"
-$env.CURL_CA_BUNDLE = "/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"
-$env.NODE_EXTRA_CA_CERTS = "/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"
+$env.SSL_CERT_FILE = "/Library/Application Support/Netskope/Certs/netskope-cert-bundle.pem"
+$env.AWS_CA_BUNDLE = "/Library/Application Support/Netskope/Certs/netskope-cert-bundle.pem"
+$env.REQUESTS_CA_BUNDLE = "/Library/Application Support/Netskope/Certs/netskope-cert-bundle.pem"
+$env.CURL_CA_BUNDLE = "/Library/Application Support/Netskope/Certs/netskope-cert-bundle.pem"
+$env.NODE_EXTRA_CA_CERTS = "/Library/Application Support/Netskope/Certs/netskope-cert-bundle.pem"
 
 $env.PROMPT_INDICATOR_VI_NORMAL = $"(ansi { fg: 'light_green' attr: b }) ❮(ansi reset) "
 $env.PROMPT_INDICATOR_VI_INSERT = $"(ansi { fg: 'light_green' attr: b }) ❯(ansi reset) "

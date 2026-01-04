@@ -17,13 +17,6 @@
 # You can remove these comments if you want or leave
 # them for future reference.
 
-# Netskope CA Certificate Bundle
-# $env.SSL_CERT_FILE = "/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"
-# $env.AWS_CA_BUNDLE = "/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"
-# $env.REQUESTS_CA_BUNDLE = "/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"
-# $env.CURL_CA_BUNDLE = "/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"
-# $env.NODE_EXTRA_CA_CERTS = "/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"
-
 # Homebrew setup
 if ('/opt/homebrew' | path type) == 'dir' {
   $env.HOMEBREW_PREFIX = '/opt/homebrew'
