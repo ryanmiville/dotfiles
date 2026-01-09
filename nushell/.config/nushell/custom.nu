@@ -129,6 +129,7 @@ alias yolo = claude --dangerously-skip-permissions
 alias touch = mkfiledir
 alias brew = mybrew
 alias oc = opencode
+alias order-by = sort-by
 
 def amend [] {
 	git add -A

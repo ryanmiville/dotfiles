@@ -78,7 +78,7 @@
     "button": true,
     "auto_reveal_entries": false
   },
-  "theme": "Tokyo Night Storm",
+  "theme": "Catppuccin Mocha",
   "telemetry": {
     "metrics": false
   },
