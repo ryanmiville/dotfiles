@@ -67,6 +67,7 @@
     "button": false
   },
   "terminal": {
+    "shell": "system",
     "dock": "bottom",
     "button": false,
     "env": {
