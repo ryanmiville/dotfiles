@@ -45,3 +45,5 @@ keybind = alt+==resize_split:down,10
 keybind = alt+-=resize_split:up,10
 
 keybind = shift+enter=text:\n
+
+keybind = global:cmd+backquote=toggle_quick_terminal
