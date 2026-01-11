@@ -3,5 +3,25 @@
   "model": "anthropic/claude-sonnet-4-20250514",
   "theme": "catppuccin",
   "autoshare": false,
-  "autoupdate": true
+  "autoupdate": true,
+  "permission": {
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.envrc": "deny",
+      "secrets/*": "deny"
+    },
+  },
+  "external_directory": {
+    "/Users/ryanmiville/dev/opencode/*": "allow",
+    "/Users/ryanmiville/.dotfiles/home/.config/opencode/*": "allow",
+    "/Users/ryanmiville/.config/opencode/*": "allow"
+  },
+  "keybinds": {
+    "leader": "ctrl+o",
+    "messages_half_page_up": "ctrl+u",
+    "messages_half_page_down": "ctrl+d"
+  },
+
 }
