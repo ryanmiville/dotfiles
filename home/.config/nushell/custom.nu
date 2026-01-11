@@ -104,12 +104,6 @@ def --env y [...args] {
   rm -f $tmp
 }
 
-# Brew wrapper
-def mybrew [...args] {
-  /opt/homebrew/bin/brew ...$args
-  /opt/homebrew/bin/brew bundle dump --force --file=($env.BREWFILE_PATH)
-}
-
 # Aliases
 alias tf = terraform
 alias vim = nvim
