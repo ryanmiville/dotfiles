@@ -93,6 +93,10 @@ def lastsha [] {
   ^git rev-parse HEAD | tr -d '\n' | ^pbcopy
 }
 
+def push [] {
+  git push origin (git rev-parse --abbrev-ref HEAD)
+}
+
 # Yazi with directory change
 def --env y [...args] {
   let tmp = (mktemp -t "yazi-cwd.XXXXXX")

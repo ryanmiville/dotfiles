@@ -126,6 +126,7 @@ alias gc="git commit -m"
 alias lastsha="git rev-parse HEAD | tr -d '\n' | pbcopy"
 alias gpv="gh pr view --web"
 alias grv="gh repo view --web"
+alias push='git push origin $(git rev-parse --abbrev-ref HEAD)'
 
 gcm() {
   if git show-ref --verify --quiet "refs/heads/main"; then
