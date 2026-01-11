@@ -18,7 +18,14 @@ return {
 			timeout = 3000,
 			style = "fancy",
 		},
-		pickers = { enabled = true },
+		picker = {
+			enabled = true,
+			sources = {
+				files = {
+					hidden = true,
+				},
+			},
+		},
 		quickfile = { enabled = true },
 		rename = { enabled = true },
 		statuscolumn = {
@@ -46,7 +53,7 @@ return {
 		{
 			"<leader>f",
 			function()
-				Snacks.picker.smart()
+				Snacks.picker.files()
 			end,
 			desc = "File picker",
 		},
