@@ -100,7 +100,7 @@ return {
 			desc = "Toggle scratch buffer",
 		},
 		{
-			"<leader>n",
+			"<leader>N",
 			function()
 				Snacks.notifier.show_history()
 			end,

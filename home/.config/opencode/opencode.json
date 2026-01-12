@@ -4,6 +4,14 @@
   "theme": "catppuccin",
   "autoshare": false,
   "autoupdate": true,
+  "mcp": {
+    "atlassian-rovo": {
+      "type": "remote",
+      "url": "https://mcp.atlassian.com/v1/mcp",
+      "enabled": true,
+      "oauth": {}
+    }
+  },
   "permission": {
     "read": {
       "*": "allow",
@@ -12,16 +20,15 @@
       "*.envrc": "deny",
       "secrets/*": "deny"
     },
-  },
-  "external_directory": {
-    "/Users/ryanmiville/dev/opencode/*": "allow",
-    "/Users/ryanmiville/.dotfiles/home/.config/opencode/*": "allow",
-    "/Users/ryanmiville/.config/opencode/*": "allow"
+    "external_directory": {
+      "/Users/ryanmiville/dev/opencode/*": "allow",
+      "/Users/ryanmiville/.dotfiles/home/.config/opencode/*": "allow",
+      "/Users/ryanmiville/.config/opencode/*": "allow"
+    },
   },
   "keybinds": {
     "leader": "ctrl+o",
     "messages_half_page_up": "ctrl+u",
     "messages_half_page_down": "ctrl+d"
   },
-
 }

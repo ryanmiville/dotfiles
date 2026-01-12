@@ -11,6 +11,8 @@ mouse-hide-while-typing = true
 # tabs 
 keybind = cmd+;>n=next_tab
 keybind = cmd+;>p=previous_tab
+keybind = cmd+opt+arrow_right=next_tab
+keybind = cmd+opt+arrow_left=previous_tab
 keybind = cmd+;>comma=move_tab:-1
 keybind = cmd+;>period=move_tab:1
 
@@ -46,4 +48,4 @@ keybind = alt+-=resize_split:up,10
 
 keybind = shift+enter=text:\n
 
-keybind = global:cmd+backquote=toggle_quick_terminal
+keybind = global:cmd+shift+opt+ctrl+;=toggle_quick_terminal

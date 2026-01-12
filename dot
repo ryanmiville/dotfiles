@@ -952,7 +952,7 @@ cmd_edit() {
     local editor="${EDITOR:-nvim}"
     
     if command_exists "$editor"; then
-        exec "$editor" "$DOTFILES_DIR"
+        exec "$editor" "$DOTFILES_DIR" -c "cd $DOTFILES_DIR"
     else
         print_error "Editor '$editor' not found"
         print_info "Set EDITOR environment variable to specify your preferred editor"
