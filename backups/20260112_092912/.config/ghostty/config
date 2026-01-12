@@ -1,0 +1,49 @@
+env = XDG_CONFIG_HOME=/Users/ryanmiville/.config
+command = bash -l -c /opt/homebrew/bin/nu --login
+
+theme = Catppuccin Mocha
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 16
+macos-titlebar-style = tabs
+mouse-hide-while-typing = true
+
+# keybindings
+# tabs 
+keybind = cmd+;>n=next_tab
+keybind = cmd+;>p=previous_tab
+keybind = cmd+;>comma=move_tab:-1
+keybind = cmd+;>period=move_tab:1
+
+keybind = cmd+;>1=goto_tab:1
+keybind = cmd+;>2=goto_tab:2
+keybind = cmd+;>3=goto_tab:3
+keybind = cmd+;>4=goto_tab:4
+keybind = cmd+;>5=goto_tab:5
+keybind = cmd+;>6=goto_tab:6
+keybind = cmd+;>7=goto_tab:7
+keybind = cmd+;>8=goto_tab:8
+keybind = cmd+;>9=goto_tab:9
+
+# split
+keybind = cmd+;>j=goto_split:bottom
+keybind = cmd+;>k=goto_split:top
+keybind = cmd+;>h=goto_split:left
+keybind = cmd+;>l=goto_split:right
+
+keybind = performable:alt+j=goto_split:bottom
+keybind = performable:alt+k=goto_split:top
+keybind = performable:alt+h=goto_split:left
+keybind = performable:alt+l=goto_split:right
+
+keybind = cmd+;>m=toggle_split_zoom
+keybind = cmd+;>e=equalize_splits
+
+# resize split
+keybind = alt+]=resize_split:right,10
+keybind = alt+[=resize_split:left,10
+keybind = alt+==resize_split:down,10
+keybind = alt+-=resize_split:up,10
+
+keybind = shift+enter=text:\n
+
+keybind = global:cmd+backquote=toggle_quick_terminal

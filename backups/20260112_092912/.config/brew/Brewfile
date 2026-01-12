@@ -1,6 +1,3 @@
-# Brewfile - managed by dot
-# Add packages with: dot package add <name>
-
 tap "dmmulroy/tap"
 tap "hashicorp/tap"
 brew "awscli"
@@ -12,7 +9,6 @@ brew "fd"
 brew "fzf"
 brew "gh"
 brew "glab"
-brew "glow"
 brew "go"
 brew "go-task"
 brew "helm"
@@ -59,4 +55,3 @@ vscode "ms-toolsai.vscode-jupyter-slideshow"
 vscode "ms-vscode.makefile-tools"
 vscode "usernamehw.errorlens"
 vscode "vscodevim.vim"
-cask "superwhisper"
