@@ -30,3 +30,18 @@ if ('/opt/homebrew' | path type) == 'dir' {
   $env.INFOPATH = $env.INFOPATH? | prepend '/opt/homebrew/share/info'
 }
 
+def --env load-nvm [] {
+    let env_vars = (
+        ^bash -c 'export NVM_DIR="$HOME/.nvm"; [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"; env'
+        | lines
+        | parse "{name}={value}"
+        | where name in ["NVM_DIR", "PATH", "NVM_BIN", "NVM_INC", "NVM_CD_FLAGS"]
+        | transpose -r
+        | into record
+    )
+    
+    load-env $env_vars
+}
+
+load-nvm
+

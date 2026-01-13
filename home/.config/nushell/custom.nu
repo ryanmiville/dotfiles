@@ -125,7 +125,6 @@ alias grv = gh repo view --web
 alias pn = pnpm
 alias yolo = claude --dangerously-skip-permissions
 alias touch = mkfiledir
-alias brew = mybrew
 alias oc = opencode
 alias order-by = sort-by
 
@@ -139,3 +138,24 @@ def force [] {
 	git commit --amend --no-edit
 	git push --force-with-lease
 }
+
+def --env nvm [...args: string] {
+    let nvm_script = $'
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"
+        nvm ($args | str join " ")
+        env
+    '
+    
+    let env_vars = (
+        ^bash -c $nvm_script
+        | lines
+        | parse "{name}={value}"
+        | where name in ["NVM_DIR", "PATH", "NVM_BIN", "NVM_INC", "NVM_CD_FLAGS"]
+        | transpose -r
+        | into record
+    )
+    
+    load-env $env_vars
+}
+
