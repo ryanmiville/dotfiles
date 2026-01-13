@@ -14,8 +14,34 @@ Where `<prd-name>` matches `.opencode/state/<prd-name>/prd.json`
 
 ## File Locations
 
+**IMPORTANT**: The `.opencode/state/` directory may not be at cwd. Search for it:
+
+1. Start at cwd
+2. Check if `.opencode/state/<prd-name>/prd.json` exists
+3. If not, go up one directory
+4. Repeat until found or reaching filesystem root
+
+Use this bash to find the state directory:
+
+```bash
+find_opencode_state() {
+  local prd="$1"
+  local dir="$PWD"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -f "$dir/.opencode/state/$prd/prd.json" ]]; then
+      echo "$dir/.opencode/state/$prd"
+      return 0
+    fi
+    dir="$(dirname "$dir")"
+  done
+  return 1
+}
 ```
-.opencode/state/<prd-name>/
+
+Once found, use **absolute paths** for all file operations:
+
+```
+<state-dir>/
 ├── prd.json       # Task list with passes field
 └── progress.txt   # Cross-iteration memory
 ```
@@ -98,7 +124,7 @@ Bookmark format: `<prdName>/<task-id>` (e.g., `lib-relay-implementation/types-2`
 If all tasks have `passes: true`, output:
 
 ```
-<task>COMPLETE</task>
+<tasks>COMPLETE</tasks>
 ```
 
 ## Philosophy
