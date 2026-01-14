@@ -140,22 +140,26 @@ def force [] {
 }
 
 def --env nvm [...args: string] {
+  if ("NVM_DIR" in $env) {
     let nvm_script = $'
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"
-        nvm ($args | str join " ")
+        source "($env.NVM_DIR)/nvm.sh"
+        nvm  ($args | str join " ")
         env
     '
-    
-    let env_vars = (
-        ^bash -c $nvm_script
-        | lines
-        | parse "{name}={value}"
-        | where name in ["NVM_DIR", "PATH", "NVM_BIN", "NVM_INC", "NVM_CD_FLAGS"]
-        | transpose -r
-        | into record
-    )
-    
-    load-env $env_vars
+
+    ^bash -c $nvm_script
+    | lines
+    | parse "{name}={value}"
+    | where name in ["NVM_DIR", "PATH", "NVM_BIN", "NVM_INC", "NVM_CD_FLAGS"]
+    | transpose -r
+    | into record
+    | load-env
+
+    return
+  } 
+
+  error make -u {
+      msg: "nvm is not installed"
+  }
 }
 
