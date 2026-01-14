@@ -138,6 +138,7 @@ $env.PATH = ($env.PATH | split row (char esep) | prepend [
   $"($env.H3_CLI_HOME)/bin"
 ] | uniq)
 
+$env.OPENCODE_EXPERIMENTAL_PLAN_MODE = "1"
 # Note: Custom commands and aliases are defined in the autoload/custom.nu file
 # and loaded automatically at startup
 
