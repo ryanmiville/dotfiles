@@ -3,11 +3,14 @@
   "theme": "catppuccin",
   "autoshare": false,
   "autoupdate": true,
+  "enabled_providers": [
+    "anthropic"
+  ],
   "mcp": {
     "atlassian-rovo": {
       "type": "remote",
       "url": "https://mcp.atlassian.com/v1/mcp",
-      "enabled": true,
+      "enabled": false,
       "oauth": {}
     }
   },

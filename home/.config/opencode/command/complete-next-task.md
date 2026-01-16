@@ -1,8 +1,8 @@
 ---
-description: Complete the next incomplete task from a PRD
+description: Complete the highest priority incomplete task from a PRD
 ---
 
-Complete one task from a PRD file. Implements the next task with `passes: false`, runs feedback loops, and commits.
+Complete one task from a PRD file. Determine the highest priority task with `passes: false`, implements it, runs feedback loops, and commits.
 
 ## Usage
 
@@ -51,7 +51,7 @@ Once found, use **absolute paths** for all file operations:
 ### 1. Get Bearings
 
 - Read progress file - **CHECK 'Codebase Patterns' SECTION FIRST**
-- Read PRD - find next task with `passes: false`
+- Read PRD - find highest priority task with `passes: false`
   - **Task Priority** (highest to lowest):
     1. Architecture/core abstractions
     2. Integration points
@@ -89,6 +89,7 @@ Work on the single task until verification steps pass.
 ### 5. Feedback Loops (REQUIRED)
 
 Before committing, run ALL applicable:
+- Precommit checks
 - Type checking
 - Tests
 - Linting
@@ -116,8 +117,6 @@ If you discover a **reusable pattern**, also add to `## Codebase Patterns` at th
 ### 8. Commit
 
 - `git add -A && git commit -m 'feat(<scope>): <description>'`
-
-Bookmark format: `<prdName>/<task-id>` (e.g., `lib-relay-implementation/types-2`)
 
 ## Completion
 
