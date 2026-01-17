@@ -59,8 +59,8 @@ skill-name/
   - Can reference other markdown files or scripts as well.
 - **Referenced scripts**:
   - Prefer nodejs or python scripts instead of bash script, because bash scripts are not well-supported on Windows.
-  - If you're going to write python scripts, make sure you have `requirements.txt`
-  - Make sure scripts respect `.env` file follow this order: `process.env` > `.opencode/skill/${SKILL}/.env` > `.opencode/skill/.env` > `.opencode/.env` 
+  - If you're going to write python scripts, always use inline script metadata (PEP 723) for python version and dependencies
+  - Make sure scripts respect `.env` file follow this order: `process.env` > `.claude/skill/${SKILL}/.env` > `.claude/skill/.env` > `.claude/.env` 
   - Create `.env.example` file to show the required environment variables.
   - Always write tests for these scripts.
 

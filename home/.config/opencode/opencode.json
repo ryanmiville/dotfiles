@@ -6,6 +6,11 @@
   "enabled_providers": [
     "anthropic"
   ],
+  "agent": {
+    "explore": {
+      "model": "anthropic/claude-haiku-4-5"
+    }
+  },
   "mcp": {
     "atlassian-rovo": {
       "type": "remote",

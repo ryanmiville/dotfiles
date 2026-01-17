@@ -1,6 +1,6 @@
 # Cloudflare Workers AI Skill
 
-A comprehensive OpenCode skill for working with Cloudflare Workers AI.
+A comprehensive agent skill for working with Cloudflare Workers AI.
 
 ## What This Skill Covers
 
