@@ -10,14 +10,14 @@ Complete one task from a PRD file. Determine the highest priority task with `pas
 /complete-next-task <prd-name>
 ```
 
-Where `<prd-name>` matches `.opencode/state/<prd-name>/prd.json`
+Where `<prd-name>` matches `.agent/state/<prd-name>/prd.json`
 
 ## File Locations
 
-**IMPORTANT**: The `.opencode/state/` directory may not be at cwd. Search for it:
+**IMPORTANT**: The `.agent/state/` directory may not be at cwd. Search for it:
 
 1. Start at cwd
-2. Check if `.opencode/state/<prd-name>/prd.json` exists
+2. Check if `.agent/state/<prd-name>/prd.json` exists
 3. If not, go up one directory
 4. Repeat until found or reaching filesystem root
 
@@ -28,8 +28,8 @@ find_opencode_state() {
   local prd="$1"
   local dir="$PWD"
   while [[ "$dir" != "/" ]]; do
-    if [[ -f "$dir/.opencode/state/$prd/prd.json" ]]; then
-      echo "$dir/.opencode/state/$prd"
+    if [[ -f "$dir/.agent/state/$prd/prd.json" ]]; then
+      echo "$dir/.agent/state/$prd"
       return 0
     fi
     dir="$(dirname "$dir")"
