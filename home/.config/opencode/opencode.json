@@ -12,6 +12,25 @@
     }
   },
   "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true
+    },
+    "grep_app": {
+      "type": "remote",
+      "url": "https://mcp.grep.app",
+      "enabled": true
+    },
+    "opensrc": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "opensrc-mcp"
+      ],
+      "enabled": true
+    },
     "atlassian-rovo": {
       "type": "remote",
       "url": "https://mcp.atlassian.com/v1/mcp",

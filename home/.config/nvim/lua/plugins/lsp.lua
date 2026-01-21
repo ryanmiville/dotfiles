@@ -10,7 +10,7 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufReadPost" },
+		event = { "BufReadPre", "BufNewFile" },
 		cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
 		dependencies = {
 			-- LSP installer plugins

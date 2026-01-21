@@ -1236,7 +1236,9 @@ cmd_check_packages() {
                 local package
                 package=$(echo "$line" | sed -n 's/^brew "\([^"]*\)".*/\1/p')
                 if [[ -n "$package" ]]; then
-                    if echo "$installed_formulas" | grep -q "^${package}$"; then
+                    # Extract formula name (last part after /) for tap packages
+                    local formula_name="${package##*/}"
+                    if echo "$installed_formulas" | grep -q "^${formula_name}$"; then
                         installed_brew+=("$package")
                     else
                         missing_brew+=("$package")
@@ -1268,7 +1270,9 @@ cmd_check_packages() {
                 local package
                 package=$(echo "$line" | sed -n 's/^brew "\([^"]*\)".*/\1/p')
                 if [[ -n "$package" ]]; then
-                    if echo "$installed_formulas" | grep -q "^${package}$"; then
+                    # Extract formula name (last part after /) for tap packages
+                    local formula_name="${package##*/}"
+                    if echo "$installed_formulas" | grep -q "^${formula_name}$"; then
                         installed_brew+=("$package (work)")
                     else
                         missing_brew+=("$package (work)")
@@ -1636,11 +1640,13 @@ cmd_package_update() {
             
             if [[ "$line" =~ ^brew[[:space:]]+\"([^\"]+)\" ]]; then
                 local package="${BASH_REMATCH[1]}"
+                # Extract formula name (last part after /) for tap packages
+                local formula_name="${package##*/}"
                 
                 # Check if package is installed
-                if brew list --formula | grep -q "^${package}$"; then
+                if brew list --formula | grep -q "^${formula_name}$"; then
                     print_info "Updating brew formula: $package"
-                    if brew upgrade "$package" 2>/dev/null; then
+                    if brew upgrade "$formula_name" 2>/dev/null; then
                         updated_packages+=("$package (formula)")
                     else
                         # Package might already be up to date
@@ -1728,7 +1734,9 @@ cmd_package_list() {
             continue
         fi
 
-        echo -e "\n${BOLD}${bundle_name^} packages ($(basename "$target_bundle")):${RESET}"
+        local cap_name
+        cap_name=$(echo "$bundle_name" | awk '{print toupper(substr($0,1,1)) substr($0,2)}')
+        echo -e "\n${BOLD}${cap_name} packages ($(basename "$target_bundle")):${RESET}"
 
         local brew_packages=()
         local cask_packages=()
@@ -1747,7 +1755,9 @@ cmd_package_list() {
         if [[ ${#brew_packages[@]} -gt 0 ]]; then
             echo -e "  ${BOLD}Brew formulas (${#brew_packages[@]}):${RESET}"
             for package in "${brew_packages[@]}"; do
-                if echo "$installed_formulas" | grep -q "^${package}$"; then
+                # Extract formula name (last part after /) for tap packages like hashicorp/tap/terraform
+                local formula_name="${package##*/}"
+                if echo "$installed_formulas" | grep -q "^${formula_name}$"; then
                     print_success "    $package"
                 else
                     print_error "    $package (not installed)"
