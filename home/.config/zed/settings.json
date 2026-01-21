@@ -9,28 +9,28 @@
 {
   "agent_servers": {
     "claude": {
-      "default_mode": "plan"
-    }
+      "default_mode": "plan",
+    },
   },
   "edit_predictions": {
     "mode": "subtle",
     "copilot": {
       "proxy": null,
-      "proxy_no_verify": null
+      "proxy_no_verify": null,
     },
-    "enabled_in_text_threads": false
+    "enabled_in_text_threads": false,
   },
   "features": {
-    "edit_prediction_provider": "zed"
+    "edit_prediction_provider": "zed",
   },
   "tab_bar": {
     "show_nav_history_buttons": false,
-    "show": true
+    "show": true,
   },
   "pane_split_direction_vertical": "right",
   "toolbar": {
     "quick_actions": false,
-    "selections_menu": false
+    "selections_menu": false,
   },
   "file_scan_exclusions": [
     "**/.git",
@@ -41,10 +41,10 @@
     "**/.DS_Store",
     "**/Thumbs.db",
     "**/.classpath",
-    "**/.settings"
+    "**/.settings",
   ],
   "file_finder": {
-    "modal_max_width": "medium"
+    "modal_max_width": "medium",
   },
   "agent": {
     "dock": "left",
@@ -53,49 +53,50 @@
     "default_profile": "write",
     "default_model": {
       "provider": "anthropic",
-      "model": "claude-sonnet-4-5-latest"
+      "model": "claude-sonnet-4-5-latest",
     },
-    "button": false
+    "button": false,
   },
   "chat_panel": {
-    "button": "never"
+    "button": "never",
   },
   "collaboration_panel": {
-    "button": false
+    "button": false,
   },
   "outline_panel": {
-    "button": false
+    "button": false,
   },
   "terminal": {
     "shell": "system",
     "dock": "bottom",
     "button": false,
     "env": {
-      "EDITOR": "zed --wait"
-    }
+      "EDITOR": "zed --wait",
+    },
   },
   "project_panel": {
     "dock": "right",
     "button": true,
-    "auto_reveal_entries": false
+    "auto_reveal_entries": false,
   },
   "theme": "Catppuccin Mocha",
   "telemetry": {
-    "metrics": false
+    "metrics": false,
   },
   "vim_mode": true,
+  "which_key": { "enabled": true },
   "vim": {
     "use_system_clipboard": "always",
-    "use_smartcase_find": true
+    "use_smartcase_find": true,
   },
   "languages": {
     "Gleam": {
-      "show_edit_predictions": true
+      "show_edit_predictions": true,
     },
     "Python": {
       "language_servers": ["basedpyright"],
-      "allow_rewrap": "in_selections"
-    }
+      "allow_rewrap": "in_selections",
+    },
     // "TypeScript": {
     //   "language_servers": [
     //     "deno",
@@ -126,12 +127,12 @@
     "kernel_selections": {
       "python": "myuv",
       "typescript": "deno",
-      "javascript": "deno"
-    }
+      "javascript": "deno",
+    },
   },
   "title_bar": {
-    "show_user_picture": false
+    "show_user_picture": false,
   },
   "auto_signature_help": true,
-  "use_system_window_tabs": false
+  "use_system_window_tabs": false,
 }
