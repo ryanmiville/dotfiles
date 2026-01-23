@@ -83,9 +83,9 @@ vim.keymap.set("n", "*", "*zz", { desc = "Search for word under cursor and cente
 vim.keymap.set("n", "#", "#zz", { desc = "Search backward for word under cursor and center" })
 
 -- source lua files
-vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>")
-vim.keymap.set("n", "<leader>x", ":.lua<CR>")
-vim.keymap.set("v", "<leader>x", ":lua<CR>")
+-- vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>")
+-- vim.keymap.set("n", "<leader>x", ":.lua<CR>")
+-- vim.keymap.set("v", "<leader>x", ":lua<CR>")
 
 -- Jump to start/end of line
 vim.keymap.set({ "n", "v" }, "gh", "^", { noremap = true, silent = true })

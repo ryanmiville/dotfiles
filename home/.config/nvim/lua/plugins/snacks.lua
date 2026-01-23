@@ -107,7 +107,7 @@ return {
 			desc = "Notification history",
 		},
 		{
-			"<leader>bx",
+			"<leader>x",
 			function()
 				Snacks.bufdelete()
 			end,
