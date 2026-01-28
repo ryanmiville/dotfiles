@@ -81,9 +81,16 @@ return {
 		{
 			"<leader><Tab>",
 			function()
-				Snacks.picker.recent()
+				Snacks.picker.recent({ filter = { cwd = true } })
 			end,
 			desc = "Recent",
+		},
+		{
+			"<leader>gs",
+			function()
+				Snacks.picker.git_status()
+			end,
+			desc = "Git Status",
 		},
 		{
 			"<leader>nc",
