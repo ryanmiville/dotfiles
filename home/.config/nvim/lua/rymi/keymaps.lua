@@ -16,7 +16,7 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 -- Save and Quit
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { silent = false, desc = "Save current buffer" })
-vim.keymap.set("n", "<leader>q", "<cmd>q<cr>", { silent = false, desc = "Quit current buffer" })
+vim.keymap.set("n", "<leader>q", "<cmd>q<cr>", { silent = false, desc = "Quit current window" })
 
 vim.keymap.set("n", "<", "<<", { noremap = true, silent = true })
 vim.keymap.set("n", ">", ">>", { noremap = true, silent = true })

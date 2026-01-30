@@ -8,6 +8,9 @@
 // from the command palette or from `Zed` application menu.
 {
   "agent_servers": {
+    "opencode": {
+      "type": "registry"
+    },
     "claude": {
       "default_mode": "plan",
     },

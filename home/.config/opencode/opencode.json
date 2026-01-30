@@ -3,9 +3,6 @@
   "theme": "catppuccin",
   "autoshare": false,
   "autoupdate": true,
-  "enabled_providers": [
-    "anthropic"
-  ],
   "agent": {
     "explore": {
       "model": "anthropic/claude-haiku-4-5"

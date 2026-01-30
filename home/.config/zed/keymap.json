@@ -41,7 +41,6 @@
       "K": "editor::Hover",
       "H": "pane::ActivatePreviousItem",
       "L": "pane::ActivateNextItem",
-      "g e": "vim::EndOfDocument",
       "g y": "editor::GoToTypeDefinition",
       "g r": "editor::FindAllReferences", // zed specific
       "g H": "vim::WindowTop",
@@ -51,7 +50,14 @@
       "ctrl-w v": "pane::SplitRight",
       "ctrl-w d": "pane::SplitDown",
       "ctrl-w O": "workspace::CloseAllDocks",
+      // Pane navigation
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
       // Space mode
+      "space w": "workspace::Save",
+      "space q": "pane::CloseActiveItem",
+      "space x": "pane::CloseActiveItem",
       "space f": "file_finder::Toggle",
       "space k": "editor::Hover",
       "space s": "outline::Toggle",
@@ -68,32 +74,92 @@
       ">": "editor::Indent",
       "<": "editor::Outdent",
       "ctrl-n": "workspace::ToggleRightDock",
-      "s": ["vim::PushSneak", {}],
-      "S": ["vim::PushSneakBackward", {}],
-      "space o": ["workspace::SendKeystrokes", "o escape"],
-      "space O": ["workspace::SendKeystrokes", "O escape"],
-      "f": ["vim::PushFindForward", { "before": false, "multiline": true }],
-      "t": ["vim::PushFindForward", { "before": true, "multiline": true }],
+      "s": [
+        "vim::PushSneak",
+        {}
+      ],
+      "S": [
+        "vim::PushSneakBackward",
+        {}
+      ],
+      "space o": [
+        "workspace::SendKeystrokes",
+        "o escape"
+      ],
+      "space O": [
+        "workspace::SendKeystrokes",
+        "O escape"
+      ],
+      "f": [
+        "vim::PushFindForward",
+        {
+          "before": false,
+          "multiline": true
+        }
+      ],
+      "t": [
+        "vim::PushFindForward",
+        {
+          "before": true,
+          "multiline": true
+        }
+      ],
       "shift-f": [
         "vim::PushFindBackward",
-        { "after": false, "multiline": true }
+        {
+          "after": false,
+          "multiline": true
+        }
       ],
-      "shift-t": ["vim::PushFindBackward", { "after": true, "multiline": true }]
+      "shift-t": [
+        "vim::PushFindBackward",
+        {
+          "after": true,
+          "multiline": true
+        }
+      ]
     }
   },
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
       "space a": "pane::TogglePinTab",
-      "space 1": ["pane::ActivateItem", 0],
-      "space 2": ["pane::ActivateItem", 1],
-      "space 3": ["pane::ActivateItem", 2],
-      "space 4": ["pane::ActivateItem", 3],
-      "space 5": ["pane::ActivateItem", 4],
-      "space 6": ["pane::ActivateItem", 5],
-      "space 7": ["pane::ActivateItem", 6],
-      "space 8": ["pane::ActivateItem", 7],
-      "space 9": ["pane::ActivateItem", 8],
+      "space 1": [
+        "pane::ActivateItem",
+        0
+      ],
+      "space 2": [
+        "pane::ActivateItem",
+        1
+      ],
+      "space 3": [
+        "pane::ActivateItem",
+        2
+      ],
+      "space 4": [
+        "pane::ActivateItem",
+        3
+      ],
+      "space 5": [
+        "pane::ActivateItem",
+        4
+      ],
+      "space 6": [
+        "pane::ActivateItem",
+        5
+      ],
+      "space 7": [
+        "pane::ActivateItem",
+        6
+      ],
+      "space 8": [
+        "pane::ActivateItem",
+        7
+      ],
+      "space 9": [
+        "pane::ActivateItem",
+        8
+      ],
       "space 0": "pane::ActivateLastItem"
       // put key-bindings here if you want them to work only in normal mode
       // "down": ["workspace::SendKeystrokes", "4 j"]
@@ -123,9 +189,9 @@
       "ctrl-j": "vim::SwitchToNormalMode",
       "g n": "vim::SelectNext",
       "g N": "vim::SelectPrevious",
-      "space w": "vim::NextSubwordStart",
-      "space b": "vim::PreviousSubwordStart",
-      "space e": "vim::NextSubwordEnd",
+      "g w": "vim::NextSubwordStart",
+      "g b": "vim::PreviousSubwordStart",
+      "g e": "vim::NextSubwordEnd",
       "space g e": "vim::PreviousSubwordEnd",
       "alt-l": "pane::ActivateNextItem",
       "alt-h": "pane::ActivatePreviousItem"
@@ -143,7 +209,10 @@
     "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
     "bindings": {
       "ctrl-j": "vim::SwitchToNormalMode",
-      "shift-s": ["vim::PushAddSurrounds", {}]
+      "shift-s": [
+        "vim::PushAddSurrounds",
+        {}
+      ]
     }
   },
   {
@@ -151,7 +220,10 @@
     "context": "Editor && vim_mode == insert",
     "bindings": {
       "ctrl-j": "vim::NormalBefore",
-      "ctrl-;": ["workspace::SendKeystrokes", "="]
+      "ctrl-;": [
+        "workspace::SendKeystrokes",
+        "="
+      ]
     }
   },
   {
@@ -192,7 +264,13 @@
       "ctrl-w l": "workspace::ActivatePaneRight",
       "ctrl-w k": "workspace::ActivatePaneUp",
       "ctrl-w j": "workspace::ActivatePaneDown",
-      "ctrl-j": ["workspace::SendKeystrokes", "escape"]
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": [
+        "workspace::SendKeystrokes",
+        "escape"
+      ]
       // ... or other keybindings
     }
   },
