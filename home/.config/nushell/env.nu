@@ -36,9 +36,13 @@ $env.REQUESTS_CA_BUNDLE = "/Library/Application Support/Netskope/Certs/netskope-
 $env.CURL_CA_BUNDLE = "/Library/Application Support/Netskope/Certs/netskope-cert-bundle.pem"
 $env.NODE_EXTRA_CA_CERTS = "/Library/Application Support/Netskope/Certs/netskope-cert-bundle.pem"
 
-$env.PROMPT_INDICATOR_VI_NORMAL = $"(ansi { fg: 'light_green' attr: b }) ❮(ansi reset) "
-$env.PROMPT_INDICATOR_VI_INSERT = $"(ansi { fg: 'light_green' attr: b }) ❯(ansi reset) "
+$env.PROMPT_INDICATOR_VI_NORMAL = ""
+$env.PROMPT_INDICATOR_VI_INSERT = ""
 $env.PROMPT_MULTILINE_INDICATOR = ""
+
+# $env.PROMPT_INDICATOR_VI_NORMAL = $"(ansi { fg: 'light_green' attr: b }) ❮(ansi reset) "
+# $env.PROMPT_INDICATOR_VI_INSERT = $"(ansi { fg: 'light_green' attr: b }) ❯(ansi reset) "
+# $env.PROMPT_MULTILINE_INDICATOR = ""
 
 # Environment Variables
 $env.XDG_CONFIG_HOME = $"($env.HOME)/.config"

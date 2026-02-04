@@ -1,5 +1,5 @@
 env = XDG_CONFIG_HOME=/Users/ryanmiville/.config
-command = bash -l -c /opt/homebrew/bin/nu --login
+# command = bash -l -c /opt/homebrew/bin/nu --login
 
 auto-update-channel = tip
 

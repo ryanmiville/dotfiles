@@ -6,7 +6,8 @@ format = """
 []()\
 $directory\
 $git_branch\
-$git_status"""
+$git_status \
+$character"""
 
 # Right prompt matching p10k's right side
 right_format = """$cmd_duration\
@@ -79,15 +80,15 @@ ssh_only = true
 style = "bright-black"
 format = "[$hostname]($style) "
 
-# Prompt character (magenta on success, red on error)
-# Vi mode: ❯ in insert, ❮ in command/visual
+# Prompt character - matching nushell vi mode indicators
+# Vi mode: ❯ in insert, ❮ in normal/visual/replace
 [character]
-success_symbol = "[❯](bold magenta)"
-error_symbol = "[❯](bold red)"
-vimcmd_symbol = "[❮](bold magenta)"
-vimcmd_visual_symbol = "[❮](bold magenta)"
-vimcmd_replace_symbol = "[❮](bold magenta)"
-vimcmd_replace_one_symbol = "[❮](bold magenta)"
+success_symbol = "[❯](bold bright-green)"
+error_symbol = "[❯](bold bright-red)"
+vimcmd_symbol = "[❮](bold bright-green)"
+vimcmd_visual_symbol = "[❮](bold bright-green)"
+vimcmd_replace_symbol = "[❮](bold bright-green)"
+vimcmd_replace_one_symbol = "[❮](bold bright-green)"
 
 # Disable modules that aren't in p10k config
 [aws]
