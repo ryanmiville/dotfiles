@@ -37,12 +37,13 @@ zinit light-mode for \
 # Starship prompt
 eval "$(starship init zsh)"
 
-# Add zsh plugins
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
-zinit light jeffreytse/zsh-vi-mode
+# Add zsh plugins (Turbo mode for faster startup)
+zinit wait lucid for \
+    zsh-users/zsh-syntax-highlighting \
+    zsh-users/zsh-completions \
+    zsh-users/zsh-autosuggestions \
+    Aloxaf/fzf-tab \
+    jeffreytse/zsh-vi-mode
 
 # For postponing loading `fzf`
 # needed to get ctrl-r with zsh-vi-mode
@@ -83,8 +84,10 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# Shell integrations
-source <(fzf --zsh)
+# Shell integrations (cached for faster startup)
+FZF_CACHE="$HOME/.fzf.zsh"
+[[ -f $FZF_CACHE ]] || fzf --zsh > $FZF_CACHE
+source $FZF_CACHE
 # Only alias cd to zoxide in interactive shells
 if [[ -o interactive ]]; then
   eval "$(zoxide init --cmd cd zsh)"
@@ -224,11 +227,8 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+# Docker CLI completions
 fpath=(/Users/ryanmiville/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
 
 # opencode
 export PATH=/Users/ryanmiville/.opencode/bin:$PATH
@@ -245,9 +245,14 @@ function mybrew() {
 
 alias brew=mybrew
 
+# Lazy-load NVM for faster startup
 export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+nvm() {
+  unset -f nvm
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+  nvm "$@"
+}
 
 
 # ==== PostgreSQL ====
