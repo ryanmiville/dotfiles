@@ -1,0 +1,35 @@
+{
+  "version": 3,
+  "skills": {
+    "supabase-postgres-best-practices": {
+      "source": "supabase/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/supabase/agent-skills.git",
+      "skillPath": "skills/postgres-best-practices/SKILL.md",
+      "skillFolderHash": "cd61bf5ae895fa74a88959c2971675447a3e818f",
+      "installedAt": "2026-01-23T13:57:39.032Z",
+      "updatedAt": "2026-01-23T13:57:39.032Z"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
+      "installedAt": "2026-02-05T15:30:51.425Z",
+      "updatedAt": "2026-02-05T15:30:51.425Z"
+    }
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "codex",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-cli",
+    "opencode",
+    "replit"
+  ],
+  "dismissed": {
+    "findSkillsPrompt": true
+  }
+}

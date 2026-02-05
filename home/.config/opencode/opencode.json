@@ -21,20 +21,12 @@
     },
     "opensrc": {
       "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "opensrc-mcp"
-      ],
-      "enabled": true
+      "command": ["npx", "-y", "opensrc-mcp"],
+      "enabled": false
     },
     "playwriter": {
       "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "playwriter@latest"
-      ],
+      "command": ["npx", "-y", "playwriter@latest"],
       "enabled": false
     },
     "atlassian-rovo": {
@@ -56,11 +48,11 @@
       "/Users/ryanmiville/dev/opencode/*": "allow",
       "/Users/ryanmiville/.dotfiles/home/.config/opencode/*": "allow",
       "/Users/ryanmiville/.config/opencode/*": "allow"
-    },
+    }
   },
   "keybinds": {
     "leader": "ctrl+x",
     "messages_half_page_up": "ctrl+u",
     "messages_half_page_down": "ctrl+d"
-  },
+  }
 }

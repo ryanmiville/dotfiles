@@ -16,15 +16,13 @@
     },
   },
   "edit_predictions": {
+    "provider": "zed",
     "mode": "subtle",
     "copilot": {
       "proxy": null,
       "proxy_no_verify": null,
     },
     "enabled_in_text_threads": false,
-  },
-  "features": {
-    "edit_prediction_provider": "zed",
   },
   "tab_bar": {
     "show_nav_history_buttons": false,
@@ -82,7 +80,7 @@
     "button": true,
     "auto_reveal_entries": false,
   },
-  "theme": "Catppuccin Espresso (Blur)",
+  "theme": "Catppuccin Espresso (Blur) [Heavy]",
   "telemetry": {
     "metrics": false,
   },

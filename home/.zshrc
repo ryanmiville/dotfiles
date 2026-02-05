@@ -232,7 +232,7 @@ fpath=(/Users/ryanmiville/.docker/completions $fpath)
 
 # opencode
 export PATH=/Users/ryanmiville/.opencode/bin:$PATH
-
+alias oc="opencode"
 
 . "$HOME/.local/bin/env"
 
