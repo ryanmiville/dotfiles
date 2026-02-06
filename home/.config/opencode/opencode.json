@@ -3,6 +3,7 @@
   "theme": "catppuccin",
   "autoshare": false,
   "autoupdate": true,
+  "disabled_providers": ["google-vertex-anthropic", "gitlab"],
   "agent": {
     "explore": {
       "model": "anthropic/claude-haiku-4-5"
