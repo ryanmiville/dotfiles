@@ -9,14 +9,28 @@
 -- 	end,
 -- }
 
+-- return {
+-- 	"catppuccin/nvim",
+-- 	name = "catppuccin",
+-- 	priority = 1000,
+-- 	config = function()
+-- 		require("catppuccin").setup({
+-- 			auto_integrations = true,
+-- 		})
+-- 		vim.cmd.colorscheme("catppuccin-mocha")
+-- 	end,
+-- }
+
 return {
-	"catppuccin/nvim",
-	name = "catppuccin",
+	dir = vim.fn.stdpath("config") .. "/pack/themes/start/houston",
+	name = "houston",
 	priority = 1000,
 	config = function()
-		require("catppuccin").setup({
-			auto_integrations = true,
+		require("houston").setup({
+			-- optional config
+			transparent = false,
+			terminal_colors = true,
 		})
-		vim.cmd.colorscheme("catppuccin-mocha")
+		vim.cmd.colorscheme("houston")
 	end,
 }

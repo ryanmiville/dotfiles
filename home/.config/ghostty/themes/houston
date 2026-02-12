@@ -1,0 +1,26 @@
+# Houston Theme for Ghostty
+# Based on the Houston VS Code theme
+
+palette = 0=#17191e
+palette = 1=#dc3657
+palette = 2=#4bf3c8
+palette = 3=#ffd493
+palette = 4=#54b9ff
+palette = 5=#acafff
+palette = 6=#00daef
+palette = 7=#eef0f9
+palette = 8=#343841
+palette = 9=#f4587e
+palette = 10=#6bffd4
+palette = 11=#ffe4b3
+palette = 12=#7accff
+palette = 13=#cc75f4
+palette = 14=#33e5f2
+palette = 15=#ffffff
+
+background = #17191e
+foreground = #eef0f9
+cursor-color = #4bf3c8
+cursor-text = #17191e
+selection-background = #ad5dca
+selection-foreground = #eef0f9
