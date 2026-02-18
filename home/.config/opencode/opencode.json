@@ -33,7 +33,7 @@
     "atlassian-rovo": {
       "type": "remote",
       "url": "https://mcp.atlassian.com/v1/mcp",
-      "enabled": false,
+      "enabled": true,
       "oauth": {}
     }
   },
@@ -50,10 +50,5 @@
       "/Users/ryanmiville/.dotfiles/home/.config/opencode/*": "allow",
       "/Users/ryanmiville/.config/opencode/*": "allow"
     }
-  },
-  "keybinds": {
-    "leader": "ctrl+x",
-    "messages_half_page_up": "ctrl+u",
-    "messages_half_page_down": "ctrl+d"
   }
 }
