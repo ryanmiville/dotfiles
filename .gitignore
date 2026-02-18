@@ -3,3 +3,4 @@ home/.config/zed/conversations/
 home/.config/nushell/history.txt
 home/.config/tmux/plugins/
 .DS_Store
+node_modules

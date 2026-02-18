@@ -1,4 +1,5 @@
 import { tool } from "@opencode-ai/plugin"
+import { createOpencodeClient } from "@opencode-ai/sdk"
 
 export default tool({
   description:
@@ -23,6 +24,14 @@ export default tool({
       ),
   },
   async execute(args, ctx) {
+    const client = createOpencodeClient({
+      baseUrl: "http://localhost:4096",
+    })
+
+    const { data: session } = await client.session.create({
+      body: { title: `Handoff: ${args.goal}` },
+    })
+
     const prompt = [
       "# Handoff from previous session",
       "",
@@ -31,22 +40,25 @@ export default tool({
       "",
       "## Context from previous session",
       args.context,
-      "",
-      "---",
-      "Continue the work described above.",
     ].join("\n")
 
+    await client.session.prompt({
+      path: { id: session!.id },
+      body: {
+        noReply: true,
+        parts: [{ type: "text", text: prompt }],
+      },
+    })
+
     const proc = Bun.spawn(
-      ["opencode", "run", "--title", args.goal, prompt],
+      ["opencode", "--session", session!.id],
       {
         cwd: ctx.directory,
-        stdin: "ignore",
-        stdout: "ignore",
-        stderr: "ignore",
+        detached: true,
       },
     )
     proc.unref()
 
-    return `Started new session with goal: ${args.goal}`
+    return `New session started: ${session!.id}`
   },
 })
