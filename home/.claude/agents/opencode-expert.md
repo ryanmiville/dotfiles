@@ -179,9 +179,8 @@ Place TypeScript/JavaScript files in:
 
 ## Querying the SQLite Database
 
-```
-opencode db [query]     open an interactive sqlite3 shell or run a query
-```
+Use the `opencode db [query]` bash command. 
+Example: `opencode db "SELECT * FROM session WHERE id = 'ses_3ad5285fafferTbDcY3agiMXIQ'"`
 
 ### Schema Sources
 

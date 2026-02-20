@@ -1,14 +1,13 @@
 import type { Plugin } from "@opencode-ai/plugin";
-import type { Part, UserMessage } from "@opencode-ai/sdk";
+import type { Part } from "@opencode-ai/sdk";
 
 const goals = new Map<string, string>();
 
-const handoffPlugin: Plugin = async (input) => {
+const handoffPlugin: Plugin = async ({ client }) => {
   return {
-    "command.execute.before": async (commandInput, output) => {
-      if (commandInput.command !== "handoff") return;
-
-      const goal = commandInput.arguments.trim();
+    "command.execute.before": async (input, output) => {
+      if (input.command !== "handoff") return;
+      const goal = input.arguments.trim();
       if (!goal) {
         output.parts.push({
           type: "text",
@@ -17,49 +16,37 @@ const handoffPlugin: Plugin = async (input) => {
         return;
       }
 
-      goals.set(commandInput.sessionID, goal);
+      goals.set(input.sessionID, goal);
+
+      const { data: messages } = await client.session.messages({
+        path: { id: input.sessionID },
+      });
+      const lastUser = messages?.findLast((m) => m.info.role === "user");
+      if (!lastUser || lastUser.info.role !== "user") {
+        output.parts.push({
+          type: "text",
+          text: "Error: No user message found to determine provider/model.",
+        } as Part);
+        return;
+      }
 
       try {
-        // const messages = await input.client.session.messages({
-        //   path: { id: commandInput.sessionID },
-        //   query: { limit: 50 },
-        // });
-
-        // const lastUserMsg = messages.data
-        //   ?.slice()
-        //   .reverse()
-        //   .find(
-        //     (m): m is { info: UserMessage; parts: Part[] } =>
-        //       m.info.role === "user",
-        //   );
-
-        // const model = lastUserMsg?.info.model ?? {
-        //   providerID: "anthropic",
-        //   modelID: "claude-3-5-sonnet-20241022",
-        // };
-
-        await input.client.session.summarize({
-          path: { id: commandInput.sessionID },
-          // body: {
-          //   providerID: model.providerID,
-          //   modelID: model.modelID,
-          // },
+        await client.session.summarize({
+          path: { id: input.sessionID },
+          body: {
+            providerID: lastUser.info.model.providerID,
+            modelID: lastUser.info.model.modelID,
+          },
         });
 
-        // Create a new message AFTER the compaction summary so it lands on
-        // the post-compaction side of filterCompacted's boundary cut.
-        // The command's own message is created before session.summarize runs
-        // (earlier ID), so filterCompacted drops it — this prompt is what
-        // actually drives the AI to start working on the goal.
-        await input.client.session.promptAsync({
-          path: { id: commandInput.sessionID },
+        await client.session.promptAsync({
+          path: { id: input.sessionID },
           body: {
-            // model: { providerID: model.providerID, modelID: model.modelID },
             parts: [{ type: "text", text: goal }],
           },
         });
       } catch (error) {
-        goals.delete(commandInput.sessionID);
+        goals.delete(input.sessionID);
         output.parts.push({
           type: "text",
           text: `Error during handoff: ${error instanceof Error ? error.message : String(error)}`,
@@ -67,10 +54,10 @@ const handoffPlugin: Plugin = async (input) => {
       }
     },
 
-    "experimental.session.compacting": async (compactionInput, output) => {
-      const goal = goals.get(compactionInput.sessionID);
+    "experimental.session.compacting": async (input, output) => {
+      const goal = goals.get(input.sessionID);
       if (!goal) return;
-      goals.delete(compactionInput.sessionID);
+      goals.delete(input.sessionID);
 
       output.prompt = `You are generating a continuation summary for a handoff. The user has explicitly requested a handoff with the following goal:
       ${goal}
