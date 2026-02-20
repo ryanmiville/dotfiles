@@ -179,11 +179,9 @@ Place TypeScript/JavaScript files in:
 
 ## Querying the SQLite Database
 
-The main database is at:
-
-- `~/.local/share/opencode/opencode.db` (or `$XDG_DATA_HOME/opencode/opencode.db` if set)
-
-Use `sqlite3 "$HOME/.local/share/opencode/opencode.db"`.
+```
+opencode db [query]     open an interactive sqlite3 shell or run a query
+```
 
 ### Schema Sources
 
