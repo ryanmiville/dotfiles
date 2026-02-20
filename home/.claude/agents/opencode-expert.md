@@ -181,165 +181,21 @@ Place TypeScript/JavaScript files in:
 
 The main database is at:
 
-- **macOS**: `~/Library/Application Support/opencode/opencode.db`
-- **Linux**: `~/.local/share/opencode/opencode.db` (or `$XDG_DATA_HOME/opencode/opencode.db`)
+- `~/.local/share/opencode/opencode.db` (or `$XDG_DATA_HOME/opencode/opencode.db` if set)
 
-Use `sqlite3 "$HOME/Library/Application Support/opencode/opencode.db"` (macOS) or adjust for Linux.
+Use `sqlite3 "$HOME/.local/share/opencode/opencode.db"`.
 
-### Schema
+### Schema Sources
 
-**`project`** — one row per project/worktree
-| column | type | notes |
-|---|---|---|
-| `id` | text PK | |
-| `worktree` | text | absolute path |
-| `vcs` | text | e.g. `"git"` |
-| `name` | text | display name |
-| `time_created` | integer | ms epoch |
-| `time_updated` | integer | ms epoch |
-| `time_initialized` | integer | ms epoch |
+Read these files in the opencode source to understand the full schema:
 
-**`session`** — one row per conversation
-| column | type | notes |
-|---|---|---|
-| `id` | text PK | |
-| `project_id` | text FK → project | |
-| `parent_id` | text | set for sub-sessions |
-| `slug` | text | short human-readable id |
-| `directory` | text | working dir when created |
-| `title` | text | auto-generated title |
-| `version` | text | opencode version |
-| `share_url` | text | if shared |
-| `time_created` | integer | ms epoch |
-| `time_updated` | integer | ms epoch |
-| `time_archived` | integer | ms epoch, null if active |
-
-**`message`** — one row per user/assistant message
-| column | type | notes |
-|---|---|---|
-| `id` | text PK | |
-| `session_id` | text FK → session | |
-| `time_created` | integer | ms epoch |
-| `time_updated` | integer | ms epoch |
-| `data` | JSON | `MessageV2.Info` — has `role` (`"user"` or `"assistant"`), `cost`, `tokens`, `modelID`, `providerID`, `agent`, etc. |
-
-**`part`** — parts of a message (text, tool calls, reasoning, etc.)
-| column | type | notes |
-|---|---|---|
-| `id` | text PK | |
-| `message_id` | text FK → message | |
-| `session_id` | text | denormalized for fast lookup |
-| `time_created` | integer | ms epoch |
-| `time_updated` | integer | ms epoch |
-| `data` | JSON | `MessageV2.Part` — discriminated union on `type` field |
-
-Part `type` values: `text`, `tool`, `reasoning`, `file`, `step-start`, `step-finish`, `snapshot`, `patch`, `agent`, `retry`, `compaction`, `subtask`
-
-**`todo`** — todo list items per session
-| column | type | notes |
-|---|---|---|
-| `session_id` | text FK → session | composite PK with `position` |
-| `position` | integer | order |
-| `content` | text | |
-| `status` | text | `pending`, `in_progress`, `completed`, `cancelled` |
-| `priority` | text | `high`, `medium`, `low` |
-
-**`session_share`** — shared sessions
-| column | type | notes |
-|---|---|---|
-| `session_id` | text PK FK → session | |
-| `id` | text | share ID |
-| `url` | text | public share URL |
-
-**`permission`** — per-project permission rulesets
-| column | notes |
-|---|---|
-| `project_id` PK | FK → project |
-| `data` | JSON ruleset |
-
-### Common Queries
-
-```sql
--- Recent sessions (most recent first)
-SELECT id, title, slug, directory, datetime(time_created/1000, 'unixepoch', 'localtime') as created
-FROM session
-ORDER BY time_created DESC
-LIMIT 20;
-
--- Sessions for a specific project/directory
-SELECT s.id, s.title, s.slug, datetime(s.time_created/1000, 'unixepoch', 'localtime') as created
-FROM session s
-JOIN project p ON s.project_id = p.id
-WHERE p.worktree LIKE '%my-project%'
-ORDER BY s.time_created DESC;
-
--- Active (non-archived) sessions
-SELECT id, title, slug, directory
-FROM session
-WHERE time_archived IS NULL
-ORDER BY time_updated DESC;
-
--- Message count and total cost per session
-SELECT s.title, s.slug, COUNT(m.id) as messages,
-       SUM(json_extract(m.data, '$.cost')) as total_cost
-FROM session s
-LEFT JOIN message m ON m.session_id = s.id
-GROUP BY s.id
-ORDER BY s.time_created DESC
-LIMIT 20;
-
--- All messages in a session (by slug or id)
-SELECT m.id, json_extract(m.data, '$.role') as role,
-       datetime(m.time_created/1000, 'unixepoch', 'localtime') as created
-FROM message m
-JOIN session s ON m.session_id = s.id
-WHERE s.slug = 'your-slug-here'
-ORDER BY m.time_created;
-
--- Text content of messages in a session
-SELECT json_extract(m.data, '$.role') as role,
-       json_extract(p.data, '$.text') as text
-FROM part p
-JOIN message m ON p.message_id = m.id
-JOIN session s ON m.session_id = s.id
-WHERE s.slug = 'your-slug-here'
-  AND json_extract(p.data, '$.type') = 'text'
-ORDER BY p.time_created;
-
--- Tool calls in a session
-SELECT json_extract(p.data, '$.tool') as tool,
-       json_extract(p.data, '$.state.status') as status,
-       json_extract(p.data, '$.state.title') as title
-FROM part p
-JOIN session s ON p.session_id = s.id
-WHERE s.slug = 'your-slug-here'
-  AND json_extract(p.data, '$.type') = 'tool'
-ORDER BY p.time_created;
-
--- Token usage per session
-SELECT s.title, s.slug,
-       SUM(json_extract(m.data, '$.tokens.input')) as input_tokens,
-       SUM(json_extract(m.data, '$.tokens.output')) as output_tokens,
-       SUM(json_extract(m.data, '$.cost')) as cost_usd
-FROM message m
-JOIN session s ON m.session_id = s.id
-WHERE json_extract(m.data, '$.role') = 'assistant'
-GROUP BY s.id
-ORDER BY cost_usd DESC
-LIMIT 20;
-
--- Find sessions by keyword in title
-SELECT id, title, slug, directory
-FROM session
-WHERE title LIKE '%keyword%'
-ORDER BY time_created DESC;
-
--- Todos for a session
-SELECT content, status, priority, position
-FROM todo
-WHERE session_id = (SELECT id FROM session WHERE slug = 'your-slug-here')
-ORDER BY position;
-```
+| file                                           | tables                                                  |
+| ---------------------------------------------- | ------------------------------------------------------- |
+| `packages/opencode/src/project/project.sql.ts` | `project`                                               |
+| `packages/opencode/src/session/session.sql.ts` | `session`, `message`, `part`, `todo`, `permission`      |
+| `packages/opencode/src/share/share.sql.ts`     | `session_share`                                         |
+| `packages/opencode/src/storage/schema.sql.ts`  | `Timestamps` mixin (`time_created`, `time_updated`)     |
+| `packages/opencode/src/session/message-v2.ts`  | Zod types for `message.data` and `part.data` JSON blobs |
 
 ### Tips
 
