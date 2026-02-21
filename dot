@@ -927,16 +927,27 @@ cmd_unlink() {
 
 cmd_stow() {
     print_header "Stowing dotfiles"
-    
+
     if ! command_exists stow; then
         print_error "GNU Stow is not installed"
         print_info "Install it first: brew install stow"
         return 1
     fi
-    
+
+    local adopt=false
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --adopt) adopt=true; shift ;;
+            *) print_error "Unknown option: $1"; return 1 ;;
+        esac
+    done
+
+    local stow_args=(-R -v -d "${DOTFILES_DIR}" -t "${HOME}")
+    [[ "$adopt" == true ]] && stow_args+=(--adopt)
+
     print_info "Creating symlinks for dotfiles..."
-    
-    if stow -R -v -d "${DOTFILES_DIR}" -t "${HOME}" home; then
+
+    if stow "${stow_args[@]}" home; then
         print_success "Dotfiles stowed successfully"
         print_info "Configuration files are now symlinked to your home directory"
     else
@@ -1831,6 +1842,144 @@ cmd_package_help() {
     echo ""
 }
 
+cmd_adopt() {
+    # Parse options
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -h|--help)
+                cat << EOF
+${BOLD}USAGE:${RESET}
+    ${SCRIPT_NAME} adopt <path>
+
+${BOLD}DESCRIPTION:${RESET}
+    Move a file or directory that was accidentally created inside a stow-managed
+    symlinked location into the actual dotfiles repo, then re-stow so the
+    symlink is (re-)created in its place.
+
+    Example: a file created at ~/.config/opencode/plugins that should live in
+    dotfiles/home/.config/opencode/plugins.
+
+${BOLD}ARGUMENTS:${RESET}
+    path    Path to the file or directory to adopt (must be under \$HOME)
+
+${BOLD}EXAMPLES:${RESET}
+    ${SCRIPT_NAME} adopt ~/.config/opencode/plugins
+    ${SCRIPT_NAME} adopt ~/.config/opencode/config.json
+
+EOF
+                return 0
+                ;;
+            -*)
+                print_error "Unknown option: $1"
+                print_info "Run '${SCRIPT_NAME} adopt --help' for usage"
+                return 1
+                ;;
+            *)
+                break
+                ;;
+        esac
+    done
+
+    local target_path="${1:-}"
+
+    if [[ -z "$target_path" ]]; then
+        print_error "Path required"
+        print_info "Usage: ${SCRIPT_NAME} adopt <path>"
+        print_info "Run '${SCRIPT_NAME} adopt --help' for usage"
+        return 1
+    fi
+
+    # Resolve to absolute path (works on macOS without GNU coreutils)
+    local abs_path
+    if [[ -e "$target_path" ]]; then
+        if [[ -d "$target_path" ]]; then
+            abs_path="$(cd "$target_path" && pwd)"
+        else
+            abs_path="$(cd "$(dirname "$target_path")" && pwd)/$(basename "$target_path")"
+        fi
+    else
+        print_error "Path does not exist: $target_path"
+        return 1
+    fi
+
+    # Must be under $HOME
+    if [[ "$abs_path" != "${HOME}/"* ]]; then
+        print_error "Path must be under \$HOME: $abs_path"
+        return 1
+    fi
+
+    # Must not already be a symlink into dotfiles
+    if [[ -L "$abs_path" ]]; then
+        local link_target
+        link_target="$(readlink "$abs_path")"
+        # Resolve relative symlinks to absolute
+        if [[ "$link_target" != /* ]]; then
+            link_target="$(cd "$(dirname "$abs_path")" && pwd)/${link_target}"
+        fi
+        # Normalize .. components by letting cd resolve the path
+        local normalized
+        if [[ -d "$link_target" ]]; then
+            normalized="$(cd "$link_target" 2>/dev/null && pwd)" || normalized="$link_target"
+        else
+            normalized="$(cd "$(dirname "$link_target")" 2>/dev/null && pwd)/$(basename "$link_target")" || normalized="$link_target"
+        fi
+        link_target="$normalized"
+        if [[ "$link_target" == "${HOME_DIR}/"* || "$link_target" == "${HOME_DIR}" ]]; then
+            print_success "$abs_path is already managed by dotfiles (symlink to $link_target)"
+            return 0
+        fi
+        print_error "$abs_path is a symlink to $link_target (not into dotfiles)"
+        print_info "Remove the symlink manually if you want to adopt this path"
+        return 1
+    fi
+
+    local relative_path="${abs_path#"${HOME}/"}"
+    local dotfiles_path="${HOME_DIR}/${relative_path}"
+
+    print_header "Adopting into dotfiles"
+    print_info "Source:      $abs_path"
+    print_info "Destination: $dotfiles_path"
+
+    # Target must not already exist in dotfiles
+    if [[ -e "$dotfiles_path" ]]; then
+        print_error "Already exists in dotfiles: $dotfiles_path"
+        print_info "Remove it from dotfiles first if you want to replace it"
+        return 1
+    fi
+
+    if ! command_exists stow; then
+        print_error "GNU Stow is not installed"
+        print_info "Install it first: brew install stow"
+        return 1
+    fi
+
+    # Create parent dirs in dotfiles if needed
+    local parent_dir
+    parent_dir="$(dirname "$dotfiles_path")"
+    if [[ ! -d "$parent_dir" ]]; then
+        print_info "Creating parent directory in dotfiles: $parent_dir"
+        mkdir -p "$parent_dir"
+    fi
+
+    # Move into dotfiles
+    if ! mv "$abs_path" "$dotfiles_path"; then
+        print_error "Failed to move $abs_path -> $dotfiles_path"
+        return 1
+    fi
+    print_success "Moved to dotfiles"
+
+    # Re-stow (creates the symlink back at the original location)
+    if stow -R -v -d "${DOTFILES_DIR}" -t "${HOME}" home 2>&1; then
+        print_success "Stowed — symlink created at $abs_path"
+    else
+        print_error "Stow failed — reverting move"
+        mv "$dotfiles_path" "$abs_path"
+        return 1
+    fi
+
+    print_success "Done! $relative_path is now tracked in dotfiles."
+}
+
 cmd_help() {
     echo -e "${BOLD}${SCRIPT_NAME}${RESET} - Dotfiles management tool"
     echo "Version: ${VERSION}"
@@ -1849,6 +1998,7 @@ cmd_help() {
     echo "    retry-failed        Retry failed package installations"
     echo "    summary             Summarize recent git commits using OpenCode"
     echo "    gen-ssh-key         Generate SSH key for GitHub/GitLab with email"
+    echo "    adopt               Move a stray file/dir into dotfiles and re-stow"
     echo "    stow                Create symlinks for dotfiles using GNU Stow"
     echo "    link                Install dot command globally (create symlink in PATH)"
     echo "    unlink              Uninstall global dot command (remove symlink)"
@@ -1877,6 +2027,7 @@ cmd_help() {
     echo "    ${SCRIPT_NAME} summary -n 5 -d           # Detailed summary of last 5 commits"
     echo "    ${SCRIPT_NAME} gen-ssh-key               # Generate SSH key (prompts for email)"
     echo "    ${SCRIPT_NAME} gen-ssh-key user@github.com  # Generate SSH key with email"
+    echo "    ${SCRIPT_NAME} adopt ~/.config/opencode/plugins  # Adopt stray dir into dotfiles"
     echo "    ${SCRIPT_NAME} stow                      # Create symlinks for dotfiles"
     echo "    ${SCRIPT_NAME} link                      # Install dot command globally in PATH"
     echo ""
@@ -1948,6 +2099,9 @@ main() {
             ;;
         gen-ssh-key)
             cmd_gen_ssh_key "$@"
+            ;;
+        adopt)
+            cmd_adopt "$@"
             ;;
         stow)
             cmd_stow "$@"

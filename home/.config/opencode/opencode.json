@@ -4,12 +4,6 @@
   "autoshare": false,
   "autoupdate": true,
   "disabled_providers": ["google-vertex-anthropic", "gitlab"],
-  "command": {
-    "handoff": {
-      "description": "Compact and immediately start working on a goal",
-      "template": "$ARGUMENTS"
-    }
-  },
   "agent": {
     "explore": {
       "model": "anthropic/claude-haiku-4-5"
