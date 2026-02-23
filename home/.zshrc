@@ -197,15 +197,18 @@ sts() {
 sso() {
     local do_login=1
     
-    local args=("$@")
-    for i in "${!args[@]}"; do
-        case "${args[$i]}" in
+    for arg in "$@"; do
+        case "$arg" in
             --export|-e)
                 do_login=0
-                unset 'args[i]'
                 ;;
         esac
     done
+    
+    local -a args
+    args=("$@")
+    args=("${args[@]:#--export}")
+    args=("${args[@]:#-e}")
     set -- "${args[@]}"
     
     case "$1" in
