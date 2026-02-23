@@ -195,6 +195,19 @@ sts() {
 
 }
 sso() {
+    local do_login=1
+    
+    local args=("$@")
+    for i in "${!args[@]}"; do
+        case "${args[$i]}" in
+            --export|-e)
+                do_login=0
+                unset 'args[i]'
+                ;;
+        esac
+    done
+    set -- "${args[@]}"
+    
     case "$1" in
         "prod")
             export AWS_PROFILE="prod"
@@ -215,7 +228,9 @@ sso() {
     esac
     echo $AWS_PROFILE
     echo $AWS_DEFAULT_REGION
-    aws sso login --profile "$1"
+    if (( do_login )); then
+        aws sso login --profile "$1"
+    fi
 }
 
 function y() {
