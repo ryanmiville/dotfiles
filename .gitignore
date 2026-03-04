@@ -2,5 +2,6 @@ home/.config/zed/prompts/
 home/.config/zed/conversations/
 home/.config/nushell/history.txt
 home/.config/tmux/plugins/
+home/.pi/agent/auth.json
 .DS_Store
 node_modules
