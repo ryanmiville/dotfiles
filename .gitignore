@@ -6,3 +6,4 @@ home/.pi/agent/auth.json
 home/.pi/agent/sessions/
 .DS_Store
 node_modules
+.opencode/plans/

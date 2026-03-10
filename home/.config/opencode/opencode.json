@@ -3,7 +3,10 @@
   // "theme": "catppuccin",
   "autoshare": false,
   "autoupdate": true,
-  "disabled_providers": ["google-vertex-anthropic", "gitlab"],
+  "disabled_providers": [
+    "google-vertex-anthropic",
+    "gitlab"
+  ],
   "agent": {
     "explore": {
       "model": "anthropic/claude-haiku-4-5"
@@ -22,12 +25,20 @@
     },
     "opensrc": {
       "type": "local",
-      "command": ["npx", "-y", "opensrc-mcp"],
+      "command": [
+        "npx",
+        "-y",
+        "opensrc-mcp"
+      ],
       "enabled": false
     },
     "playwriter": {
       "type": "local",
-      "command": ["npx", "-y", "playwriter@latest"],
+      "command": [
+        "npx",
+        "-y",
+        "playwriter@latest"
+      ],
       "enabled": false
     },
     "atlassian-rovo": {
@@ -50,5 +61,8 @@
       "/Users/ryanmiville/.dotfiles/home/.config/opencode/*": "allow",
       "/Users/ryanmiville/.config/opencode/*": "allow"
     }
-  }
+  },
+  "plugin": [
+    "@plannotator/opencode@latest"
+  ]
 }

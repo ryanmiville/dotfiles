@@ -1,7 +1,17 @@
 {
-  "lastChangelogVersion": "0.55.4",
+  "lastChangelogVersion": "0.57.1",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.3-codex",
-  "defaultThinkingLevel": "medium",
-  "theme": "houston"
+  "defaultModel": "gpt-5.4",
+  "defaultThinkingLevel": "high",
+  "theme": "houston",
+  "enabledModels": [
+    "anthropic/claude-opus-4-6",
+    "anthropic/claude-sonnet-4-6",
+    "anthropic/claude-haiku-4-5",
+    "openai-codex/gpt-5.1-codex-mini",
+    "openai-codex/gpt-5.4"
+  ],
+  "packages": [
+    "npm:@plannotator/pi-extension"
+  ]
 }
