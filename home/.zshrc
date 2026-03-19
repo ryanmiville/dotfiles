@@ -50,6 +50,14 @@ zinit wait lucid for \
 zinit ice lucid wait
 zinit snippet OMZP::fzf
 
+# Source fzf key bindings for ctrl-r history search (override zsh-vi-mode)
+if [[ -f "$HOME/.fzf.zsh" ]]; then
+  source "$HOME/.fzf.zsh"
+fi
+
+# Ensure fzf takes over ctrl-r for history search (placed after all plugins)
+bindkey '^R' fzf-history-widget
+
 # Load completions
 autoload -U compinit && compinit
 
@@ -286,3 +294,6 @@ alias yolo='claude --dangerously-skip-permissions'
 
 export H3_CLI_HOME=/Users/ryanmiville/dev/h3-cli
 export PATH="$H3_CLI_HOME/bin:$PATH"
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8

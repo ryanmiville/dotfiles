@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "context7": {
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "grep_app": {
+      "url": "https://mcp.grep.app"
+    },
+    "atlassian-rovo": {
+      "type": "remote",
+      "url": "https://mcp.atlassian.com/v1/mcp",
+      "enabled": false,
+      "oauth": {}
+    }
+  }
+}
