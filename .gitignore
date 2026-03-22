@@ -7,3 +7,4 @@ home/.pi/agent/sessions/
 .DS_Store
 node_modules
 .opencode/plans/
+/home/.pi/agent/mcp-cache.json
