@@ -52,6 +52,11 @@
     "modal_max_width": "medium",
   },
   "agent": {
+    "inline_assistant_model": {
+      "provider": "anthropic",
+      "model": "claude-opus-4-6-thinking-latest",
+      "enable_thinking": false
+    },
     "tool_permissions": {
       "default": "allow",
     },
@@ -101,7 +106,7 @@
       "show_edit_predictions": true,
     },
     "Python": {
-      "language_servers": ["ty"],
+      "language_servers": ["basedpyright"],
       "allow_rewrap": "in_selections",
     },
     // "TypeScript": {

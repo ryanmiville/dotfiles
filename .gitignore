@@ -4,7 +4,8 @@ home/.config/nushell/history.txt
 home/.config/tmux/plugins/
 home/.pi/agent/auth.json
 home/.pi/agent/sessions/
+home/.pi/agent/.cache/
+home/.pi/agent/mcp-cache.json
 .DS_Store
 node_modules
 .opencode/plans/
-/home/.pi/agent/mcp-cache.json

@@ -248,6 +248,18 @@
     },
   },
   {
+    "context": "!OutlinePanel",
+    "bindings": {
+      "cmd-shift-b": "outline_panel::ToggleFocus",
+    },
+  },
+  {
+    "context": "OutlinePanel",
+    "bindings": {
+      "cmd-shift-b": "workspace::ToggleLeftDock",
+    },
+  },
+  {
     "context": "(GitPanel && ChangesList)",
     "bindings": {
       "a": "git::StageAll",

@@ -267,7 +267,7 @@ M.map_lsp_keybinds = function(buffer_number)
 		return vim.lsp.buf.hover({ border = "rounded" })
 	end
 
-	vim.keymap.set("n", "K", hover, { desc = "LSP: Signature help", buffer = buffer_number })
+	vim.keymap.set("n", "K", hover, { desc = "LSP: Hover", buffer = buffer_number })
 
 	vim.keymap.set("i", "<C-k>", signature_help, { desc = "LSP: Signature help", buffer = buffer_number })
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: Go to declaration", buffer = buffer_number })
