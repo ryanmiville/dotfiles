@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.62.0",
+  "lastChangelogVersion": "0.63.1",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-sonnet-4-6",
-  "defaultThinkingLevel": "high",
+  "defaultModel": "claude-opus-4-6",
+  "defaultThinkingLevel": "minimal",
   "theme": "houston",
   "enabledModels": [
     "anthropic/claude-opus-4-6",
@@ -15,5 +15,6 @@
     "npm:@plannotator/pi-extension",
     "npm:pi-mcp-adapter",
     "https://github.com/davebcn87/pi-autoresearch"
-  ]
+  ],
+  "hideThinkingBlock": false
 }

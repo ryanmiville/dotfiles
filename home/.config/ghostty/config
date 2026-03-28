@@ -28,7 +28,6 @@ keybind = cmd+;>7=goto_tab:7
 keybind = cmd+;>8=goto_tab:8
 keybind = cmd+;>9=goto_tab:9
 
-# split
 keybind = cmd+;>j=goto_split:bottom
 keybind = cmd+;>k=goto_split:top
 keybind = cmd+;>h=goto_split:left

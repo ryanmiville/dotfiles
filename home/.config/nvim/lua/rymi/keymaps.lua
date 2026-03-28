@@ -1,4 +1,5 @@
 local prelude = require("rymi.prelude")
+local cmux_navigation = require("rymi.cmux_navigation")
 
 local copy_line_diagnostics_to_clipboard = prelude.copy_line_diagnostics_to_clipboard
 local open_link = prelude.open_link
@@ -22,37 +23,10 @@ vim.keymap.set("n", "<", "<<", { noremap = true, silent = true })
 vim.keymap.set("n", ">", ">>", { noremap = true, silent = true })
 
 -- Split navigation
-vim.keymap.set("n", "<C-j>", function()
-	if vim.fn.exists(":NvimTmuxNavigateDown") ~= 0 then
-		vim.cmd.NvimTmuxNavigateDown()
-	else
-		vim.cmd.wincmd("j")
-	end
-end, { desc = "Navigate down" })
-
-vim.keymap.set("n", "<C-k>", function()
-	if vim.fn.exists(":NvimTmuxNavigateUp") ~= 0 then
-		vim.cmd.NvimTmuxNavigateUp()
-	else
-		vim.cmd.wincmd("k")
-	end
-end, { desc = "Navigate up" })
-
-vim.keymap.set("n", "<C-l>", function()
-	if vim.fn.exists(":NvimTmuxNavigateRight") ~= 0 then
-		vim.cmd.NvimTmuxNavigateRight()
-	else
-		vim.cmd.wincmd("l")
-	end
-end, { desc = "Navigate right" })
-
-vim.keymap.set("n", "<C-h>", function()
-	if vim.fn.exists(":NvimTmuxNavigateLeft") ~= 0 then
-		vim.cmd.NvimTmuxNavigateLeft()
-	else
-		vim.cmd.wincmd("h")
-	end
-end, { desc = "Navigate left" })
+vim.keymap.set("n", "<C-j>", cmux_navigation.NvimCmuxNavigateDown, { desc = "Navigate down" })
+vim.keymap.set("n", "<C-k>", cmux_navigation.NvimCmuxNavigateUp, { desc = "Navigate up" })
+vim.keymap.set("n", "<C-l>", cmux_navigation.NvimCmuxNavigateRight, { desc = "Navigate right" })
+vim.keymap.set("n", "<C-h>", cmux_navigation.NvimCmuxNavigateLeft, { desc = "Navigate left" })
 --
 -- Swap between last two buffers
 vim.keymap.set("n", "<leader>bb", "<C-^>", { desc = "Switch to last buffer" })
