@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.63.1",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.4",
-  "defaultThinkingLevel": "xhigh",
+  "lastChangelogVersion": "0.64.0",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-6",
+  "defaultThinkingLevel": "low",
   "theme": "houston",
   "enabledModels": [
     "anthropic/claude-opus-4-6",
