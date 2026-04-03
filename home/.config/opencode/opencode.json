@@ -54,9 +54,11 @@
       "*.env": "deny",
       "*.env.*": "deny",
       "*.envrc": "deny",
+      "*.secrets": "deny",
       "secrets/*": "deny"
     },
     "external_directory": {
+      "*": "allow",
       "/Users/ryanmiville/dev/opencode/*": "allow",
       "/Users/ryanmiville/.dotfiles/home/.config/opencode/*": "allow",
       "/Users/ryanmiville/.config/opencode/*": "allow"
