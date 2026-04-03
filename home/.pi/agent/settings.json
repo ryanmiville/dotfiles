@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.64.0",
+  "lastChangelogVersion": "0.65.0",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.4",
   "defaultThinkingLevel": "xhigh",
@@ -14,7 +14,8 @@
   "packages": [
     "npm:@plannotator/pi-extension",
     "npm:pi-mcp-adapter",
-    "https://github.com/davebcn87/pi-autoresearch"
+    "https://github.com/davebcn87/pi-autoresearch",
+    "npm:pi-web-access"
   ],
   "hideThinkingBlock": false
 }
