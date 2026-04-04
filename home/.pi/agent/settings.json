@@ -2,7 +2,7 @@
   "lastChangelogVersion": "0.65.0",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.4",
-  "defaultThinkingLevel": "low",
+  "defaultThinkingLevel": "high",
   "theme": "houston",
   "enabledModels": [
     "anthropic/claude-opus-4-6",
