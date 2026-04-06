@@ -11,6 +11,9 @@
     "tree_view": true,
   },
   "agent_servers": {
+    "pi-acp": {
+      "type": "registry"
+    },
     "claude-acp": {
       "type": "registry",
       "default_mode": "plan",

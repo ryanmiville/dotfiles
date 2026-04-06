@@ -9,3 +9,4 @@ home/.pi/agent/mcp-cache.json
 .DS_Store
 node_modules
 .opencode/plans/
+/home/.pi/pi-acp
