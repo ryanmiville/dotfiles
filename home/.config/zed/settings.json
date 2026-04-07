@@ -11,8 +11,13 @@
     "tree_view": true,
   },
   "agent_servers": {
+    "pi-sdk-acp": {
+      "type": "custom",
+      "command": "node",
+      "args": ["/Users/ryanmiville/dev/pi-sdk-acp/dist/index.js"],
+    },
     "pi-acp": {
-      "type": "registry"
+      "type": "registry",
     },
     "claude-acp": {
       "type": "registry",
@@ -58,7 +63,7 @@
     "inline_assistant_model": {
       "provider": "anthropic",
       "model": "claude-opus-4-6-thinking-latest",
-      "enable_thinking": false
+      "enable_thinking": false,
     },
     "tool_permissions": {
       "default": "allow",
