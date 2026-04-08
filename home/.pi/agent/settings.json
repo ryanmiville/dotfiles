@@ -11,6 +11,9 @@
     "openai-codex/gpt-5.1-codex-mini",
     "openai-codex/gpt-5.4"
   ],
+  "extensions": [
+    "~/.pi/agent/extensions/pi-ephemeral"
+  ],
   "packages": [
     "npm:@plannotator/pi-extension",
     "npm:pi-mcp-adapter",
