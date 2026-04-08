@@ -1,60 +1,77 @@
+local parser_languages = {
+	"bash",
+	"css",
+	"gleam",
+	"go",
+	"html",
+	"javascript",
+	"json",
+	"lua",
+	"luadoc",
+	"markdown",
+	"markdown_inline",
+	"python",
+	"rust",
+	"terraform",
+	"tsx",
+	"typescript",
+	"yaml",
+}
+
+local function install_missing_parsers()
+	local treesitter = require("nvim-treesitter")
+	local installed = {}
+
+	for _, language in ipairs(treesitter.get_installed()) do
+		installed[language] = true
+	end
+
+	local missing = vim.tbl_filter(function(language)
+		return not installed[language]
+	end, parser_languages)
+
+	if #missing > 0 then
+		treesitter.install(missing)
+	end
+end
+
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
+		lazy = false,
 		build = function()
-			require("nvim-treesitter.install").update({ with_sync = true })
+			require("nvim-treesitter").install(parser_languages)
 		end,
-		event = { "BufEnter" },
-		main = "nvim-treesitter.configs", -- Sets main module to use for opts
-		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-		opts = {
-			ensure_installed = {
-				"bash",
-				"css",
-				"gleam",
-				"go",
-				"html",
-				"javascript",
-				"json",
-				"lua",
-				"luadoc",
-				"markdown",
-				"markdown_inline",
-				"python",
-				"rust",
-				"terraform",
-				"tsx",
-				"typescript",
-				"yaml",
-				-- "scala"
-			},
-			sync_install = false,
-			auto_install = true,
-			highlight = {
-				enable = true,
-			},
-			indent = { enable = true },
-			autopairs = { enable = true },
-			autotag = { enable = true },
-			incremental_selection = { 
-				enable = true,
-				keymaps = {
-					init_selection = "<c-space>",
-					node_incremental = "<c-space>",
-					scope_incremental = "<c-s>",
-					node_decremental = "<c-backspace>",
-				}
-
-			},
-		},
+		config = function()
+			require("nvim-treesitter").setup({})
+			install_missing_parsers()
+		end,
 	},
 	{
-		-- Additional text objects for treesitter
 		"nvim-treesitter/nvim-treesitter-textobjects",
+		branch = "main",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			require("nvim-treesitter-textobjects").setup({
+				select = {
+					lookahead = true,
+				},
+				move = {
+					set_jumps = true,
+				},
+			})
+		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			require("treesitter-context").setup({
+				enable = false,
+				max_lines = 1,
+				trim_scope = "inner",
+			})
+		end,
 	},
 }

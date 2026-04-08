@@ -1,36 +1,34 @@
--- return {
--- 	"folke/tokyonight.nvim",
--- 	lazy = false,
--- 	priority = 1000,
--- 	opts = {},
--- 	init = function()
--- 		-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
--- 		vim.cmd.colorscheme("tokyonight-storm")
--- 	end,
--- }
-
--- return {
--- 	"catppuccin/nvim",
--- 	name = "catppuccin",
--- 	priority = 1000,
--- 	config = function()
--- 		require("catppuccin").setup({
--- 			auto_integrations = true,
--- 		})
--- 		vim.cmd.colorscheme("catppuccin-mocha")
--- 	end,
--- }
-
 return {
-	dir = vim.fn.stdpath("config") .. "/pack/themes/start/houston",
-	name = "houston",
-	priority = 1000,
-	config = function()
-		require("houston").setup({
-			-- optional config
-			transparent = false,
-			terminal_colors = true,
-		})
-		vim.cmd.colorscheme("houston")
-	end,
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require("catppuccin").setup({
+				integrations = {
+					diffview = true,
+					fidget = true,
+					gitsigns = true,
+					harpoon = true,
+					native_lsp = { enabled = true },
+					render_markdown = true,
+					snacks = {
+						enabled = true,
+						indent_scope_color = "mauve",
+					},
+					treesitter = true,
+					treesitter_context = true,
+					ufo = true,
+					which_key = true,
+				},
+			})
+			vim.cmd.colorscheme("catppuccin-macchiato")
+
+			-- Hide all semantic highlights until upstream issues are resolved
+			for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+				vim.api.nvim_set_hl(0, group, {})
+			end
+		end,
+	},
 }
