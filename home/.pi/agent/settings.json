@@ -12,7 +12,13 @@
     "openai-codex/gpt-5.4"
   ],
   "extensions": [
-    "~/.pi/agent/extensions/pi-ephemeral"
+    "~/.pi/agent/extensions/pi-ephemeral",
+    "~/dev/agent-stuff/pi-extensions/answer.ts",
+    "~/dev/agent-stuff/pi-extensions/context.ts",
+    "~/dev/agent-stuff/pi-extensions/todos.ts",
+    "~/dev/agent-stuff/pi-extensions/btw.ts",
+    "~/dev/agent-stuff/pi-extensions/prompt-editor.ts",
+    "~/dev/agent-stuff/pi-extensions/whimsical.ts"
   ],
   "packages": [
     "npm:@plannotator/pi-extension",
