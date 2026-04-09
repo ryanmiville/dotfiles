@@ -1,8 +1,8 @@
 {
   "lastChangelogVersion": "0.65.2",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-6",
-  "defaultThinkingLevel": "xhigh",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.4",
+  "defaultThinkingLevel": "high",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
     "anthropic/claude-opus-4-6",
@@ -15,9 +15,8 @@
     "~/.pi/agent/extensions/pi-ephemeral",
     "~/dev/agent-stuff/pi-extensions/answer.ts",
     "~/dev/agent-stuff/pi-extensions/context.ts",
-    "~/dev/agent-stuff/pi-extensions/todos.ts",
+    "~/dev/dmmulroy/home/.pi/agent/extensions/todos/index.ts",
     "~/dev/agent-stuff/pi-extensions/btw.ts",
-    "~/dev/agent-stuff/pi-extensions/prompt-editor.ts",
     "~/dev/agent-stuff/pi-extensions/whimsical.ts"
   ],
   "packages": [
