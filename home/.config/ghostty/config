@@ -1,13 +1,29 @@
 env = XDG_CONFIG_HOME=/Users/ryanmiville/.config
-# command = bash -l -c /opt/homebrew/bin/nu --login
 
+# Ghostty theme
+theme = Catppuccin Macchiato
+
+# Updates
 auto-update-channel = tip
 
-theme = Catppuccin Macchiato
-font-family = "JetBrainsMono Nerd Font Mono"
+# Shell integrations
+shell-integration = zsh
+
+# Font 
+font-family = "Maple Mono NF"
+font-style = Regular
+font-style-italic = Regular Italic
+font-style-bold = Bold
+font-style-bold-italic = Bold Italic
 font-size = 16
-macos-titlebar-style = tabs
+
+# UI
+macos-titlebar-style = transparent
+macos-titlebar-proxy-icon = hidden
 mouse-hide-while-typing = true
+
+# Quick terminal
+quick-terminal-position = bottom
 
 # keybindings
 # tabs 
@@ -47,6 +63,8 @@ keybind = alt+[=resize_split:left,10
 keybind = alt+==resize_split:down,10
 keybind = alt+-=resize_split:up,10
 
+# new line
 keybind = shift+enter=text:\n
 
+# quick terminal
 keybind = global:cmd+shift+opt+ctrl+;=toggle_quick_terminal
