@@ -1,5 +1,8 @@
 {
   "mcpServers": {
+    "datadog": {
+      "url": "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp"
+    },
     "context7": {
       "url": "https://mcp.context7.com/mcp"
     },
@@ -7,10 +10,7 @@
       "url": "https://mcp.grep.app"
     },
     "atlassian-rovo": {
-      "type": "remote",
-      "url": "https://mcp.atlassian.com/v1/mcp",
-      "enabled": false,
-      "oauth": {}
+      "url": "https://mcp.atlassian.com/v1/mcp"
     }
   }
 }

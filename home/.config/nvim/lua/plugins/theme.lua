@@ -26,9 +26,9 @@ return {
 			vim.cmd.colorscheme("catppuccin-macchiato")
 
 			-- Hide all semantic highlights until upstream issues are resolved
-			for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
-				vim.api.nvim_set_hl(0, group, {})
-			end
+			-- for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+			-- 	vim.api.nvim_set_hl(0, group, {})
+			-- end
 		end,
 	},
 }
