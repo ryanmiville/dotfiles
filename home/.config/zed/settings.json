@@ -107,7 +107,7 @@
   "theme": {
     "mode": "dark",
     "light": "One Light",
-    "dark": "Catppuccin Macchiato (Blur) [Heavy]"
+    "dark": "Catppuccin Macchiato"
   },
   "telemetry": {
     "metrics": false,
