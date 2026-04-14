@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.66.1",
+  "lastChangelogVersion": "0.67.1",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-6",
   "defaultThinkingLevel": "high",
@@ -23,7 +23,8 @@
     "npm:@plannotator/pi-extension",
     "npm:pi-mcp-adapter",
     "https://github.com/davebcn87/pi-autoresearch",
-    "npm:pi-web-access"
+    "npm:pi-web-access",
+    "git:github.com/earendil-works/pi-review"
   ],
   "hideThinkingBlock": false,
   "terminal": {

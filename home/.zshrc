@@ -298,5 +298,8 @@ export PATH="$H3_CLI_HOME/bin:$PATH"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+# Suppress npm deprecation warnings for pi
+alias pi='npm_config_loglevel=error pi'
+
 # Vite+ bin (https://viteplus.dev)
 . "$HOME/.vite-plus/env"

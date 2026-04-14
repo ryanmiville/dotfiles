@@ -6,6 +6,13 @@
     "reveal": "always",
     "reveal_target": "center",
     "hide": "always"
+  },
+  {
+    "label": "yazi",
+    "command": "EDITOR=zed yazi $ZED_WORKTREE_ROOT",
+    "reveal": "always",
+    "reveal_target": "center",
+    "hide": "always"
   }
   // {
   //   "label": "Example task",
