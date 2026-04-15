@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.67.1",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-6",
+  "lastChangelogVersion": "0.67.2",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.4",
   "defaultThinkingLevel": "high",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
@@ -15,16 +15,25 @@
     "~/.pi/agent/extensions/pi-ephemeral",
     "~/dev/agent-stuff/extensions/context.ts",
     "~/dev/dmmulroy/home/.pi/agent/extensions/todos/index.ts",
+    "~/dev/dmmulroy/home/.pi/agent/extensions/answer.ts",
     "~/dev/agent-stuff/extensions/btw.ts",
     "~/dev/agent-stuff/extensions/whimsical.ts"
   ],
   "packages": [
     "npm:@plannotator/pi-extension",
     "npm:pi-mcp-adapter",
-    "https://github.com/davebcn87/pi-autoresearch",
+    {
+      "source": "https://github.com/davebcn87/pi-autoresearch",
+      "extensions": [
+        "-extensions/pi-autoresearch/index.ts"
+      ],
+      "skills": [
+        "-skills/autoresearch-create/SKILL.md",
+        "-skills/autoresearch-finalize/SKILL.md"
+      ]
+    },
     "npm:pi-web-access",
-    "git:github.com/earendil-works/pi-review",
-    "npm:pi-answer"
+    "git:github.com/earendil-works/pi-review"
   ],
   "hideThinkingBlock": false,
   "terminal": {
