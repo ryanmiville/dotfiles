@@ -13,18 +13,18 @@
   ],
   "extensions": [
     "~/.pi/agent/extensions/pi-ephemeral",
-    "~/dev/agent-stuff/pi-extensions/answer.ts",
-    "~/dev/agent-stuff/pi-extensions/context.ts",
+    "~/dev/agent-stuff/extensions/context.ts",
     "~/dev/dmmulroy/home/.pi/agent/extensions/todos/index.ts",
-    "~/dev/agent-stuff/pi-extensions/btw.ts",
-    "~/dev/agent-stuff/pi-extensions/whimsical.ts"
+    "~/dev/agent-stuff/extensions/btw.ts",
+    "~/dev/agent-stuff/extensions/whimsical.ts"
   ],
   "packages": [
     "npm:@plannotator/pi-extension",
     "npm:pi-mcp-adapter",
     "https://github.com/davebcn87/pi-autoresearch",
     "npm:pi-web-access",
-    "git:github.com/earendil-works/pi-review"
+    "git:github.com/earendil-works/pi-review",
+    "npm:pi-answer"
   ],
   "hideThinkingBlock": false,
   "terminal": {

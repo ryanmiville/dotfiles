@@ -10,7 +10,8 @@
       "url": "https://mcp.grep.app"
     },
     "atlassian-rovo": {
-      "url": "https://mcp.atlassian.com/v1/mcp"
+      "url": "https://mcp.atlassian.com/v1/mcp",
+      "directTools": true
     }
   }
 }
