@@ -130,6 +130,7 @@ export default function confirmGitExtension(pi: ExtensionAPI) {
 		if (actions.length === 0) return;
 
 		if (!ctx.hasUI) {
+			ctx.abort();
 			return {
 				block: true,
 				reason: `${formatActionList(actions)} blocked: confirmation requires UI`,
@@ -139,7 +140,8 @@ export default function confirmGitExtension(pi: ExtensionAPI) {
 		const confirmed = await confirmGitCommand(ctx, command, actions);
 		if (confirmed) return;
 
-		ctx.ui.notify(`Blocked ${formatActionList(actions)}`, "warning");
+		ctx.ui.notify(`Denied ${formatActionList(actions)}. agent stopped.`, "warning");
+		ctx.abort();
 		return { block: true, reason: "Blocked by user" };
 	});
 }
