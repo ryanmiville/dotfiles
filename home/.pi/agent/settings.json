@@ -1,15 +1,13 @@
 {
-  "lastChangelogVersion": "0.67.2",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.4",
+  "lastChangelogVersion": "0.67.4",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-7",
   "defaultThinkingLevel": "high",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
     "anthropic/claude-opus-4-6",
-    "anthropic/claude-sonnet-4-6",
-    "anthropic/claude-haiku-4-5",
-    "openai-codex/gpt-5.1-codex-mini",
-    "openai-codex/gpt-5.4"
+    "openai-codex/gpt-5.4",
+    "anthropic/claude-opus-4-7"
   ],
   "extensions": [
     "~/.pi/agent/extensions/pi-ephemeral",
