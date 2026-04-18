@@ -1,0 +1,8 @@
+{
+  "hiddenCommands": [
+    "plannotator",
+    "plannotator-status",
+    "plannotator-set-file",
+    "plannotator-archive"
+  ]
+}
