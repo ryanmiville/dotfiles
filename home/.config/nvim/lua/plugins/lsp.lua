@@ -27,7 +27,7 @@ return {
 
 			-- List your LSP servers here.
 			local servers = {
-				basedpyright = {},
+				ty = {},
 				bashls = {},
 				biome = {},
 				-- cf_lsp = {
@@ -76,7 +76,7 @@ return {
 				stylua = {},
 			}
 
-			local manually_installed_servers = {}
+			local manually_installed_servers = { "ty" }
 			local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters))
 			local ensure_installed = vim.tbl_filter(function(name)
 				return not vim.tbl_contains(manually_installed_servers, name)
@@ -147,7 +147,7 @@ return {
 
 			-- Setup Mason for managing external LSP servers
 			require("mason").setup({ ui = { border = "rounded" } })
-			require("mason-lspconfig").setup()
+			require("mason-lspconfig").setup({ automatic_enable = false })
 		end,
 	},
 }
