@@ -236,18 +236,6 @@
     },
   },
   {
-    "context": "!GitPanel",
-    "bindings": {
-      "cmd-g": "git_panel::ToggleFocus",
-    },
-  },
-  {
-    "context": "GitPanel",
-    "bindings": {
-      "cmd-g": "workspace::ToggleLeftDock",
-    },
-  },
-  {
     "context": "!OutlinePanel",
     "bindings": {
       "cmd-shift-b": "outline_panel::ToggleFocus",
@@ -256,7 +244,25 @@
   {
     "context": "OutlinePanel",
     "bindings": {
-      "cmd-shift-b": "workspace::ToggleLeftDock",
+      "cmd-shift-b": "workspace::ToggleRightDock",
+    },
+  },
+  {
+    "context": "AgentPanel",
+    "bindings": {
+      "cmd-?": "workspace::ToggleLeftDock",
+    },
+  },
+  {
+    "context": "!GitPanel",
+    "bindings": {
+      "cmd-g": "git_panel::ToggleFocus",
+    },
+  },
+  {
+    "context": "GitPanel",
+    "bindings": {
+      "cmd-g": "workspace::ToggleRightDock",
     },
   },
   {
