@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.70.2",
+  "lastChangelogVersion": "0.70.6",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "low",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
     "anthropic/claude-opus-4-6",
@@ -31,7 +31,8 @@
       ]
     },
     "npm:pi-web-access",
-    "~/dev/pi-review"
+    "~/dev/pi-review",
+    "npm:pi-interview"
   ],
   "hideThinkingBlock": false,
   "terminal": {
