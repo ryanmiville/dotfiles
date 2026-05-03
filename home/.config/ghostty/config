@@ -1,7 +1,8 @@
 env = XDG_CONFIG_HOME=/Users/ryanmiville/.config
 
 # Ghostty theme
-theme = Catppuccin Macchiato
+# theme = Catppuccin Macchiato
+theme = TokyoNight
 
 # Updates
 auto-update-channel = tip

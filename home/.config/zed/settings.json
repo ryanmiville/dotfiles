@@ -7,11 +7,16 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "preview_tabs": {
+    "enable_preview_from_multibuffer": false,
+    "enable_preview_from_project_panel": false,
+    "enabled": false,
+  },
   "cli_default_open_behavior": "new_window",
   "icon_theme": {
-    "mode": "dark",
+    "mode": "light",
     "light": "Zed (Default)",
-    "dark": "Zed (Default)"
+    "dark": "Zed (Default)",
   },
   "git_panel": {
     "dock": "right",
@@ -41,11 +46,11 @@
       "proxy": null,
       "proxy_no_verify": null,
     },
-    "enabled_in_text_threads": false,
   },
   "tab_bar": {
+    "show_tab_bar_buttons": false,
     "show_nav_history_buttons": false,
-    "show": true,
+    "show": false,
   },
   "pane_split_direction_vertical": "right",
   "toolbar": {
@@ -64,7 +69,7 @@
     "**/.settings",
   ],
   "file_finder": {
-    "modal_max_width": "medium",
+    "modal_max_width": "large",
   },
   "agent": {
     "inline_assistant_model": {
@@ -76,16 +81,13 @@
       "default": "allow",
     },
     "dock": "left",
-    "play_sound_when_agent_done": true,
+    "play_sound_when_agent_done": "always",
     "default_profile": "write",
     "default_model": {
       "provider": "anthropic",
       "model": "claude-3-haiku-20240307",
     },
     "button": false,
-  },
-  "chat_panel": {
-    "button": "never",
   },
   "collaboration_panel": {
     "dock": "right",
@@ -111,7 +113,23 @@
   "theme": {
     "mode": "dark",
     "light": "One Light",
-    "dark": "Catppuccin Macchiato"
+    "dark": "Tokyo Night",
+  },
+  "theme_overrides": {
+    "Tokyo Night": {
+      "border.variant": "#16161E",
+      "border": "#16161E",
+      // "title_bar.background": "",
+      "panel.focused_border": "#C0CAF5",
+      "syntax": {
+        "comment": {
+          "font_style": "italic",
+        },
+        "comment.doc": {
+          "font_style": "italic",
+        },
+      },
+    },
   },
   "telemetry": {
     "metrics": false,
@@ -123,36 +141,15 @@
     "use_smartcase_find": true,
   },
   "languages": {
-    "Gleam": {
-      "show_edit_predictions": true,
-    },
     "Python": {
       "language_servers": ["basedpyright"],
       "allow_rewrap": "in_selections",
     },
-    // "TypeScript": {
-    //   "language_servers": [
-    //     "deno",
-    //     "!typescript-language-server",
-    //     "!vtsls",
-    //     "!eslint"
-    //   ],
-    //   "formatter": "language_server"
-    // },
-    // "TSX": {
-    //   "language_servers": [
-    //     "deno",
-    //     "!typescript-language-server",
-    //     "!vtsls",
-    //     "!eslint"
-    //   ],
-    //   "formatter": "language_server"
-    // }
   },
   "relative_line_numbers": "enabled",
   "ui_font_size": 16,
-  "ui_font_family": "JetBrainsMono Nerd Font",
-  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "ui_font_family": "Maple Mono NF",
+  "buffer_font_family": "Maple Mono NF",
   "buffer_font_size": 16,
   "agent_ui_font_size": 16,
   "soft_wrap": "none",
@@ -164,11 +161,31 @@
     },
   },
   "title_bar": {
+    "show_branch_name": false,
+    "show_user_menu": false,
+    "show_sign_in": false,
+    "show_onboarding_banner": false,
+    "show_project_items": true,
     "show_user_picture": false,
+  },
+  "status_bar": {
+    "experimental.show": false,
   },
   "auto_signature_help": true,
   "use_system_window_tabs": false,
   "hover_popover_enabled": false,
   "extend_comment_on_newline": false,
   "close_on_file_delete": true,
+  "scrollbar": {
+    "show": "never",
+  },
+  "gutter": {
+    "min_line_number_digits": 0,
+    "folds": false,
+    "runnables": false,
+  },
+  "cursor_blink": false,
+  "show_completions_on_input": true,
+  "show_completion_documentation": true,
+  "inline_code_actions": false,
 }
