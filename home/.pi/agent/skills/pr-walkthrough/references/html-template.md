@@ -201,25 +201,58 @@ All diagrams are inline SVGs inside a `.diagram` container. Use consistent styli
 ```html
 <div class="diagram">
   <svg width="900" height="320" viewBox="0 0 900 320">
-    <!-- Boxes: rounded rects with fill + stroke from the palette -->
-    <rect x="30" y="50" width="160" height="70" rx="8"
-          fill="#1a3a5c" stroke="#264d73"/>
-    <!-- Text: centered in boxes -->
-    <text x="110" y="80" fill="#e6edf3" font-size="13"
-          font-weight="600" text-anchor="middle">Component Name</text>
-    <!-- Arrows: lines with markers -->
-    <line x1="190" y1="85" x2="280" y2="85"
-          stroke="#58a6ff" stroke-width="2" marker-end="url(#arrow)"/>
-    <!-- Arrow marker definition (one per SVG) -->
     <defs>
-      <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-        <path d="M0,0 L8,4 L0,8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <!-- One filled-triangle marker per arrow color. Match the marker fill
+           to the stroke color of the path it terminates. markerUnits=
+           "userSpaceOnUse" keeps the head a fixed size regardless of stroke. -->
+      <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4"
+              orient="auto" markerUnits="userSpaceOnUse">
+        <path d="M 0 0 L 10 4 L 0 8 z" fill="#58a6ff"/>
       </marker>
     </defs>
+
+    <!-- Wrap diagram contents so all paths inherit clean joins/caps. -->
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+
+      <!-- Boxes: rounded rects with fill + stroke from the palette -->
+      <rect x="30" y="50" width="160" height="70" rx="8"
+            fill="#1a3a5c" stroke="#264d73"/>
+      <!-- Text: centered in boxes -->
+      <text x="110" y="80" fill="#e6edf3" font-size="13"
+            font-weight="600" text-anchor="middle">Component Name</text>
+      <!-- Connections: always <path>, never <line>. End ~3px short of the
+           target box so the arrowhead doesn't overlap the stroke. -->
+      <path d="M 190 85 H 277"
+            stroke="#58a6ff" stroke-width="2" marker-end="url(#arrow)"/>
+
+    </g>
   </svg>
   <div class="diagram-label">Caption describing the diagram</div>
 </div>
 ```
+
+**Arrow style rules — these are non-negotiable for a polished diagram:**
+
+1. **Filled-triangle arrowheads, not hollow chevrons.** Use `<path d="M 0 0 L 10 4 L 0 8 z" fill="<color>"/>` (the `z` closes the triangle). One marker per color (`arrow`, `arrow-purple`, `arrow-green`, etc.) — the marker's `fill` must match the path's `stroke`.
+2. **`<path>` everywhere, never `<line>`.** Even straight connections — paths can grow rounded corners or curves later without rewriting. Use `M x y V y2` for vertical, `M x y H x2` for horizontal.
+3. **Stop the path 3px short of the target box** so the arrowhead tip lands cleanly on the box edge instead of inside it.
+4. **Wrap the diagram in `<g fill="none" stroke-linecap="round" stroke-linejoin="round">`** so every path inherits soft, polished line ends.
+5. **Round every L-corner with a quadratic curve.** When a path turns 90°, use `Q` for a 4px radius rounded corner instead of a sharp angle:
+   ```
+   <!-- vertical down, turn right, horizontal, turn down again -->
+   <path d="M 310 422 V 428 Q 310 432 314 432 H 596 Q 600 432 600 436 V 447"
+         stroke="#bc8cff" stroke-width="2" marker-end="url(#arrow-purple)"/>
+   ```
+   The `Q controlX controlY endX endY` syntax: control point at the corner, end point 4px past it on the next axis.
+6. **For fan-outs (1 source → N destinations): one path per branch, all starting at the source.** Branches that share a trunk just overlap on those segments — visually it looks like a single trunk that splits, but each branch carries its own arrowhead and is independent. Avoid building one source path + multiple T-junction stubs; T-junctions look unfinished.
+7. **For fan-ins (N sources → 1 destination): cubic-bezier S-curves, all entering the destination vertically.** Each source path starts vertical (matching the source box's bottom) and ends vertical (matching the destination box's top). The control points sit on the same x as their respective endpoints:
+   ```
+   <!-- starts vertical at (820, 510), ends vertical at (660, 717) -->
+   <path d="M 820 510 C 820 615 660 615 660 717"
+         stroke="#3fb950" stroke-width="2" marker-end="url(#arrow-green)"/>
+   ```
+   The control points `820 615` and `660 615` are at the midpoint y, each on the x of their own endpoint — this guarantees both ends are perfectly vertical, with a graceful sweep in the middle. Diagonal straight lines into a fan-in target almost always look ugly; resist them.
+8. **Color the arrow by the kind of flow.** Reuse the diagram color palette — e.g. blue for ingest/control flow, purple for derived/aggregated data, green for output/success, red for error/removed. Define one marker per color used.
 
 **Box color conventions for diagrams:**
 

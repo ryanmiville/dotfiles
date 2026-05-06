@@ -74,7 +74,7 @@
   "agent": {
     "inline_assistant_model": {
       "provider": "anthropic",
-      "model": "claude-opus-4-6-thinking-latest",
+      "model": "claude-sonnet-4-6-latest",
       "enable_thinking": false,
     },
     "tool_permissions": {
@@ -122,12 +122,40 @@
       // "title_bar.background": "",
       "panel.focused_border": "#C0CAF5",
       "syntax": {
-        "comment": {
-          "font_style": "italic",
-        },
-        "comment.doc": {
-          "font_style": "italic",
-        },
+        // keep JSON keys purple
+        "property.json_key": { "color": "#bb9af7" },
+
+        // TS object/interface fields like nvim
+        "property": { "color": "#73daca" },
+        "field": { "color": "#73daca" },
+        "variable.member": { "color": "#73daca" },
+
+        // params like nvim
+        "parameter": { "color": "#e0af68" },
+        "variable.parameter": { "color": "#e0af68" },
+
+        // keywords closer to nvim tokyonight
+        "keyword": { "color": "#9d7cd8", "font_style": "italic" },
+        "keyword.type": { "color": "#9d7cd8", "font_style": "italic" },
+        "keyword.return": { "color": "#9d7cd8", "font_style": "italic" },
+        "keyword.import": { "color": "#7dcfff" },
+        "keyword.export": { "color": "#7dcfff" },
+        "keyword.modifier": { "color": "#7dcfff" },
+        "keyword.function": { "color": "#bb9af7" },
+        "keyword.conditional": { "color": "#bb9af7" },
+
+        // types closer to nvim
+        "type": { "color": "#2ac3de" },
+        "type.definition": { "color": "#2ac3de" },
+        "type.interface": { "color": "#2ac3de" },
+        "type.class.definition": { "color": "#2ac3de" },
+        "type.builtin": { "color": "#27a1b9" },
+
+        // less neon punctuation
+        "punctuation.bracket": { "color": "#a9b1d6" },
+
+        "comment": { "font_style": "italic" },
+        "comment.doc": { "font_style": "italic" },
       },
     },
   },

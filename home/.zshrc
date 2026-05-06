@@ -37,13 +37,15 @@ zinit light-mode for \
 # Starship prompt
 eval "$(starship init zsh)"
 
+# Load zsh-vi-mode synchronously so cursor shape is set before first prompt
+zinit light jeffreytse/zsh-vi-mode
+
 # Add zsh plugins (Turbo mode for faster startup)
 zinit wait lucid for \
     zsh-users/zsh-syntax-highlighting \
     zsh-users/zsh-completions \
     zsh-users/zsh-autosuggestions \
-    Aloxaf/fzf-tab \
-    jeffreytse/zsh-vi-mode
+    Aloxaf/fzf-tab
 
 # For postponing loading `fzf`
 # needed to get ctrl-r with zsh-vi-mode

@@ -56,6 +56,9 @@ type ZedEditorRow = Readonly<{
 	timestamp: string;
 	buffer_path: string;
 	pane_active: number;
+	item_active: number;
+	item_position: number;
+	active_item_position: number | null;
 	selection_start: number | null;
 	selection_end: number | null;
 }>;
@@ -173,15 +176,22 @@ async function queryZedActiveEditors(dbPath: string, signal?: AbortSignal): Prom
 			w.timestamp as timestamp,
 			e.buffer_path as buffer_path,
 			p.active as pane_active,
+			i.active as item_active,
+			i.position as item_position,
+			active_item.position as active_item_position,
 			s.start as selection_start,
 			s.end as selection_end
 		from items i
 		join panes p on p.pane_id = i.pane_id and p.workspace_id = i.workspace_id
 		join workspaces w on w.workspace_id = i.workspace_id
 		join editors e on e.item_id = i.item_id and e.workspace_id = i.workspace_id
+		left join items active_item
+			on active_item.workspace_id = i.workspace_id
+			and active_item.pane_id = i.pane_id
+			and active_item.active = 1
 		left join editor_selections s on s.editor_id = e.item_id and s.workspace_id = e.workspace_id
-		where i.active = 1 and i.kind = 'Editor' and e.buffer_path is not null
-		order by w.timestamp desc;
+		where i.kind = 'Editor' and e.buffer_path is not null
+		order by i.active desc, w.timestamp desc;
 	`;
 
 	const rows = await sqliteJson(dbPath, sql, signal);
@@ -223,6 +233,9 @@ function parseZedEditorRow(value: Record<string, unknown>): ZedEditorRow[] {
 	const timestamp = value["timestamp"];
 	const bufferPath = value["buffer_path"];
 	const paneActive = value["pane_active"];
+	const itemActive = value["item_active"];
+	const itemPosition = value["item_position"];
+	const activeItemPosition = value["active_item_position"];
 	const selectionStart = value["selection_start"];
 	const selectionEnd = value["selection_end"];
 
@@ -232,6 +245,9 @@ function parseZedEditorRow(value: Record<string, unknown>): ZedEditorRow[] {
 	if (typeof timestamp !== "string") return [];
 	if (typeof bufferPath !== "string" || bufferPath.length === 0) return [];
 	if (!isFiniteNumber(paneActive)) return [];
+	if (!isFiniteNumber(itemActive)) return [];
+	if (!isFiniteNumber(itemPosition)) return [];
+	if (activeItemPosition !== null && !isFiniteNumber(activeItemPosition)) return [];
 	if (selectionStart !== null && !isFiniteNumber(selectionStart)) return [];
 	if (selectionEnd !== null && !isFiniteNumber(selectionEnd)) return [];
 
@@ -243,6 +259,9 @@ function parseZedEditorRow(value: Record<string, unknown>): ZedEditorRow[] {
 			timestamp,
 			buffer_path: bufferPath,
 			pane_active: paneActive,
+			item_active: itemActive,
+			item_position: itemPosition,
+			active_item_position: activeItemPosition,
 			selection_start: selectionStart,
 			selection_end: selectionEnd,
 		},
@@ -299,20 +318,26 @@ function statusText(context: ZedContext, cwd: string): string {
 }
 
 function scoreZedEditor(row: ZedEditorRow, cwd: string): number {
+	const focusScore = row.item_active ? 30 : row.pane_active ? 20 - activeItemDistance(row) : 10;
+
 	// Prefer editors whose file belongs to pi's cwd/project.
 	// Multi-root Zed workspaces can have cwd open while focus is in another repo.
-	if (pathContains(cwd, row.buffer_path)) return row.pane_active ? 5 : 4;
+	if (pathContains(cwd, row.buffer_path)) return focusScore + 5;
 
 	return zedWorkspacePaths(row.workspace_paths).reduce((score, workspacePath) => {
 		const cwdInWorkspace = pathContains(workspacePath, cwd);
 		const fileInWorkspace = pathContains(workspacePath, row.buffer_path);
-		if (cwdInWorkspace && fileInWorkspace) return Math.max(score, 3);
+		if (cwdInWorkspace && fileInWorkspace) return Math.max(score, focusScore + 3);
 
 		const workspaceInCwd = pathContains(cwd, workspacePath);
-		if (workspaceInCwd && fileInWorkspace) return Math.max(score, 2);
+		if (workspaceInCwd && fileInWorkspace) return Math.max(score, focusScore + 2);
 
 		return score;
 	}, 0);
+}
+
+function activeItemDistance(row: ZedEditorRow): number {
+	return row.active_item_position === null ? 0 : Math.abs(row.item_position - row.active_item_position);
 }
 
 function zedWorkspacePaths(value: string | null): string[] {
