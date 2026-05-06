@@ -8,6 +8,20 @@
 
 macOS dev environment managed by `dot` CLI using GNU Stow. Single `home/` package symlinks to `$HOME`.
 
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked as local markdown under `.scratch/<feature>/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Triage roles use the default canonical label strings. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: root `CONTEXT.md` and `docs/adr/`. See `docs/agents/domain.md`.
+
 ## STRUCTURE
 
 ```
