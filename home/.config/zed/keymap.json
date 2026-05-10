@@ -68,6 +68,8 @@
       "space r": "editor::Rename",
       "space c a": "editor::ToggleCodeActions",
       "space h": "editor::SelectAllMatches",
+      "space y": "editor::CopyFileLocation",
+      "space space w": "vim::HelixJumpToWord",
       // Misc
       "ctrl-shift-k": "editor::MoveLineUp",
       "ctrl-shift-j": "editor::MoveLineDown",
@@ -332,4 +334,15 @@
       "cmd-s l": "workspace::ActivatePaneRight",
     },
   },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-tab": "tab_switcher::Toggle"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-tab": "tab_switcher::ToggleAll"
+    }
+  }
 ]
