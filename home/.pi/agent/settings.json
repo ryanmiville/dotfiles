@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.74.0",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-7",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "high",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
@@ -20,22 +20,25 @@
   "packages": [
     "npm:@plannotator/pi-extension",
     "npm:pi-mcp-adapter",
-    {
-      "source": "https://github.com/davebcn87/pi-autoresearch",
-      "extensions": [
-        "-extensions/pi-autoresearch/index.ts"
-      ],
-      "skills": [
-        "-skills/autoresearch-create/SKILL.md",
-        "-skills/autoresearch-finalize/SKILL.md"
-      ]
-    },
     "npm:pi-web-access",
     "~/dev/pi-review",
-    "npm:pi-interview"
+    "npm:pi-interview",
+    "npm:pi-autoresearch",
+    "npm:pi-skill-toggle"
   ],
   "hideThinkingBlock": false,
   "terminal": {
     "showImages": false
-  }
+  },
+  "skills": [
+    "-/Users/ryanmiville/.codex/skills/codex-primary-runtime/spreadsheets",
+    "-/Users/ryanmiville/.codex/skills/codex-primary-runtime/slides",
+    "-/Users/ryanmiville/.claude/skills/agent-browser",
+    "-/Users/ryanmiville/.claude/skills/cloudflare",
+    "-/Users/ryanmiville/.claude/skills/frontend-design",
+    "-/Users/ryanmiville/.claude/skills/index-knowledge",
+    "-/Users/ryanmiville/.claude/skills/librarian",
+    "-/Users/ryanmiville/.claude/skills/opensrc",
+    "-/Users/ryanmiville/.claude/skills/postgres-best-practices"
+  ]
 }

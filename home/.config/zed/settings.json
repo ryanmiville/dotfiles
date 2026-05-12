@@ -50,7 +50,7 @@
   "tab_bar": {
     "show_tab_bar_buttons": false,
     "show_nav_history_buttons": false,
-    "show": false,
+    "show": true,
   },
   "pane_split_direction_vertical": "right",
   "toolbar": {
