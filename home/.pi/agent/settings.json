@@ -12,8 +12,7 @@
   "extensions": [
     "~/.pi/agent/extensions/pi-ephemeral",
     "~/dev/agent-stuff/extensions/context.ts",
-    "~/dev/dmmulroy/home/.pi/agent/extensions/todos/index.ts",
-    "~/dev/dmmulroy/home/.pi/agent/extensions/answer.ts",
+    "~/dev/agent-stuff/extensions/answer.ts",
     "~/dev/agent-stuff/extensions/btw.ts",
     "~/dev/agent-stuff/extensions/whimsical.ts"
   ],
@@ -26,7 +25,7 @@
     "npm:pi-autoresearch",
     "npm:pi-skill-toggle"
   ],
-  "hideThinkingBlock": false,
+  "hideThinkingBlock": true,
   "terminal": {
     "showImages": false
   },

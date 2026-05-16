@@ -22,23 +22,7 @@
     "dock": "right",
     "tree_view": true,
   },
-  "agent_servers": {
-    "pi-sdk-acp": {
-      "type": "custom",
-      "command": "node",
-      "args": ["/Users/ryanmiville/dev/pi-sdk-acp/dist/index.js"],
-    },
-    "pi-acp": {
-      "type": "registry",
-    },
-    "claude-acp": {
-      "type": "registry",
-      "default_mode": "plan",
-    },
-    "opencode": {
-      "type": "registry",
-    },
-  },
+  "agent_servers": {},
   "edit_predictions": {
     "provider": "zed",
     "mode": "subtle",
@@ -160,6 +144,7 @@
     },
   },
   "telemetry": {
+    "diagnostics": false,
     "metrics": false,
   },
   "vim_mode": true,
@@ -189,7 +174,7 @@
     },
   },
   "title_bar": {
-    "show_branch_name": false,
+    "show_branch_name": true,
     "show_user_menu": false,
     "show_sign_in": false,
     "show_onboarding_banner": false,

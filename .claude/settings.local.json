@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(zsh:*)",
+      "Bash(jj status:*)",
+      "Bash(jj log:*)",
+      "Bash(jj branch:*)",
+      "Bash(jj help:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
