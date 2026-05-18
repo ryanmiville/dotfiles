@@ -1,7 +1,7 @@
 {
   "~/dev/work": {
     "provider": "anthropic",
-    "model": "claude-opus-4-7",
+    "model": "claude-opus-4-6",
     "thinkingLevel": "high"
   },
   "*": {

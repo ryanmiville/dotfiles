@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.74.0",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-6",
   "defaultThinkingLevel": "high",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
@@ -14,6 +14,7 @@
     "~/dev/agent-stuff/extensions/context.ts",
     "~/dev/agent-stuff/extensions/answer.ts",
     "~/dev/agent-stuff/extensions/btw.ts",
+    "~/dev/agent-stuff/extensions/todos.ts",
     "~/dev/agent-stuff/extensions/whimsical.ts"
   ],
   "packages": [
@@ -29,15 +30,5 @@
   "terminal": {
     "showImages": false
   },
-  "skills": [
-    "-/Users/ryanmiville/.codex/skills/codex-primary-runtime/spreadsheets",
-    "-/Users/ryanmiville/.codex/skills/codex-primary-runtime/slides",
-    "-/Users/ryanmiville/.claude/skills/agent-browser",
-    "-/Users/ryanmiville/.claude/skills/cloudflare",
-    "-/Users/ryanmiville/.claude/skills/frontend-design",
-    "-/Users/ryanmiville/.claude/skills/index-knowledge",
-    "-/Users/ryanmiville/.claude/skills/librarian",
-    "-/Users/ryanmiville/.claude/skills/opensrc",
-    "-/Users/ryanmiville/.claude/skills/postgres-best-practices"
-  ]
+  "skills": []
 }
