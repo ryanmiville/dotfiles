@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.75.3",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5",
+  "lastChangelogVersion": "0.75.4",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-7",
   "defaultThinkingLevel": "high",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
@@ -10,7 +10,6 @@
     "openai-codex/gpt-5.5"
   ],
   "extensions": [
-    "~/.pi/agent/extensions/pi-ephemeral",
     "~/dev/agent-stuff/extensions/context.ts",
     "~/dev/agent-stuff/extensions/answer.ts",
     "~/dev/agent-stuff/extensions/btw.ts",
@@ -31,8 +30,8 @@
     "showImages": false
   },
   "skills": [
-    "-/Users/ryanmiville/.codex/skills/codex-primary-runtime/spreadsheets",
-    "-/Users/ryanmiville/.codex/skills/codex-primary-runtime/slides"
+    "/Users/ryanmiville/dev/dmmulroy/home/.pi/agent/skills/tmux",
+    "/Users/ryanmiville/dev/dmmulroy/home/.pi/agent/skills/init-deep"
   ],
   "treeFilterMode": "no-tools"
 }
