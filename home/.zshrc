@@ -150,6 +150,13 @@ mkfiledir() {
 
 alias touch=mkfiledir
 
+tempd() {
+    local tmpdir
+    tmpdir=$(mktemp -d) || return
+    cd "$tmpdir" || return
+    echo "$tmpdir"
+}
+
 # pnpm
 export PNPM_HOME="/Users/ryanmiville/Library/pnpm"
 case ":$PATH:" in
