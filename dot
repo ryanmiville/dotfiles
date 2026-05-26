@@ -254,6 +254,21 @@ install_packages() {
 }
 
 stow_dotfiles() {
+    local backup_mode="prompt"
+    
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --no-backup)
+                backup_mode="skip"
+                shift
+                ;;
+            *)
+                print_error "Unknown stow option: $1"
+                return 1
+                ;;
+        esac
+    done
+    
     print_step "Stowing configuration files"
     
     if ! command_exists stow; then
@@ -283,7 +298,9 @@ stow_dotfiles() {
         print_warning "The following files will be replaced:"
         printf "  %s\n" "${files_to_backup[@]}"
         
-        if confirm "Create backups of existing files?" "y"; then
+        if [[ "$backup_mode" == "skip" ]]; then
+            print_info "Skipping backups"
+        elif confirm "Create backups of existing files?" "y"; then
             mkdir -p "$backup_dir"
             for file in "${files_to_backup[@]}"; do
                 local src="${HOME}/${file}"
@@ -710,6 +727,26 @@ cmd_init() {
 }
 
 cmd_update() {
+    local assume_yes=false
+    local no_backup=false
+    
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -y|--yes)
+                assume_yes=true
+                shift
+                ;;
+            --no-backup)
+                no_backup=true
+                shift
+                ;;
+            *)
+                print_error "Unknown update option: $1"
+                return 1
+                ;;
+        esac
+    done
+    
     print_header "Updating dotfiles"
     
     # Pull latest changes
@@ -723,7 +760,7 @@ cmd_update() {
     fi
     
     # Update packages
-    if confirm "Update Homebrew packages?" "y"; then
+    if [[ "$assume_yes" == true ]] || confirm "Update Homebrew packages?" "y"; then
         print_info "Updating Homebrew..."
         brew update
         brew upgrade
@@ -731,8 +768,12 @@ cmd_update() {
     fi
     
     # Re-stow dotfiles
-    if confirm "Re-stow dotfiles?" "y"; then
-        stow_dotfiles
+    if [[ "$assume_yes" == true ]] || confirm "Re-stow dotfiles?" "y"; then
+        if [[ "$no_backup" == true ]]; then
+            stow_dotfiles --no-backup
+        else
+            stow_dotfiles
+        fi
     fi
 }
 
@@ -2011,11 +2052,16 @@ cmd_help() {
     echo "    --version       Show version information"
     echo "    -h, --help      Show this help message"
     echo ""
+    echo -e "${BOLD}UPDATE OPTIONS:${RESET}"
+    echo "    -y, --yes       Run update package/stow steps without prompts"
+    echo "    --no-backup     Skip stow conflict backups during update"
+    echo ""
     
     echo -e "${BOLD}EXAMPLES:${RESET}"
     echo "    ${SCRIPT_NAME} init                      # Full initialization"
     echo "    ${SCRIPT_NAME} init --skip-ssh           # Initialize without SSH setup"
     echo "    ${SCRIPT_NAME} update                    # Update everything"
+    echo "    ${SCRIPT_NAME} update --yes --no-backup  # Non-interactive, no stow backups"
     echo "    ${SCRIPT_NAME} doctor                    # Check installation health"
     echo "    ${SCRIPT_NAME} package list              # List all packages"
     echo "    ${SCRIPT_NAME} package add git           # Add git package to base bundle"
