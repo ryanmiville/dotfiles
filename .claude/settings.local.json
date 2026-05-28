@@ -1,4 +1,8 @@
 {
+  "awsAuthRefresh": "aws sso login --profile dev",
+  "env": {
+    "AWS_PROFILE": "dev"
+  },
   "permissions": {
     "allow": [
       "Bash(zsh:*)",
