@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.76.0",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-7",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "high",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
@@ -28,9 +28,6 @@
   "terminal": {
     "showImages": false
   },
-  "skills": [
-    "/Users/ryanmiville/dev/dmmulroy/home/.pi/agent/skills/tmux",
-    "/Users/ryanmiville/dev/dmmulroy/home/.pi/agent/skills/init-deep"
-  ],
+  "skills": [],
   "treeFilterMode": "no-tools"
 }
