@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.77.0",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-7",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "high",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
@@ -19,15 +19,9 @@
   "packages": [
     {
       "source": "npm:@plannotator/pi-extension",
-      "skills": [
-        "plannotator-last",
-        "plannotator-review"
-      ]
+      "skills": ["plannotator-last", "plannotator-review"]
     },
-    {
-      "source": "npm:pi-mcp-adapter",
-      "extensions": []
-    },
+    "npm:pi-mcp-adapter",
     "npm:pi-web-access",
     "~/dev/pi-review",
     "npm:pi-autoresearch"

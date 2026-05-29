@@ -2,7 +2,7 @@
   "mcpServers": {
     "datadog": {
       "url": "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp",
-      "directTools": true
+      "directTools": false
     },
     "context7": {
       "url": "https://mcp.context7.com/mcp"
