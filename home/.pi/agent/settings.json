@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.76.0",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5",
+  "lastChangelogVersion": "0.77.0",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-7",
   "defaultThinkingLevel": "high",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
@@ -17,12 +17,20 @@
     "~/dev/agent-stuff/extensions/whimsical.ts"
   ],
   "packages": [
-    "npm:@plannotator/pi-extension",
-    "npm:pi-mcp-adapter",
+    {
+      "source": "npm:@plannotator/pi-extension",
+      "skills": [
+        "plannotator-last",
+        "plannotator-review"
+      ]
+    },
+    {
+      "source": "npm:pi-mcp-adapter",
+      "extensions": []
+    },
     "npm:pi-web-access",
     "~/dev/pi-review",
-    "npm:pi-autoresearch",
-    "npm:pi-skill-toggle"
+    "npm:pi-autoresearch"
   ],
   "hideThinkingBlock": true,
   "terminal": {
