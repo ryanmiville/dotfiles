@@ -2,21 +2,24 @@ import type {
 	ExtensionAPI,
 	SessionEntry,
 	SessionManager,
-} from "@mariozechner/pi-coding-agent";
+} from "@earendil-works/pi-coding-agent";
 
 type SessionReader = Pick<
 	SessionManager,
 	"getLeafId" | "getBranch" | "getEntries" | "getLabel"
 >;
-import { DynamicBorder, getMarkdownTheme } from "@mariozechner/pi-coding-agent";
-import type { Theme } from "@mariozechner/pi-coding-agent";
+import {
+	getMarkdownTheme,
+	TreeSelectorComponent,
+} from "@earendil-works/pi-coding-agent";
+import type { Theme } from "@earendil-works/pi-coding-agent";
 import {
 	Key,
 	Markdown,
 	matchesKey,
 	truncateToWidth,
 	visibleWidth,
-} from "@mariozechner/pi-tui";
+} from "@earendil-works/pi-tui";
 import type { Component } from "@mariozechner/pi-tui";
 
 // ── Pin = label convention ────────────────────────────────────────────────
@@ -100,14 +103,6 @@ function relativeTime(iso: string): string {
 
 // ── Session queries ──────────────────────────────────────────────────────────
 
-// All pinnable messages on the current branch, chronological (oldest first).
-function branchPinnables(sm: SessionReader): PinnableEntry[] {
-	const leaf = sm.getLeafId();
-	// getBranch returns root→leaf (chronological, oldest first).
-	const branch = leaf ? sm.getBranch(leaf) : sm.getEntries();
-	return branch.map(toPinnable).filter((e): e is PinnableEntry => e !== null);
-}
-
 interface PinView extends PinnableEntry {
 	title: string; // "" when untitled
 }
@@ -139,13 +134,6 @@ function lastAssistantOnBranch(sm: SessionReader): string | null {
 }
 
 // ── Filter helpers ────────────────────────────────────────────────────────────
-type RoleFilter = "all" | "assistant" | "user";
-const ROLE_CYCLE: RoleFilter[] = ["all", "assistant", "user"];
-
-function matchesRole(role: Role, filter: RoleFilter): boolean {
-	return filter === "all" || filter === role;
-}
-
 function matchesSearch(haystack: string, search: string): boolean {
 	if (search.length === 0) return true;
 	return haystack.toLowerCase().includes(search.toLowerCase());
@@ -161,99 +149,9 @@ function printableChar(data: string): string | null {
 	return null;
 }
 
-// ── Pin picker: choose an earlier message to pin ───────────────────────────────
-interface PickerRow {
-	entry: PinnableEntry;
-}
-
-class PinPicker implements Component {
-	private search = "";
-	private filter: RoleFilter = "all";
-	private selected = 0;
-	private readonly maxVisible = 12;
-
-	constructor(
-		private readonly entries: PinnableEntry[],
-		private readonly theme: Theme,
-		private readonly onPick: (id: string) => void,
-		private readonly onCancel: () => void,
-	) {}
-
-	private visibleRows(): PickerRow[] {
-		return this.entries
-			.filter((e) => matchesRole(e.role, this.filter))
-			.filter((e) => matchesSearch(e.preview, this.search))
-			.map((entry) => ({ entry }));
-	}
-
-	handleInput(data: string): void {
-		const rows = this.visibleRows();
-		if (matchesKey(data, Key.up)) {
-			this.selected = this.selected <= 0 ? rows.length - 1 : this.selected - 1;
-		} else if (matchesKey(data, Key.down)) {
-			this.selected = this.selected >= rows.length - 1 ? 0 : this.selected + 1;
-		} else if (matchesKey(data, Key.tab)) {
-			const i = ROLE_CYCLE.indexOf(this.filter);
-			this.filter = ROLE_CYCLE[(i + 1) % ROLE_CYCLE.length]!;
-			this.selected = 0;
-		} else if (matchesKey(data, Key.enter)) {
-			const row = rows[this.selected];
-			if (row) this.onPick(row.entry.id);
-		} else if (matchesKey(data, Key.escape)) {
-			this.onCancel();
-		} else if (matchesKey(data, Key.backspace)) {
-			this.search = this.search.slice(0, -1);
-			this.selected = 0;
-		} else {
-			const ch = printableChar(data);
-			if (ch !== null) {
-				this.search += ch;
-				this.selected = 0;
-			}
-		}
-	}
-
-	invalidate(): void {}
-
-	render(width: number): string[] {
-		const t = this.theme;
-		const rows = this.visibleRows();
-		if (this.selected >= rows.length) this.selected = Math.max(0, rows.length - 1);
-
-		const lines: string[] = [];
-		lines.push(...new DynamicBorder((s: string) => t.fg("accent", s)).render(width));
-		lines.push(t.fg("accent", t.bold(" Pin a message")));
-		lines.push(
-			t.fg("dim", ` filter: ${this.filter}   search: ${this.search || "—"}`),
-		);
-
-		if (rows.length === 0) {
-			lines.push(t.fg("warning", " No matching messages"));
-		} else {
-			const start = Math.max(0, Math.min(this.selected - Math.floor(this.maxVisible / 2), rows.length - this.maxVisible));
-			const end = Math.min(rows.length, Math.max(start, 0) + this.maxVisible);
-			const from = Math.max(0, start);
-			for (let i = from; i < end; i++) {
-				const row = rows[i]!;
-				const sel = i === this.selected;
-				const prefix = sel ? "› " : "  ";
-				const meta = `${row.entry.role} · ${relativeTime(row.entry.timestamp)}`;
-				const body = ` ${prefix}${row.entry.preview}`;
-				const line = truncateToWidth(body, width - visibleWidth(meta) - 2);
-				const pad = " ".repeat(Math.max(1, width - visibleWidth(line) - visibleWidth(meta)));
-				const styledBody = sel ? t.fg("accent", line) : line;
-				lines.push(`${styledBody}${pad}${t.fg("dim", meta)}`);
-			}
-			if (rows.length > this.maxVisible) {
-				lines.push(t.fg("dim", ` ${this.selected + 1}/${rows.length}`));
-			}
-		}
-
-		lines.push(t.fg("dim", " ↑↓ navigate • tab filter • enter pin • esc cancel"));
-		lines.push(...new DynamicBorder((s: string) => t.fg("accent", s)).render(width));
-		return lines;
-	}
-}
+// Raw SGR helpers (theme-independent attributes the Theme API doesn't expose).
+const ITALIC = (s: string): string => `\x1b[3m${s}\x1b[23m`;
+const STRIKE = (s: string): string => `\x1b[9m${s}\x1b[29m`;
 
 // ── Pin browser: list / detail / edit, with staged unpin ───────────────────────
 type Mode = "list" | "detail" | "edit";
@@ -265,11 +163,18 @@ class PinBrowser implements Component {
 	private editBuffer = "";
 	private readonly maxVisible = 12;
 	private readonly pendingUnpin = new Set<string>();
-	private detailMarkdown?: Markdown;
+	// Detail view is self-scrolling: the message is flattened to lines once, then
+	// a window of them is shown. (Overlays have no native scroll; maxHeight only
+	// hard-clips the bottom, so the component must page itself.)
+	private detailLines?: string[];
+	private detailWidth?: number;
+	private detailScroll = 0;
+	private pendingG = false; // armed by a bare "g", consumed by the second (gg)
 
 	constructor(
 		private readonly pins: PinView[],
 		private readonly theme: Theme,
+		private readonly viewportRows: () => number,
 		private readonly commitUnpin: (id: string) => void,
 		private readonly retitle: (id: string, title: string) => void,
 		private readonly onClose: () => void,
@@ -308,10 +213,9 @@ class PinBrowser implements Component {
 			this.selected = this.selected >= rows.length - 1 ? 0 : this.selected + 1;
 		} else if (matchesKey(data, Key.enter)) {
 			if (this.current()) {
-				this.detailMarkdown = undefined;
-				this.mode = "detail";
+				this.enterDetail();
 			}
-		} else if (matchesKey(data, Key.ctrl("d"))) {
+		} else if (matchesKey(data, Key.ctrl("p"))) {
 			this.togglePending();
 		} else if (matchesKey(data, Key.ctrl("e"))) {
 			this.beginEdit();
@@ -329,15 +233,56 @@ class PinBrowser implements Component {
 		}
 	}
 
+	// Detail is a pure reader (no fuzzy search), so vim motions are safe here:
+	// j/k line, ctrl+d/ctrl+u page, gg/G ends — alongside the arrow/Page/Home keys.
 	private handleDetailInput(data: string): void {
+		// gg: a bare "g" arms; the next "g" jumps to the top.
+		if (data === "g") {
+			if (this.pendingG) this.detailScroll = 0;
+			this.pendingG = !this.pendingG;
+			return;
+		}
+		this.pendingG = false;
+
 		if (matchesKey(data, Key.escape)) {
 			this.mode = "list";
-		} else if (matchesKey(data, Key.ctrl("d"))) {
+		} else if (matchesKey(data, Key.ctrl("p"))) {
 			this.togglePending();
 			this.mode = "list"; // mark-and-return, per design
 		} else if (matchesKey(data, Key.ctrl("e"))) {
 			this.beginEdit();
+		} else if (matchesKey(data, Key.up) || data === "k") {
+			this.detailScroll = Math.max(0, this.detailScroll - 1);
+		} else if (matchesKey(data, Key.down) || data === "j") {
+			this.detailScroll = this.clampScroll(this.detailScroll + 1);
+		} else if (matchesKey(data, Key.pageDown) || matchesKey(data, Key.ctrl("d"))) {
+			this.detailScroll = this.clampScroll(this.detailScroll + this.detailBodyHeight());
+		} else if (matchesKey(data, Key.pageUp) || matchesKey(data, Key.ctrl("u"))) {
+			this.detailScroll = Math.max(0, this.detailScroll - this.detailBodyHeight());
+		} else if (matchesKey(data, Key.home)) {
+			this.detailScroll = 0;
+		} else if (matchesKey(data, Key.end) || data === "G") {
+			this.detailScroll = this.clampScroll(Number.MAX_SAFE_INTEGER);
 		}
+	}
+
+	// Reset and enter the scrollable detail view for the current pin.
+	private enterDetail(): void {
+		this.detailLines = undefined;
+		this.detailScroll = 0;
+		this.pendingG = false;
+		this.mode = "detail";
+	}
+
+	// Visible body rows for the detail message, derived from the terminal height
+	// minus the box chrome (borders, title, padding, footer, scroll indicator).
+	private detailBodyHeight(): number {
+		return Math.max(3, this.viewportRows() - 9);
+	}
+
+	private clampScroll(offset: number): number {
+		const total = this.detailLines?.length ?? 0;
+		return Math.max(0, Math.min(offset, total - this.detailBodyHeight()));
 	}
 
 	private handleEditInput(data: string): void {
@@ -373,7 +318,7 @@ class PinBrowser implements Component {
 	}
 
 	invalidate(): void {
-		this.detailMarkdown = undefined;
+		this.detailLines = undefined;
 	}
 
 	render(width: number): string[] {
@@ -382,20 +327,91 @@ class PinBrowser implements Component {
 		return this.renderList(width);
 	}
 
+	// ── Bordered-box chrome (skill-toggle inspired) ────────────────────────────
+	// A rounded panel: ╭─ title ─╮ / │ rows │ / ├─ divider ─┤ / ╰────╯. Every
+	// interior line is exactly `width` columns so the side borders stay aligned.
+	private border(s: string): string {
+		return this.theme.fg("border", s);
+	}
+
+	private topBorder(width: number, title: string): string {
+		const innerW = Math.max(0, width - 2);
+		const titleText = ` ${title} `;
+		const fill = Math.max(0, innerW - visibleWidth(titleText));
+		const left = Math.floor(fill / 2);
+		const right = fill - left;
+		return (
+			this.border(`╭${"─".repeat(left)}`) +
+			this.theme.fg("accent", this.theme.bold(truncateToWidth(titleText, innerW))) +
+			this.border(`${"─".repeat(right)}╮`)
+		);
+	}
+
+	private divider(width: number): string {
+		return this.border(`├${"─".repeat(Math.max(0, width - 2))}┤`);
+	}
+
+	private bottomBorder(width: number): string {
+		return this.border(`╰${"─".repeat(Math.max(0, width - 2))}╯`);
+	}
+
+	private emptyRow(width: number): string {
+		return this.border("│") + " ".repeat(Math.max(0, width - 2)) + this.border("│");
+	}
+
+	// One interior row, left-padded by a space and right-padded to fill the box.
+	private row(width: number, content: string): string {
+		const innerW = Math.max(0, width - 2);
+		return this.border("│") + truncateToWidth(` ${content}`, innerW, "…", true) + this.border("│");
+	}
+
+	// A row with left text and right-aligned metadata inside the box interior.
+	private splitRow(width: number, left: string, meta: string): string {
+		const avail = Math.max(0, width - 3); // 2 borders + 1 leading space
+		const metaW = visibleWidth(meta);
+		const leftMax = Math.max(0, avail - metaW - 1);
+		const leftTrunc = truncateToWidth(left, leftMax, "…");
+		const pad = " ".repeat(Math.max(1, avail - visibleWidth(leftTrunc) - metaW));
+		return this.row(width, `${leftTrunc}${pad}${meta}`);
+	}
+
+	private searchRow(width: number): string {
+		const t = this.theme;
+		const cursor = t.fg("accent", "│");
+		const query = this.search
+			? `${this.search}${cursor}`
+			: `${cursor}${t.fg("dim", ITALIC("type to filter…"))}`;
+		return this.row(width, `${t.fg("accent", "◎")}  ${query}`);
+	}
+
 	private renderList(width: number): string[] {
 		const t = this.theme;
 		const rows = this.visiblePins();
 		if (this.selected >= rows.length) this.selected = Math.max(0, rows.length - 1);
 
 		const lines: string[] = [];
-		lines.push(...new DynamicBorder((s: string) => t.fg("accent", s)).render(width));
-		lines.push(t.fg("accent", t.bold(" 📌 Pinned messages")));
-		if (this.search.length > 0) lines.push(t.fg("dim", ` search: ${this.search}`));
+		lines.push(this.topBorder(width, `📌 Pinned messages (${this.pins.length})`));
+		lines.push(this.emptyRow(width));
+		lines.push(this.searchRow(width));
+		lines.push(this.emptyRow(width));
+
+		if (this.pendingUnpin.size > 0) {
+			const n = this.pendingUnpin.size;
+			lines.push(
+				this.row(width, t.fg("warning", `⚠ ${n} to unpin on close · esc applies · ctrl+p undoes`)),
+			);
+			lines.push(this.emptyRow(width));
+		}
+
+		lines.push(this.divider(width));
+		lines.push(this.emptyRow(width));
 
 		if (this.pins.length === 0) {
-			lines.push(t.fg("muted", " No pinned messages"));
+			lines.push(this.row(width, t.fg("muted", ITALIC("No pinned messages — pin from /tree with ctrl+p"))));
+			lines.push(this.emptyRow(width));
 		} else if (rows.length === 0) {
-			lines.push(t.fg("warning", " No matching pins"));
+			lines.push(this.row(width, t.fg("warning", ITALIC("No matching pins"))));
+			lines.push(this.emptyRow(width));
 		} else {
 			const start = Math.max(0, Math.min(this.selected - Math.floor(this.maxVisible / 2), rows.length - this.maxVisible));
 			const from = Math.max(0, start);
@@ -404,28 +420,25 @@ class PinBrowser implements Component {
 				const pin = rows[i]!;
 				const sel = i === this.selected;
 				const pending = this.pendingUnpin.has(pin.id);
-				const prefix = sel ? "› " : "  ";
-				const labelText = pin.title || pin.preview;
-				const meta = `${pin.role} · ${relativeTime(pin.timestamp)}`;
-				let body = `${prefix}${pending ? "✗ " : ""}${labelText}`;
-				body = truncateToWidth(` ${body}`, width - visibleWidth(meta) - 2);
-				const pad = " ".repeat(Math.max(1, width - visibleWidth(body) - visibleWidth(meta)));
-				let styled: string;
-				if (pending) styled = t.fg("dim", body); // struck/dimmed = slated for removal
-				else if (sel) styled = t.fg("accent", body);
-				else styled = body;
-				lines.push(`${styled}${pad}${t.fg("dim", meta)}`);
+				const prefix = sel ? t.fg("accent", "▸") : this.border("·");
+				let label = `${pending ? "✗ " : ""}${pin.title || pin.preview}`;
+				if (pending) label = t.fg("dim", STRIKE(label)); // staged for removal
+				else if (sel) label = t.fg("accent", t.bold(label));
+				const meta = t.fg("dim", `${pin.role} · ${relativeTime(pin.timestamp)}`);
+				lines.push(this.splitRow(width, `${prefix} ${label}`, meta));
 			}
-			if (rows.length > this.maxVisible) lines.push(t.fg("dim", ` ${this.selected + 1}/${rows.length}`));
+			lines.push(this.emptyRow(width));
+			if (rows.length > this.maxVisible) {
+				lines.push(this.row(width, t.fg("dim", `${this.selected + 1}/${rows.length}`)));
+				lines.push(this.emptyRow(width));
+			}
 		}
 
-		const pendingNote = this.pendingUnpin.size > 0
-			? t.fg("warning", `  (${this.pendingUnpin.size} to unpin on close)`)
-			: "";
-		lines.push(
-			t.fg("dim", " ↑↓ navigate • enter reveal • ctrl+d unpin • ctrl+e title • esc close") + pendingNote,
-		);
-		lines.push(...new DynamicBorder((s: string) => t.fg("accent", s)).render(width));
+		lines.push(this.divider(width));
+		lines.push(this.emptyRow(width));
+		lines.push(this.row(width, t.fg("dim",
+			`${ITALIC("↑↓")} navigate  ${ITALIC("enter")} reveal  ${ITALIC("ctrl+p")} unpin  ${ITALIC("ctrl+e")} title  ${ITALIC("esc")} close`)));
+		lines.push(this.bottomBorder(width));
 		return lines;
 	}
 
@@ -433,34 +446,109 @@ class PinBrowser implements Component {
 		const t = this.theme;
 		const pin = this.current();
 		const lines: string[] = [];
-		lines.push(...new DynamicBorder((s: string) => t.fg("accent", s)).render(width));
 		if (!pin) {
-			lines.push(t.fg("warning", " Pin not found"));
-		} else {
-			const heading = pin.title || `${pin.role} · ${relativeTime(pin.timestamp)}`;
-			const pending = this.pendingUnpin.has(pin.id) ? t.fg("warning", "  ✗ (will unpin)") : "";
-			lines.push(t.fg("accent", t.bold(` 📌 ${truncateToWidth(heading, width - 6)}`)) + pending);
-			if (!this.detailMarkdown) this.detailMarkdown = new Markdown(pin.markdown, 1, 0, getMarkdownTheme());
-			lines.push(...this.detailMarkdown.render(width));
+			lines.push(this.topBorder(width, "📌 Pin not found"));
+			lines.push(this.emptyRow(width));
+			lines.push(this.bottomBorder(width));
+			return lines;
 		}
-		lines.push(t.fg("dim", " ctrl+d unpin • ctrl+e title • esc back"));
-		lines.push(...new DynamicBorder((s: string) => t.fg("accent", s)).render(width));
+		const heading = pin.title || `${pin.role} · ${relativeTime(pin.timestamp)}`;
+		const pendingTag = this.pendingUnpin.has(pin.id) ? "  ✗ will unpin" : "";
+		lines.push(this.topBorder(width, `📌 ${heading}${pendingTag}`));
+		lines.push(this.emptyRow(width));
+
+		// Flatten the message to lines once per width, then window it.
+		if (!this.detailLines || this.detailWidth !== width) {
+			this.detailLines = new Markdown(pin.markdown, 0, 0, getMarkdownTheme()).render(Math.max(1, width - 3));
+			this.detailWidth = width;
+		}
+		const total = this.detailLines.length;
+		const bodyHeight = this.detailBodyHeight();
+		if (this.detailScroll > 0) this.detailScroll = this.clampScroll(this.detailScroll);
+		const slice = this.detailLines.slice(this.detailScroll, this.detailScroll + bodyHeight);
+		for (const md of slice) lines.push(this.row(width, md));
+		// Pad short messages so the box keeps a stable height.
+		for (let i = slice.length; i < bodyHeight; i++) lines.push(this.emptyRow(width));
+		if (total > bodyHeight) {
+			const first = this.detailScroll + 1;
+			const last = Math.min(total, this.detailScroll + bodyHeight);
+			const up = this.detailScroll > 0 ? "▴" : " ";
+			const down = last < total ? "▾" : " ";
+			lines.push(this.row(width, t.fg("dim", `${up}${down} ${first}–${last}/${total} lines`)));
+		} else {
+			lines.push(this.emptyRow(width));
+		}
+
+		lines.push(this.divider(width));
+		lines.push(this.emptyRow(width));
+		lines.push(this.row(width, t.fg("dim",
+			`${ITALIC("↑↓/PgUp/PgDn")} scroll  ${ITALIC("ctrl+p")} unpin  ${ITALIC("ctrl+e")} title  ${ITALIC("esc")} back`)));
+		lines.push(this.bottomBorder(width));
 		return lines;
 	}
 
 	private renderEdit(width: number): string[] {
 		const t = this.theme;
 		const lines: string[] = [];
-		lines.push(...new DynamicBorder((s: string) => t.fg("accent", s)).render(width));
-		lines.push(t.fg("accent", t.bold(" Set pin title")));
-		lines.push(truncateToWidth(` › ${this.editBuffer}`, width) + t.fg("dim", "▌"));
-		lines.push(t.fg("dim", " enter save • esc cancel • (empty clears title)"));
-		lines.push(...new DynamicBorder((s: string) => t.fg("accent", s)).render(width));
+		lines.push(this.topBorder(width, "✎ Set pin title"));
+		lines.push(this.emptyRow(width));
+		lines.push(this.row(width, `${t.fg("accent", "›")} ${this.editBuffer}${t.fg("accent", "│")}`));
+		lines.push(this.emptyRow(width));
+		lines.push(this.divider(width));
+		lines.push(this.emptyRow(width));
+		lines.push(this.row(width, t.fg("dim",
+			`${ITALIC("enter")} save  ${ITALIC("esc")} cancel  ${ITALIC("empty")} clears title`)));
+		lines.push(this.bottomBorder(width));
 		return lines;
 	}
 }
 
+// ── Patch the built-in /tree to add a one-key pin toggle ───────────────────
+// The TreeSelectorComponent we import is the *same class object* the host news
+// up for /tree (extension imports are aliased to the host module), so a single
+// prototype patch makes the real /tree — and the esc-esc tree — gain Ctrl+P pin
+// toggling on the highlighted row. Ctrl+P (not Shift+P) keeps the letter 'P'
+// usable in the tree's fuzzy search. Every host-internal access is
+// feature-detected so a future refactor degrades to "no toggle" instead of
+// crashing.
+interface TreeListInternals {
+	getSelectedNode?: () => { entry: { id: string }; label?: string } | undefined;
+	updateNodeLabel?: (id: string, label: string | undefined) => void;
+}
+interface TreeSelectorInternals {
+	handleInput?: (data: string) => void;
+	__pinTogglePatched?: boolean;
+	getTreeList?: () => TreeListInternals | undefined;
+	// `labelInput` is private in the host; truthy while the Shift+L editor is open.
+	labelInput?: unknown;
+}
+
+function installTreePinToggle(pi: ExtensionAPI): void {
+	const proto = TreeSelectorComponent.prototype as unknown as TreeSelectorInternals;
+	if (proto.__pinTogglePatched) return;
+	const original = proto.handleInput;
+	if (typeof original !== "function") return; // host shape changed — bail safely
+	proto.handleInput = function (this: TreeSelectorInternals, data: string): void {
+		// Don't steal the key while the Shift+L label editor is focused.
+		if (!this.labelInput && matchesKey(data, Key.ctrl("p"))) {
+			const list = this.getTreeList?.();
+			const node = list?.getSelectedNode?.();
+			if (node && list?.updateNodeLabel) {
+				const next = isPin(node.label) ? undefined : pinLabel("");
+				pi.setLabel(node.entry.id, next); // persist to the session
+				list.updateNodeLabel(node.entry.id, next); // sync the visible [label]
+				return; // consume
+			}
+		}
+		original.call(this, data);
+	};
+	proto.__pinTogglePatched = true;
+}
+
 export default function (pi: ExtensionAPI) {
+	// Make the native /tree pin-aware (Ctrl+P toggles a 📌 label on the selection).
+	installTreePinToggle(pi);
+
 	// /pin [title] — quick-pin the most recent assistant message on the branch.
 	pi.registerCommand("pin", {
 		description: "Pin the last assistant message (optional title)",
@@ -489,41 +577,6 @@ export default function (pi: ExtensionAPI) {
 		},
 	});
 
-	// /pin-pick — choose an earlier message on the branch to pin.
-	pi.registerCommand("pin-pick", {
-		description: "Pick an earlier message to pin",
-		handler: async (_args, ctx) => {
-			const entries = branchPinnables(ctx.sessionManager);
-			if (entries.length === 0) {
-				ctx.ui.notify("No messages to pin", "warning");
-				return;
-			}
-			await ctx.ui.custom<void>(
-				(tui, theme, _kb, done) => {
-					const picker = new PinPicker(
-						entries,
-						theme,
-						(id) => {
-							pi.setLabel(id, pinLabel(""));
-							ctx.ui.notify("Pinned", "info");
-							done();
-						},
-						() => done(),
-					);
-					return {
-						render: (w) => picker.render(w),
-						invalidate: () => picker.invalidate(),
-						handleInput: (d) => {
-							picker.handleInput(d);
-							tui.requestRender();
-						},
-					};
-				},
-				{ overlay: true },
-			);
-		},
-	});
-
 	// /pins — browse all pins in the session tree.
 	pi.registerCommand("pins", {
 		description: "Browse pinned messages",
@@ -534,6 +587,7 @@ export default function (pi: ExtensionAPI) {
 					const browser = new PinBrowser(
 						pins,
 						theme,
+						() => tui.terminal.rows,
 						(id) => pi.setLabel(id, undefined),
 						(id, title) => pi.setLabel(id, pinLabel(title)),
 						() => done(),
@@ -547,7 +601,7 @@ export default function (pi: ExtensionAPI) {
 						},
 					};
 				},
-				{ overlay: true },
+				{ overlay: true, overlayOptions: { anchor: "center", width: 80, minWidth: 48 } },
 			);
 		},
 	});

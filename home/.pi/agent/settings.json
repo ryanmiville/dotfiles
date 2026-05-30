@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.77.0",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-8",
-  "defaultThinkingLevel": "off",
+  "lastChangelogVersion": "0.78.0",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
+  "defaultThinkingLevel": "low",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
     "openai-codex/gpt-5.5",
