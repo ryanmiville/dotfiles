@@ -27,6 +27,7 @@ import type { Component } from "@mariozechner/pi-tui";
 // prefix; titled pins carry free text after it. Persistence, session-scoping,
 // and survival across restarts/forks all come from pi's label system.
 const PIN_PREFIX = "📌";
+const PINNED_FILTER_MODE = "pinned-only";
 
 function isPin(label: string | undefined): label is string {
 	return label != null && label.startsWith(PIN_PREFIX);
@@ -215,7 +216,7 @@ class PinBrowser implements Component {
 			if (this.current()) {
 				this.enterDetail();
 			}
-		} else if (matchesKey(data, Key.ctrl("p"))) {
+		} else if (matchesKey(data, "shift+p")) {
 			this.togglePending();
 		} else if (matchesKey(data, Key.ctrl("e"))) {
 			this.beginEdit();
@@ -246,7 +247,7 @@ class PinBrowser implements Component {
 
 		if (matchesKey(data, Key.escape)) {
 			this.mode = "list";
-		} else if (matchesKey(data, Key.ctrl("p"))) {
+		} else if (matchesKey(data, "shift+p")) {
 			this.togglePending();
 			this.mode = "list"; // mark-and-return, per design
 		} else if (matchesKey(data, Key.ctrl("e"))) {
@@ -398,7 +399,7 @@ class PinBrowser implements Component {
 		if (this.pendingUnpin.size > 0) {
 			const n = this.pendingUnpin.size;
 			lines.push(
-				this.row(width, t.fg("warning", `⚠ ${n} to unpin on close · esc applies · ctrl+p undoes`)),
+				this.row(width, t.fg("warning", `⚠ ${n} to unpin on close · esc applies · shift+p undoes`)),
 			);
 			lines.push(this.emptyRow(width));
 		}
@@ -407,7 +408,7 @@ class PinBrowser implements Component {
 		lines.push(this.emptyRow(width));
 
 		if (this.pins.length === 0) {
-			lines.push(this.row(width, t.fg("muted", ITALIC("No pinned messages — pin from /tree with ctrl+p"))));
+			lines.push(this.row(width, t.fg("muted", ITALIC("No pinned messages — pin from /tree with shift+p"))));
 			lines.push(this.emptyRow(width));
 		} else if (rows.length === 0) {
 			lines.push(this.row(width, t.fg("warning", ITALIC("No matching pins"))));
@@ -437,7 +438,7 @@ class PinBrowser implements Component {
 		lines.push(this.divider(width));
 		lines.push(this.emptyRow(width));
 		lines.push(this.row(width, t.fg("dim",
-			`${ITALIC("↑↓")} navigate  ${ITALIC("enter")} reveal  ${ITALIC("ctrl+p")} unpin  ${ITALIC("ctrl+e")} title  ${ITALIC("esc")} close`)));
+			`${ITALIC("↑↓")} navigate  ${ITALIC("enter")} reveal  ${ITALIC("shift+p")} unpin  ${ITALIC("ctrl+e")} title  ${ITALIC("esc")} close`)));
 		lines.push(this.bottomBorder(width));
 		return lines;
 	}
@@ -482,7 +483,7 @@ class PinBrowser implements Component {
 		lines.push(this.divider(width));
 		lines.push(this.emptyRow(width));
 		lines.push(this.row(width, t.fg("dim",
-			`${ITALIC("↑↓/PgUp/PgDn")} scroll  ${ITALIC("ctrl+p")} unpin  ${ITALIC("ctrl+e")} title  ${ITALIC("esc")} back`)));
+			`${ITALIC("↑↓/PgUp/PgDn")} scroll  ${ITALIC("shift+p")} unpin  ${ITALIC("ctrl+e")} title  ${ITALIC("esc")} back`)));
 		lines.push(this.bottomBorder(width));
 		return lines;
 	}
@@ -506,48 +507,223 @@ class PinBrowser implements Component {
 // ── Patch the built-in /tree to add a one-key pin toggle ───────────────────
 // The TreeSelectorComponent we import is the *same class object* the host news
 // up for /tree (extension imports are aliased to the host module), so a single
-// prototype patch makes the real /tree — and the esc-esc tree — gain Ctrl+P pin
-// toggling on the highlighted row. Ctrl+P (not Shift+P) keeps the letter 'P'
-// usable in the tree's fuzzy search. Every host-internal access is
-// feature-detected so a future refactor degrades to "no toggle" instead of
-// crashing.
+// prototype patch makes the real /tree — and the esc-esc tree — gain Shift+P pin
+// toggling on the highlighted row, matching native Shift+L label editing.
+// Every host-internal access is feature-detected so a future refactor degrades
+// to "no toggle" instead of crashing.
 interface TreeListInternals {
-	getSelectedNode?: () => { entry: { id: string }; label?: string } | undefined;
+	getSelectedNode?: () => { entry: SessionEntry; label?: string } | undefined;
 	updateNodeLabel?: (id: string, label: string | undefined) => void;
+	searchQuery?: string;
+	filterMode?: string;
+	applyFilter?: () => void;
+	getFilterLabel?: () => string;
+	recalculateVisualStructure?: () => void;
+	filteredNodes?: Array<{ node: { entry: SessionEntry; label?: string } }>;
+	selectedIndex?: number;
+	__pinnedFilterPatched?: boolean;
 }
+
+interface TreeDetailState {
+	entry: PinnableEntry;
+	scroll: number;
+	lines?: string[];
+	width?: number;
+	pendingG?: boolean;
+	title: string; // pin title ("" when untitled), used like /pins
+	pinned: boolean; // entry carries a 📌 label
+}
+
 interface TreeSelectorInternals {
 	handleInput?: (data: string) => void;
+	render?: (width: number) => string[];
 	__pinTogglePatched?: boolean;
+	__messageDetail?: TreeDetailState;
 	getTreeList?: () => TreeListInternals | undefined;
 	// `labelInput` is private in the host; truthy while the Shift+L editor is open.
 	labelInput?: unknown;
 }
 
+// The /tree detail view is rendered from a prototype patch and a free function,
+// neither of which receives a Theme (ExtensionAPI exposes none, and the live
+// `theme` proxy isn't a package export). We capture it from a handler ctx so the
+// box can use the same `border` token as /pins; absent a capture it degrades to
+// the raw/default foreground.
+let liveTheme: Theme | undefined;
+
+function treeBorder(s: string): string {
+	return liveTheme ? liveTheme.fg("border", s) : s;
+}
+
+const TREE_DETAIL_BODY_HEIGHT = 20;
+
+function clampTreeDetailScroll(state: TreeDetailState, offset: number): number {
+	const total = state.lines?.length ?? 0;
+	return Math.max(0, Math.min(offset, total - TREE_DETAIL_BODY_HEIGHT));
+}
+
+function treeDetailRow(width: number, content: string): string {
+	const innerW = Math.max(0, width - 2);
+	return treeBorder("│") + truncateToWidth(` ${content}`, innerW, "…", true) + treeBorder("│");
+}
+
+function renderTreeDetail(state: TreeDetailState, width: number): string[] {
+	const lines: string[] = [];
+	// Same title rules as /pins: pin title when present, else role · time.
+	const heading = state.title || `${state.entry.role} · ${relativeTime(state.entry.timestamp)}`;
+	const titleText = ` ${state.pinned ? "📌 " : ""}${heading} `;
+	const innerW = Math.max(0, width - 2);
+	const fill = Math.max(0, innerW - visibleWidth(titleText));
+	const left = Math.floor(fill / 2);
+	const right = fill - left;
+	const styledTitle = liveTheme
+		? liveTheme.fg("accent", liveTheme.bold(truncateToWidth(titleText, innerW)))
+		: truncateToWidth(titleText, innerW);
+	lines.push(treeBorder(`╭${"─".repeat(left)}`) + styledTitle + treeBorder(`${"─".repeat(right)}╮`));
+	lines.push(treeDetailRow(width, ""));
+
+	if (!state.lines || state.width !== width) {
+		state.lines = new Markdown(state.entry.markdown, 0, 0, getMarkdownTheme()).render(Math.max(1, width - 3));
+		state.width = width;
+	}
+	const detailLines = state.lines!;
+	state.scroll = clampTreeDetailScroll(state, state.scroll);
+	const total = detailLines.length;
+	const slice = detailLines.slice(state.scroll, state.scroll + TREE_DETAIL_BODY_HEIGHT);
+	for (const md of slice) lines.push(treeDetailRow(width, md));
+	for (let i = slice.length; i < TREE_DETAIL_BODY_HEIGHT; i++) lines.push(treeDetailRow(width, ""));
+
+	if (total > TREE_DETAIL_BODY_HEIGHT) {
+		const first = state.scroll + 1;
+		const last = Math.min(total, state.scroll + TREE_DETAIL_BODY_HEIGHT);
+		const up = state.scroll > 0 ? "▴" : " ";
+		const down = last < total ? "▾" : " ";
+		lines.push(treeDetailRow(width, `${up}${down} ${first}–${last}/${total} lines`));
+	} else {
+		lines.push(treeDetailRow(width, ""));
+	}
+
+	lines.push(treeBorder(`├${"─".repeat(Math.max(0, width - 2))}┤`));
+	lines.push(treeDetailRow(width, `${ITALIC("↑↓/PgUp/PgDn")} scroll  ${ITALIC("Home/End")} ends  ${ITALIC("esc")} tree`));
+	lines.push(treeBorder(`╰${"─".repeat(Math.max(0, width - 2))}╯`));
+	return lines;
+}
+
+function handleTreeDetailInput(state: TreeDetailState, data: string): boolean {
+	if (data === "g") {
+		if (state.pendingG) state.scroll = 0;
+		state.pendingG = !state.pendingG;
+		return true;
+	}
+	state.pendingG = false;
+	if (matchesKey(data, Key.up) || data === "k") state.scroll = Math.max(0, state.scroll - 1);
+	else if (matchesKey(data, Key.down) || data === "j") state.scroll = clampTreeDetailScroll(state, state.scroll + 1);
+	else if (matchesKey(data, Key.pageDown) || matchesKey(data, Key.ctrl("d"))) state.scroll = clampTreeDetailScroll(state, state.scroll + TREE_DETAIL_BODY_HEIGHT);
+	else if (matchesKey(data, Key.pageUp) || matchesKey(data, Key.ctrl("u"))) state.scroll = Math.max(0, state.scroll - TREE_DETAIL_BODY_HEIGHT);
+	else if (matchesKey(data, Key.home)) state.scroll = 0;
+	else if (matchesKey(data, Key.end) || data === "G") state.scroll = clampTreeDetailScroll(state, Number.MAX_SAFE_INTEGER);
+	else return false;
+	return true;
+}
+
+function installPinnedFilter(list: TreeListInternals): void {
+	if (list.__pinnedFilterPatched || typeof list.applyFilter !== "function") return;
+	const nativeApplyFilter = list.applyFilter;
+	const nativeGetFilterLabel = list.getFilterLabel;
+	list.applyFilter = function (this: TreeListInternals): void {
+		if (this.filterMode !== PINNED_FILTER_MODE) {
+			nativeApplyFilter.call(this);
+			return;
+		}
+		this.filterMode = "labeled-only";
+		nativeApplyFilter.call(this);
+		this.filterMode = PINNED_FILTER_MODE;
+		this.filteredNodes = this.filteredNodes?.filter((node) => isPin(node.node.label));
+		this.recalculateVisualStructure?.();
+		if (this.filteredNodes && typeof this.selectedIndex === "number") {
+			this.selectedIndex = Math.max(0, Math.min(this.selectedIndex, this.filteredNodes.length - 1));
+		}
+	};
+	list.getFilterLabel = function (this: TreeListInternals): string {
+		return this.filterMode === PINNED_FILTER_MODE ? " [pinned]" : (nativeGetFilterLabel?.call(this) ?? "");
+	};
+	list.__pinnedFilterPatched = true;
+}
+
+function cycleTreeFilter(list: TreeListInternals, direction: 1 | -1): void {
+	installPinnedFilter(list);
+	const modes = ["default", "no-tools", "user-only", "labeled-only", PINNED_FILTER_MODE, "all"];
+	const current = modes.indexOf(list.filterMode ?? "default");
+	list.filterMode = modes[(current + direction + modes.length) % modes.length];
+	list.applyFilter?.();
+}
+
 function installTreePinToggle(pi: ExtensionAPI): void {
 	const proto = TreeSelectorComponent.prototype as unknown as TreeSelectorInternals;
 	if (proto.__pinTogglePatched) return;
-	const original = proto.handleInput;
-	if (typeof original !== "function") return; // host shape changed — bail safely
+	const originalInput = proto.handleInput;
+	const originalRender = proto.render;
+	if (typeof originalInput !== "function" || typeof originalRender !== "function") return; // host shape changed — bail safely
 	proto.handleInput = function (this: TreeSelectorInternals, data: string): void {
-		// Don't steal the key while the Shift+L label editor is focused.
-		if (!this.labelInput && matchesKey(data, Key.ctrl("p"))) {
-			const list = this.getTreeList?.();
+		const list = this.getTreeList?.();
+		if (list) installPinnedFilter(list);
+
+		if (this.__messageDetail) {
+			if (matchesKey(data, Key.escape)) this.__messageDetail = undefined;
+			else handleTreeDetailInput(this.__messageDetail, data);
+			return;
+		}
+
+		// Don't steal keys while the Shift+L label editor is focused.
+		if (!this.labelInput && list && matchesKey(data, "shift+ctrl+o")) {
+			cycleTreeFilter(list, -1);
+			return;
+		}
+		if (!this.labelInput && list && matchesKey(data, "ctrl+o")) {
+			cycleTreeFilter(list, 1);
+			return;
+		}
+		if (!this.labelInput && list && matchesKey(data, Key.ctrl("p"))) {
+			list.filterMode = PINNED_FILTER_MODE;
+			list.applyFilter?.();
+			return;
+		}
+		if (!this.labelInput && matchesKey(data, Key.ctrl("v"))) {
+			const node = this.getTreeList?.()?.getSelectedNode?.();
+			const entry = node ? toPinnable(node.entry) : null;
+			if (entry) {
+				const pinned = isPin(node!.label);
+				const title = pinned ? titleOf(node!.label as string) : (node!.label ?? "");
+				this.__messageDetail = { entry, scroll: 0, title, pinned };
+				return;
+			}
+		}
+		if (!this.labelInput && matchesKey(data, "shift+p")) {
 			const node = list?.getSelectedNode?.();
 			if (node && list?.updateNodeLabel) {
 				const next = isPin(node.label) ? undefined : pinLabel("");
 				pi.setLabel(node.entry.id, next); // persist to the session
 				list.updateNodeLabel(node.entry.id, next); // sync the visible [label]
+				list.applyFilter?.();
 				return; // consume
 			}
 		}
-		original.call(this, data);
+		originalInput.call(this, data);
+	};
+	proto.render = function (this: TreeSelectorInternals, width: number): string[] {
+		return this.__messageDetail ? renderTreeDetail(this.__messageDetail, width) : originalRender.call(this, width);
 	};
 	proto.__pinTogglePatched = true;
 }
 
 export default function (pi: ExtensionAPI) {
-	// Make the native /tree pin-aware (Ctrl+P toggles a 📌 label on the selection).
+	// Make the native /tree pin-aware (Shift+P toggles a 📌 label on the selection).
 	installTreePinToggle(pi);
+
+	// Capture the live theme so the /tree detail patch can use the `border` token.
+	pi.on("session_start", (_e, ctx) => {
+		if (ctx.hasUI) liveTheme = ctx.ui.theme;
+	});
 
 	// /pin [title] — quick-pin the most recent assistant message on the branch.
 	pi.registerCommand("pin", {
@@ -577,32 +753,62 @@ export default function (pi: ExtensionAPI) {
 		},
 	});
 
-	// /pins — browse all pins in the session tree.
+	// /pins — reuse native /tree, starting in pinned-only mode.
 	pi.registerCommand("pins", {
 		description: "Browse pinned messages",
 		handler: async (_args, ctx) => {
-			const pins = allPins(ctx.sessionManager);
-			await ctx.ui.custom<void>(
-				(tui, theme, _kb, done) => {
-					const browser = new PinBrowser(
-						pins,
-						theme,
-						() => tui.terminal.rows,
-						(id) => pi.setLabel(id, undefined),
-						(id, title) => pi.setLabel(id, pinLabel(title)),
-						() => done(),
-					);
-					return {
-						render: (w) => browser.render(w),
-						invalidate: () => browser.invalidate(),
-						handleInput: (d) => {
-							browser.handleInput(d);
-							tui.requestRender();
-						},
-					};
-				},
-				{ overlay: true, overlayOptions: { anchor: "center", width: 80, minWidth: 48 } },
-			);
+			await ctx.ui.custom<void>((tui, theme, _kb, done) => {
+				liveTheme = theme; // keep the /tree detail in sync after theme switches
+				const tree = ctx.sessionManager.getTree();
+				const leaf = ctx.sessionManager.getLeafId();
+				let selector!: TreeSelectorComponent;
+				const revealSelected = (): void => {
+					const internals = selector as unknown as TreeSelectorInternals;
+					const node = internals.getTreeList?.()?.getSelectedNode?.();
+					const entry = node ? toPinnable(node.entry) : null;
+					if (!entry || !node) return;
+					const pinned = isPin(node.label);
+					const title = pinned ? titleOf(node.label as string) : (node.label ?? "");
+					internals.__messageDetail = { entry, scroll: 0, title, pinned };
+					tui.requestRender();
+				};
+				selector = new (TreeSelectorComponent as unknown as new (
+					tree: ReturnType<typeof ctx.sessionManager.getTree>,
+					currentLeafId: string | null,
+					terminalHeight: number,
+					onSelect: (entryId: string) => void,
+					onCancel: () => void,
+					onLabelChange: (entryId: string, label: string | undefined) => void,
+					initialSelectedId?: string,
+					initialFilterMode?: string,
+				) => TreeSelectorComponent)(
+					tree,
+					leaf,
+					tui.terminal.rows,
+					revealSelected,
+					() => done(),
+					(id, label) => pi.setLabel(id, label),
+					undefined,
+					"labeled-only",
+				);
+				const list = (selector as unknown as TreeSelectorInternals).getTreeList?.();
+				if (list) {
+					installPinnedFilter(list);
+					list.filterMode = PINNED_FILTER_MODE;
+					list.searchQuery = "";
+					list.applyFilter?.();
+				}
+				const originalHandleInput = selector.handleInput.bind(selector);
+				selector.handleInput = (data: string): void => {
+					if (matchesKey(data, Key.ctrl("c"))) {
+						done();
+						return;
+					}
+					originalHandleInput(data);
+					tui.requestRender();
+				};
+				return selector;
+			});
 		},
 	});
 }
