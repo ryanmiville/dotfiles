@@ -537,6 +537,7 @@ interface TreeDetailState {
 interface TreeSelectorInternals {
 	handleInput?: (data: string) => void;
 	render?: (width: number) => string[];
+	children?: Array<{ text?: string; invalidate?: () => void }>;
 	__pinTogglePatched?: boolean;
 	__messageDetail?: TreeDetailState;
 	getTreeList?: () => TreeListInternals | undefined;
@@ -553,6 +554,10 @@ let liveTheme: Theme | undefined;
 
 function treeBorder(s: string): string {
 	return liveTheme ? liveTheme.fg("border", s) : s;
+}
+
+function treeMuted(s: string): string {
+	return liveTheme ? liveTheme.fg("muted", s) : s;
 }
 
 const TREE_DETAIL_BODY_HEIGHT = 20;
@@ -624,6 +629,21 @@ function handleTreeDetailInput(state: TreeDetailState, data: string): boolean {
 	else if (matchesKey(data, Key.end) || data === "G") state.scroll = clampTreeDetailScroll(state, Number.MAX_SAFE_INTEGER);
 	else return false;
 	return true;
+}
+
+function patchTreeHelpText(selector: TreeSelectorInternals): void {
+	// Original runtime text:
+	// "  ↑/↓: move. ←/→: page. ctrl+left/option+left/ctrl+right/option+right: fold/branch. shift+l: label. ctrl+d/ctrl+t/ctrl+u/ctrl+l/ctrl+a: filters (ctrl+o/shift+ctrl+o cycle). ctrl+r: label time"
+	const help = selector.children?.find((child) => {
+		if (typeof child.text !== "string") return false;
+		const text = child.text.toLowerCase();
+		return text.includes("session tree") === false && text.includes("label") && text.includes("filter");
+	});
+	if (!help) return;
+	help.text = treeMuted(
+		"  ↑/↓: move. ←/→: page. Shift+L: label. Shift+P: pin. Ctrl+P: pinned. Ctrl+O/Shift+Ctrl+O: filters.",
+	);
+	help.invalidate?.();
 }
 
 function installPinnedFilter(list: TreeListInternals): void {
@@ -711,6 +731,7 @@ function installTreePinToggle(pi: ExtensionAPI): void {
 		originalInput.call(this, data);
 	};
 	proto.render = function (this: TreeSelectorInternals, width: number): string[] {
+		patchTreeHelpText(this);
 		return this.__messageDetail ? renderTreeDetail(this.__messageDetail, width) : originalRender.call(this, width);
 	};
 	proto.__pinTogglePatched = true;
