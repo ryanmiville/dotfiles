@@ -2,7 +2,7 @@
   "lastChangelogVersion": "0.77.0",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-8",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "off",
   "theme": "catppuccin-macchiato",
   "enabledModels": [
     "openai-codex/gpt-5.5",
@@ -26,7 +26,14 @@
     "npm:pi-mcp-adapter",
     "npm:pi-web-access",
     "~/dev/pi-review",
-    "npm:pi-autoresearch"
+    {
+      "source": "npm:pi-autoresearch",
+      "skills": [
+        "-skills/autoresearch-create",
+        "-skills/autoresearch-finalize",
+        "-skills/autoresearch-hooks"
+      ]
+    }
   ],
   "hideThinkingBlock": true,
   "terminal": {
