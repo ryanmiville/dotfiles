@@ -1,6 +1,7 @@
 {
   "hiddenCommands": [
     "plannotator",
+    "plannotator-annotate",
     "plannotator-status",
     "plannotator-set-file",
     "plannotator-archive"
