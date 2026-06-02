@@ -420,7 +420,7 @@ function installTreePinToggle(pi: ExtensionAPI): void {
 
 export default function (pi: ExtensionAPI) {
   // Make the native /tree pin-aware (Shift+P toggles a 📌 label on the selection).
-  // installTreePinToggle(pi);
+  installTreePinToggle(pi);
 
   // Capture the live theme so the /tree detail patch can use the `border` token.
   pi.on("session_start", (_e, ctx) => {

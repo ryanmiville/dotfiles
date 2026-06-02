@@ -1,9 +1,9 @@
 {
   "lastChangelogVersion": "0.78.0",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-8",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "high",
-  "theme": "catppuccin-macchiato",
+  "theme": "tokyo-night",
   "enabledModels": [
     "openai-codex/gpt-5.5",
     "anthropic/claude-opus-4-8"
@@ -40,5 +40,7 @@
     "showImages": false
   },
   "skills": [],
-  "treeFilterMode": "no-tools"
+  "treeFilterMode": "no-tools",
+  "editorPaddingX": 1,
+  "showHardwareCursor": false
 }
