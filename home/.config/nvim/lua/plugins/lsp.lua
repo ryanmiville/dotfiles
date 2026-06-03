@@ -61,6 +61,7 @@ return {
 				tailwindcss = {
 					filetypes = { "typescriptreact", "javascriptreact", "html", "svelte", "astro" },
 				},
+				ts_ls = {},
 				yamlls = {},
 				rust_analyzer = {
 					settings = {
