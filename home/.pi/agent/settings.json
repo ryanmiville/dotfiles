@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.78.0",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-8",
   "defaultThinkingLevel": "low",
   "theme": "tokyo-night",
   "enabledModels": [
@@ -9,7 +9,6 @@
     "anthropic/claude-opus-4-8"
   ],
   "extensions": [
-    "~/dev/agent-stuff/extensions/context.ts",
     "~/dev/agent-stuff/extensions/answer.ts",
     "~/dev/agent-stuff/extensions/btw.ts",
     "~/dev/agent-stuff/extensions/todos.ts",
