@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "currentMode": "default",
+  "modes": {
+    "default": {
+      "provider": "openai-codex",
+      "modelId": "gpt-5.5",
+      "thinkingLevel": "low"
+    },
+    "opus-low": {
+      "provider": "anthropic",
+      "modelId": "claude-opus-4-6",
+      "thinkingLevel": "low"
+    },
+    "opus": {
+      "provider": "anthropic",
+      "modelId": "claude-sonnet-4-6",
+      "thinkingLevel": "high"
+    },
+    "sonnet": {
+      "provider": "anthropic",
+      "modelId": "claude-sonnet-4-6",
+      "thinkingLevel": "low"
+    },
+    "gpt-low": {
+      "provider": "openai-codex",
+      "modelId": "gpt-5.5",
+      "thinkingLevel": "low"
+    },
+    "gpt": {
+      "provider": "openai-codex",
+      "modelId": "gpt-5.5",
+      "thinkingLevel": "high"
+    }
+  }
+}

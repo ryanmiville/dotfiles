@@ -1,17 +1,19 @@
 {
-  "lastChangelogVersion": "0.78.0",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-8",
-  "defaultThinkingLevel": "low",
+  "lastChangelogVersion": "0.78.1",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
+  "defaultThinkingLevel": "high",
   "theme": "tokyo-night",
   "enabledModels": [
     "openai-codex/gpt-5.5",
-    "anthropic/claude-opus-4-8"
+    "anthropic/claude-sonnet-4-6",
+    "anthropic/claude-opus-4-6"
   ],
   "extensions": [
     "~/dev/agent-stuff/extensions/answer.ts",
     "~/dev/agent-stuff/extensions/btw.ts",
     "~/dev/agent-stuff/extensions/todos.ts",
+    "~/dev/agent-stuff/extensions/prompt-editor.ts",
     "~/dev/agent-stuff/extensions/whimsical.ts"
   ],
   "packages": [
