@@ -135,7 +135,7 @@ vim.keymap.set("n", "<leader>d", function()
 	vim.diagnostic.open_float({ border = "rounded" })
 end, { desc = "Open diagnostic float with rounded border" })
 
-vim.keymap.set("n", "<leader>cd", copy_line_diagnostics_to_clipboard, { desc = "[C]opy line [D]iagnostics" })
+vim.keymap.set("n", "<leader>cd", copy_line_diagnostics_to_clipboard, { desc = "Copy line Diagnostics" })
 
 vim.keymap.set("n", "<leader>ld", vim.diagnostic.setqflist, { desc = "Populate quickfix list with diagnostics" })
 

@@ -168,14 +168,14 @@ return {
 			function()
 				Snacks.toggle.diagnostics():toggle()
 			end,
-			desc = "[T]oggle [D]iagnostics",
+			desc = "Toggle Diagnostics",
 		},
 		{
 			"<leader>tw",
 			function()
 				Snacks.toggle.option("wrap"):toggle()
 			end,
-			desc = "[T]oggle line [W]rap",
+			desc = "Toggle line Wrap",
 		},
 		{
 			"<leader>un",

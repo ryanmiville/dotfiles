@@ -11,10 +11,36 @@ local parser_languages = {
 	"markdown",
 	"markdown_inline",
 	"python",
+	"query",
 	"rust",
 	"terraform",
 	"tsx",
 	"typescript",
+	"vim",
+	"vimdoc",
+	"yaml",
+}
+
+local parser_filetypes = {
+	"bash",
+	"css",
+	"gleam",
+	"go",
+	"html",
+	"javascript",
+	"json",
+	"lua",
+	"luadoc",
+	"markdown",
+	"python",
+	"query",
+	"rust",
+	"sh",
+	"terraform",
+	"tsx",
+	"typescript",
+	"vim",
+	"vimdoc",
 	"yaml",
 }
 
@@ -35,17 +61,24 @@ local function install_missing_parsers()
 	end
 end
 
+local function start_treesitter()
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = parser_filetypes,
+		callback = function()
+			vim.treesitter.start()
+		end,
+	})
+end
+
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		branch = "main",
 		lazy = false,
-		build = function()
-			require("nvim-treesitter").install(parser_languages)
-		end,
+		build = ":TSUpdate",
 		config = function()
-			require("nvim-treesitter").setup({})
 			install_missing_parsers()
+			start_treesitter()
 		end,
 	},
 	{
