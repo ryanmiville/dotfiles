@@ -312,3 +312,11 @@ export LC_ALL=en_US.UTF-8
 
 # Vite+ bin (https://viteplus.dev)
 . "$HOME/.vite-plus/env"
+
+# --- Java/Coursier behind Netskope TLS inspection ---
+# Bootstrap JDK (brew openjdk) so the coursier JVM launcher can run.
+export JAVA_HOME="/opt/homebrew/opt/openjdk/libexec/openjdk.jdk/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
+# Netskope truststore (built from netskope-cert-bundle.pem) is injected directly
+# into coursier's JVM by the ~/.local/bin/cs wrapper -- not via global
+# JAVA_TOOL_OPTIONS, to avoid the "Picked up JAVA_TOOL_OPTIONS..." noise.

@@ -1,4 +1,4 @@
 return {
-	"chpeters/annotator.nvim",
+	"ryanmiville/annotator.nvim",
 	opts = {},
 }
