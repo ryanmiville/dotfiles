@@ -1,4 +1,11 @@
 {
+  "/Users/ryanmiville/dev/effect-smol": true,
+  "/Users/ryanmiville/dev/pi-mono": true,
+  "/Users/ryanmiville/dev/work": true,
   "/Users/ryanmiville/dev/work/data-platform": true,
-  "/Users/ryanmiville/dev/work/tuft-data-team": true
+  "/Users/ryanmiville/dev/work/tuft-data-team": true,
+  "/Users/ryanmiville/dev/work/worktrees/data-platform/bold-cabin/data-platform": true,
+  "/Users/ryanmiville/dev/work/worktrees/data-platform/civil-sequoia/data-platform": true,
+  "/Users/ryanmiville/dev/work/worktrees/data-platform/light-bolt/data-platform": true,
+  "/Users/ryanmiville/dev/zed": true
 }
