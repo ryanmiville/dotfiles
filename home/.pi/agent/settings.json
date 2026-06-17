@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.79.4",
+  "lastChangelogVersion": "0.79.6",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "minimal",
   "theme": "tokyo-night",
   "enabledModels": [
     "openai-codex/gpt-5.5",
@@ -37,7 +37,9 @@
   "terminal": {
     "showImages": false
   },
-  "skills": [],
+  "skills": [
+    "-skills/handoff"
+  ],
   "treeFilterMode": "no-tools",
   "editorPaddingX": 1,
   "showHardwareCursor": false
