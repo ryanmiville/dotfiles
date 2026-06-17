@@ -6,22 +6,22 @@ onboarding = false
 
 [terminal]
 # Match tmux default-shell fish while preserving macOS login shell behavior.
-default_shell = "fish"
+default_shell = ""
 shell_mode = "auto"
 # Match tmux split/new-window -c "#{pane_current_path}".
 new_cwd = "follow"
 
 [theme]
-name = "catppuccin"
+name = "tokyo-night"
 
-[theme.custom]
+# [theme.custom]
 # Catppuccin Macchiato-inspired overrides matching the tmux theme choices.
-panel_bg = "#24273a"
-accent = "#c6a0f6"
-blue = "#8aadf4"
-green = "#a6da95"
-red = "#ed8796"
-yellow = "#eed49f"
+# panel_bg = "#24273a"
+# accent = "#c6a0f6"
+# blue = "#8aadf4"
+# green = "#a6da95"
+# red = "#ed8796"
+# yellow = "#eed49f"
 
 [update]
 channel = "stable"
@@ -35,7 +35,7 @@ help = "prefix+?"
 # Free prefix+s for tmux-session-like workspace picking.
 settings = "prefix+shift+s"
 detach = ["prefix+d", "prefix+q"]
-reload_config = "prefix+r"
+reload_config = "prefix+shift+r"
 goto = "prefix+g"
 
 # Workspaces are Herdr's closest equivalent to tmux sessions:
@@ -73,7 +73,7 @@ zoom = "prefix+m"
 copy_mode = "prefix+v"
 
 # Herdr exposes resize mode rather than tmux's exact repeatable -/= /[ /] bindings.
-resize_mode = "prefix+shift+r"
+resize_mode = "prefix+r"
 
 # Pane navigation. Prefix mappings mirror vim-ish tmux usage; ctrl+h/j/k/l are direct Herdr chords.
 focus_pane_left = ["ctrl+h"]
@@ -95,17 +95,17 @@ navigate_pane_up = "k"
 navigate_pane_right = "l"
 
 [ui]
-sidebar_width = 32
-sidebar_min_width = 18
-sidebar_max_width = 36
+# sidebar_width = 32
+# sidebar_min_width = 18
+# sidebar_max_width = 36
 mouse_capture = true
 right_click_passthrough_modifier = "ctrl"
-mouse_scroll_lines = 3
+# mouse_scroll_lines = 3
 # tmux close/kill bindings do not prompt; match that behavior.
 confirm_close = false
 prompt_new_tab_name = true
 agent_panel_scope = "all"
-accent = "#c6a0f6"
+# accent = "#c6a0f6"
 
 [ui.toast]
 delivery = "off"
@@ -120,7 +120,7 @@ position = "bottom-center"
 
 [ui.sound]
 # tmux config has no sound notifications.
-enabled = false
+enabled = true
 
 [session]
 # Closest analogue to tmux-resurrect for supported coding agents.
@@ -138,4 +138,4 @@ kitty_graphics = true
 
 [advanced]
 # tmux uses history-limit 50000 lines; Herdr config is byte-based.
-scrollback_limit_bytes = 52428800
+# scrollback_limit_bytes = 52428800
