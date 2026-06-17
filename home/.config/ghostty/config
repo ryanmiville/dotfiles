@@ -30,8 +30,10 @@ quick-terminal-position = bottom
 # tabs 
 keybind = cmd+;>n=next_tab
 keybind = cmd+;>p=previous_tab
-keybind = cmd+opt+arrow_right=next_tab
-keybind = cmd+opt+arrow_left=previous_tab
+keybind = cmd+opt+arrow_right=unbind
+keybind = cmd+opt+arrow_left=unbind
+keybind = cmd+opt+arrow_up=unbind
+keybind = cmd+opt+arrow_down=unbind
 keybind = cmd+;>comma=move_tab:-1
 keybind = cmd+;>period=move_tab:1
 

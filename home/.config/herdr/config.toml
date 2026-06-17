@@ -28,7 +28,8 @@ channel = "stable"
 
 [keys]
 # tmux prefix: C-;
-prefix = "ctrl+semicolon"
+prefix = "cmd+alt+shift+ctrl+backspace"
+# prefix = "ctrl+"
 
 # tmux-style basics.
 help = "prefix+?"
@@ -36,6 +37,7 @@ help = "prefix+?"
 settings = "prefix+shift+s"
 detach = ["prefix+d", "prefix+q"]
 reload_config = "prefix+shift+r"
+open_notification_target = "prefix+o"
 goto = "prefix+g"
 
 # Workspaces are Herdr's closest equivalent to tmux sessions:
@@ -47,18 +49,20 @@ workspace_picker = ["prefix+s", "prefix+w"]
 new_workspace = "prefix+shift+n"
 rename_workspace = "prefix+shift+w"
 close_workspace = "prefix+shift+d"
-previous_workspace = "prefix+("
-next_workspace = "prefix+)"
+previous_workspace = ["prefix+(", "cmd+alt+up"]
+next_workspace = ["prefix+)", "cmd+alt+down"]
 # switch_workspace = ["prefix+alt+1..9"]
 
 # agents
 focus_agent = "prefix+alt+1..9"
+next_agent = "prefix+]"
+previous_agent = "prefix+["
 
 
 # tmux windows ~= Herdr tabs.
-new_tab = "prefix+c"
-previous_tab = "prefix+p"
-next_tab = "prefix+n"
+new_tab = ["prefix+c", "prefix+t"]
+previous_tab = ["prefix+p", "cmd+alt+left"]
+next_tab = ["prefix+n", "cmd+alt+right"]
 switch_tab = "prefix+1..9"
 rename_tab = "prefix+comma"
 close_tab = "prefix+shift+x"
@@ -76,10 +80,10 @@ copy_mode = "prefix+v"
 resize_mode = "prefix+r"
 
 # Pane navigation. Prefix mappings mirror vim-ish tmux usage; ctrl+h/j/k/l are direct Herdr chords.
-focus_pane_left = ["ctrl+h"]
-focus_pane_down = ["ctrl+j"]
-focus_pane_up = ["ctrl+k"]
-focus_pane_right = ["ctrl+l"]
+focus_pane_left = ["prefix+h","ctrl+h"]
+focus_pane_down = ["prefix+j","ctrl+j"]
+focus_pane_up = ["prefix+k","ctrl+k"]
+focus_pane_right = ["prefix+l","ctrl+l"]
 cycle_pane_next = "prefix+tab"
 cycle_pane_previous = "prefix+shift+tab"
 
@@ -108,7 +112,11 @@ agent_panel_scope = "all"
 # accent = "#c6a0f6"
 
 [ui.toast]
-delivery = "off"
+# off = disable pop-up notifications
+# herdr = show in-app toasts
+# terminal = ask the outer terminal to show a desktop notification
+# system = ask the OS notification service directly
+delivery = "herdr"
 delay_seconds = 1
 
 [ui.toast.herdr]
