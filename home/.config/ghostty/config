@@ -19,6 +19,7 @@ font-style-bold-italic = Bold Italic
 font-size = 16
 
 # UI
+title = " "
 macos-titlebar-style = transparent
 macos-titlebar-proxy-icon = hidden
 mouse-hide-while-typing = true
