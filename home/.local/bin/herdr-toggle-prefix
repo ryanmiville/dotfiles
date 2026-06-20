@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script=${BASH_SOURCE[0]}
+while [[ -L "$script" ]]; do
+  dir=$(cd -P -- "$(dirname -- "$script")" && pwd)
+  target=$(readlink "$script")
+  [[ $target == /* ]] && script=$target || script=$dir/$target
+done
+script_dir=$(cd -P -- "$(dirname -- "$script")" && pwd)
+managed_config=$(cd -P -- "$script_dir/../.." && pwd)/.config/herdr/config.toml
+xdg_config="${XDG_CONFIG_HOME:-$HOME/.config}/herdr/config.toml"
+config="${HERDR_CONFIG:-$managed_config}"
+[[ -f "$config" ]] || config="$xdg_config"
+
+prefix_desk='prefix = "cmd+alt+shift+ctrl+backspace"'
+prefix_default='prefix = "ctrl+;"'
+
+if [[ ! -f "$config" ]]; then
+  echo "missing config: $config" >&2
+  exit 1
+fi
+
+active_prefix=$(grep -E '^[[:space:]]*prefix[[:space:]]*=' "$config" || true)
+
+case "$active_prefix" in
+  "$prefix_desk")
+    perl -0pi -e \
+      's/^prefix = "cmd\+alt\+shift\+ctrl\+backspace"$/# prefix = "cmd+alt+shift+ctrl+backspace"/m; s/^# prefix = "ctrl\+;"$/prefix = "ctrl+;"/m' \
+      "$config"
+    echo 'herdr prefix: ctrl+;'
+    ;;
+  "$prefix_default")
+    perl -0pi -e \
+      's/^# prefix = "cmd\+alt\+shift\+ctrl\+backspace"$/prefix = "cmd+alt+shift+ctrl+backspace"/m; s/^prefix = "ctrl\+;"$/# prefix = "ctrl+;"/m' \
+      "$config"
+    echo 'herdr prefix: cmd+alt+shift+ctrl+backspace'
+    ;;
+  *)
+    echo "unknown active prefix in $config:" >&2
+    echo "${active_prefix:-  <none>}" >&2
+    exit 1
+    ;;
+esac
+
+echo "edited: $config"
+
+if command -v herdr >/dev/null 2>&1; then
+  if herdr server reload-config; then
+    echo 'herdr config reloaded'
+  else
+    echo 'reload failed: herdr server reload-config' >&2
+    exit 1
+  fi
+else
+  echo 'reload Herdr config: prefix+shift+r'
+fi

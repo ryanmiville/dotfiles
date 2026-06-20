@@ -27,9 +27,8 @@ name = "tokyo-night"
 channel = "stable"
 
 [keys]
-# tmux prefix: C-;
-prefix = "cmd+alt+shift+ctrl+backspace"
-# prefix = "ctrl+;"
+# prefix = "cmd+alt+shift+ctrl+backspace"
+prefix = "ctrl+;"
 
 # tmux-style basics.
 help = "prefix+?"
