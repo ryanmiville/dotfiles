@@ -27,8 +27,8 @@ name = "tokyo-night"
 channel = "stable"
 
 [keys]
-# prefix = "cmd+alt+shift+ctrl+backspace"
-prefix = "ctrl+;"
+prefix = "cmd+alt+shift+ctrl+backspace"
+# prefix = "ctrl+;"
 
 # tmux-style basics.
 help = "prefix+?"
@@ -38,6 +38,9 @@ detach = ["prefix+d", "prefix+q"]
 reload_config = "prefix+shift+r"
 open_notification_target = "prefix+o"
 goto = "prefix+g"
+new_worktree    = "prefix+shift+g"
+open_worktree   = "prefix+alt+g"
+remove_worktree = "prefix+ctrl+g"
 
 # Workspaces are Herdr's closest equivalent to tmux sessions:
 #   prefix+s       choose session/workspace

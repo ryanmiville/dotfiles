@@ -68,7 +68,7 @@ keybind = alt+==resize_split:down,10
 keybind = alt+-=resize_split:up,10
 
 # new line
-keybind = shift+enter=text:\n
+# keybind = shift+enter=text:\n
 
 # quick terminal
 # keybind = global:cmd+shift+opt+ctrl+;=toggle_quick_terminal
