@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.79.7",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5",
+  "lastChangelogVersion": "0.79.10",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-sonnet-4-6",
   "defaultThinkingLevel": "high",
   "theme": "tokyo-night",
   "enabledModels": [
