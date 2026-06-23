@@ -1,5 +1,5 @@
 tap "agavra/tap"
-tap "coursier/formulas"
+tap "coursier/formulas", trusted: { formulae: ["coursier"] }
 tap "datadog-labs/pack"
 tap "dmmulroy/tap"
 tap "hashicorp/tap"
@@ -7,6 +7,8 @@ tap "jnsahaj/lumen"
 tap "manaflow-ai/cmux"
 tap "ryanmiville/tap"
 tap "tansu-io/tap"
+# Code searching, linting, rewriting
+brew "ast-grep"
 # Official Amazon AWS command-line interface
 brew "awscli"
 # Clone of cat(1) with syntax highlighting and Git integration
