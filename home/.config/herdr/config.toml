@@ -100,6 +100,11 @@ navigate_pane_down = "j"
 navigate_pane_up = "k"
 navigate_pane_right = "l"
 
+[[keys.command]]
+key = "prefix+alt+p"
+type = "shell"
+command = "herdr-toggle-prefix"
+
 [ui]
 # sidebar_width = 32
 # sidebar_min_width = 18

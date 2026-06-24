@@ -24,10 +24,18 @@ return {
 		},
 		config = function()
 			local map_lsp_keybinds = require("rymi.keymaps").map_lsp_keybinds
+			local python = require("rymi.python")
 
 			-- List your LSP servers here.
 			local servers = {
-				ty = {},
+				basedpyright = {
+					root_dir = python.root_dir,
+					settings = python.basedpyright_settings(),
+					before_init = python.basedpyright_before_init,
+				},
+				ruff = {
+					root_dir = python.root_dir,
+				},
 				bashls = {},
 				biome = {},
 				-- cf_lsp = {
@@ -77,7 +85,7 @@ return {
 				stylua = {},
 			}
 
-			local manually_installed_servers = { "ty" }
+			local manually_installed_servers = {}
 			local mason_tools_to_install = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters))
 			local ensure_installed = vim.tbl_filter(function(name)
 				return not vim.tbl_contains(manually_installed_servers, name)
@@ -132,6 +140,7 @@ return {
 					cmd = config.cmd,
 					capabilities = capabilities,
 					filetypes = config.filetypes,
+					before_init = config.before_init,
 					settings = config.settings,
 					root_dir = config.root_dir,
 					root_markers = config.root_markers,

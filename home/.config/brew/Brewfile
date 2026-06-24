@@ -1,4 +1,4 @@
-tap "agavra/tap"
+tap "agavra/tap", trusted: true
 tap "coursier/formulas", trusted: { formulae: ["coursier"] }
 tap "datadog-labs/pack"
 tap "dmmulroy/tap"
@@ -107,6 +107,8 @@ brew "yq"
 brew "zig"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Terminal UI for Code Reviews - review AI-generated diffs like a GitHub PR
+brew "agavra/tap/tuicr"
 # GraphQL client
 cask "altair-graphql-client"
 # Managed client-based VPN service to securely access AWS resources

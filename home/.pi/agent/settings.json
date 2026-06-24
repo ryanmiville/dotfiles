@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.79.10",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-sonnet-4-6",
+  "defaultModel": "claude-opus-4-6",
   "defaultThinkingLevel": "high",
   "theme": "tokyo-night",
   "enabledModels": [
@@ -22,7 +22,6 @@
       "skills": []
     },
     "npm:pi-mcp-adapter",
-    "npm:pi-web-access",
     "~/dev/pi-review",
     {
       "source": "npm:pi-autoresearch",
