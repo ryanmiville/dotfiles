@@ -26,6 +26,46 @@ return {
 			local map_lsp_keybinds = require("rymi.keymaps").map_lsp_keybinds
 			local python = require("rymi.python")
 
+			local vtsls_language_settings = {
+				suggest = {
+					completeFunctionCalls = true,
+				},
+				inlayHints = {
+					parameterNames = {
+						enabled = "all",
+						suppressWhenArgumentMatchesName = false,
+					},
+					parameterTypes = {
+						enabled = true,
+					},
+					variableTypes = {
+						enabled = true,
+						suppressWhenTypeMatchesName = false,
+					},
+					propertyDeclarationTypes = {
+						enabled = true,
+					},
+					functionLikeReturnTypes = {
+						enabled = true,
+					},
+					enumMemberValues = {
+						enabled = true,
+					},
+				},
+				implementationsCodeLens = {
+					enabled = true,
+					showOnAllClassMethods = true,
+					showOnInterfaceMethods = true,
+				},
+				referencesCodeLens = {
+					enabled = true,
+					showOnAllFunctions = true,
+				},
+				tsserver = {
+					maxTsServerMemory = 8092,
+				},
+			}
+
 			-- List your LSP servers here.
 			local servers = {
 				basedpyright = {
@@ -46,8 +86,6 @@ return {
 				-- },
 				cssls = {},
 				eslint = {
-					autostart = false,
-					cmd = { "vscode-eslint-language-server", "--stdio", "--max-old-space-size=12288" },
 					settings = { format = false },
 				},
 				gopls = {},
@@ -69,7 +107,21 @@ return {
 				tailwindcss = {
 					filetypes = { "typescriptreact", "javascriptreact", "html", "svelte", "astro" },
 				},
-				ts_ls = {},
+				vtsls = {
+					settings = {
+						typescript = vtsls_language_settings,
+						javascript = vtsls_language_settings,
+						vtsls = {
+							experimental = {
+								completion = {
+									enableServerSideFuzzyMatch = true,
+									entriesLimit = 5000,
+								},
+							},
+							autoUseWorkspaceTsdk = true,
+						},
+					},
+				},
 				yamlls = {},
 				rust_analyzer = {
 					settings = {
