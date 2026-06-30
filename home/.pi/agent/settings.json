@@ -1,13 +1,14 @@
 {
   "lastChangelogVersion": "0.80.2",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-6",
-  "defaultThinkingLevel": "high",
+  "defaultModel": "claude-opus-4-8",
+  "defaultThinkingLevel": "xhigh",
   "theme": "tokyo-night",
   "enabledModels": [
     "openai-codex/gpt-5.5",
     "anthropic/claude-sonnet-4-6",
-    "anthropic/claude-opus-4-6"
+    "anthropic/claude-opus-4-6",
+    "anthropic/claude-opus-4-8"
   ],
   "extensions": [
     "~/dev/agent-stuff/extensions/answer.ts",
@@ -34,7 +35,7 @@
   ],
   "hideThinkingBlock": true,
   "terminal": {
-    "showImages": false
+    "showImages": true
   },
   "skills": [
     "-skills/handoff"
