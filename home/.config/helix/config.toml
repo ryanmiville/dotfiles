@@ -20,6 +20,11 @@ auto-pairs = true
 end-of-line-diagnostics = "disable"
 gutters = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
 
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "block"
+
 [editor.statusline]
 left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
 center = []
@@ -62,3 +67,35 @@ max-diagnostics = 10
 [editor.word-completion]
 enable = true
 trigger-length = 3
+
+# Multicursor-ish mappings ported from nvim.
+# Match maps use the current Helix selection as the search seed.
+[keys.normal]
+esc = "keep_primary_selection"
+K = "hover"
+
+[keys.normal.space]
+w = ":write"
+q = ":quit"
+
+[keys.normal.g]
+k = "copy_selection_on_prev_line"
+j = "copy_selection_on_next_line"
+n = ["search_selection_detect_word_boundaries", "extend_search_next"]
+N = ["search_selection_detect_word_boundaries", "extend_search_prev"]
+gt = ["search_selection_detect_word_boundaries", "search_next"]
+lt = ["search_selection_detect_word_boundaries", "search_prev"]
+
+[keys.select.g]
+k = "copy_selection_on_prev_line"
+j = "copy_selection_on_next_line"
+n = ["search_selection_detect_word_boundaries", "extend_search_next"]
+N = ["search_selection_detect_word_boundaries", "extend_search_prev"]
+gt = ["search_selection_detect_word_boundaries", "search_next"]
+lt = ["search_selection_detect_word_boundaries", "search_prev"]
+
+[keys.select]
+"|" = "split_selection"
+"/" = "select_regex"
+I = ["split_selection_on_newline", "insert_at_line_start"]
+A = ["split_selection_on_newline", "insert_at_line_end"]

@@ -118,6 +118,7 @@ prompt_new_tab_name = true
 agent_panel_scope = "all"
 # accent = "#c6a0f6"
 
+agent_panel_sort = "spaces"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
