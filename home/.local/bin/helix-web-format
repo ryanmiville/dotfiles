@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+path="${1:-}"
+if [[ -z "$path" ]]; then
+  cat
+  exit 0
+fi
+
+find_up() {
+  local dir="$1"
+  shift
+
+  while [[ -n "$dir" && "$dir" != "/" && "$dir" != "$HOME" ]]; do
+    for name in "$@"; do
+      if [[ -e "$dir/$name" ]]; then
+        printf '%s\n' "$dir/$name"
+        return 0
+      fi
+    done
+    dir="$(dirname "$dir")"
+  done
+
+  return 1
+}
+
+dir="$(cd "$(dirname "$path")" 2>/dev/null && pwd -P || pwd)"
+
+if command -v biome >/dev/null 2>&1 && find_up "$dir" biome.json biome.jsonc >/dev/null; then
+  exec biome format --stdin-file-path="$path"
+fi
+
+if command -v prettierd >/dev/null 2>&1 && find_up "$dir" \
+  .prettierrc \
+  .prettierrc.json \
+  .prettierrc.json5 \
+  .prettierrc.yaml \
+  .prettierrc.yml \
+  .prettierrc.toml \
+  .prettierrc.js \
+  .prettierrc.cjs \
+  .prettierrc.mjs \
+  .prettierrc.ts \
+  .prettierrc.cts \
+  .prettierrc.mts \
+  prettier.config.js \
+  prettier.config.cjs \
+  prettier.config.mjs \
+  prettier.config.ts \
+  prettier.config.cts \
+  prettier.config.mts >/dev/null; then
+  exec prettierd "$path"
+fi
+
+cat

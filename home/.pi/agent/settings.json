@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.80.2",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-8",
+  "lastChangelogVersion": "0.80.3",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "xhigh",
   "theme": "tokyo-night",
   "enabledModels": [
@@ -31,7 +31,8 @@
         "-skills/autoresearch-finalize",
         "-skills/autoresearch-hooks"
       ]
-    }
+    },
+    "npm:pi-sidequest"
   ],
   "hideThinkingBlock": true,
   "terminal": {

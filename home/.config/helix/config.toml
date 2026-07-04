@@ -1,0 +1,64 @@
+theme = "tokyonight"
+
+[editor]
+line-number = "absolute"
+mouse = true
+scrolloff = 8
+cursorline = true
+true-color = true
+color-modes = true
+bufferline = "multiple"
+popup-border = "all"
+default-yank-register = "+"
+clipboard-provider = "pasteboard"
+auto-completion = true
+path-completion = true
+auto-format = true
+completion-trigger-len = 2
+preview-completion-insert = true
+auto-pairs = true
+end-of-line-diagnostics = "disable"
+gutters = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
+center = []
+right = ["version-control", "diagnostics", "selections", "position-percentage", "position", "file-type"]
+separator = ""
+diagnostics = ["hint", "info", "warning", "error"]
+workspace-diagnostics = ["hint", "info", "warning", "error"]
+
+[editor.lsp]
+display-messages = true
+display-progress-messages = false
+auto-signature-help = true
+display-inlay-hints = false
+display-color-swatches = true
+snippets = true
+
+[editor.file-picker]
+hidden = false
+git-ignore = true
+
+[editor.file-explorer]
+hidden = false
+
+[editor.search]
+smart-case = true
+wrap-around = true
+
+[editor.indent-guides]
+render = true
+character = "│"
+skip-levels = 0
+
+[editor.inline-diagnostics]
+cursor-line = "hint"
+other-lines = "disable"
+prefix-len = 1
+max-wrap = 20
+max-diagnostics = 10
+
+[editor.word-completion]
+enable = true
+trigger-length = 3

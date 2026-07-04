@@ -1,0 +1,185 @@
+# Neovim preference carry-over where Helix supports it.
+# Keybindings intentionally omitted.
+
+[language-server.vtsls]
+command = "vtsls"
+args = ["--stdio"]
+
+[language-server.vtsls.config.typescript.suggest]
+completeFunctionCalls = true
+
+[language-server.vtsls.config.javascript.suggest]
+completeFunctionCalls = true
+
+[language-server.vtsls.config.typescript.inlayHints]
+parameterNames.enabled = "all"
+parameterNames.suppressWhenArgumentMatchesName = false
+parameterTypes.enabled = true
+variableTypes.enabled = true
+variableTypes.suppressWhenTypeMatchesName = false
+propertyDeclarationTypes.enabled = true
+functionLikeReturnTypes.enabled = true
+enumMemberValues.enabled = true
+
+[language-server.vtsls.config.javascript.inlayHints]
+parameterNames.enabled = "all"
+parameterNames.suppressWhenArgumentMatchesName = false
+parameterTypes.enabled = true
+variableTypes.enabled = true
+variableTypes.suppressWhenTypeMatchesName = false
+propertyDeclarationTypes.enabled = true
+functionLikeReturnTypes.enabled = true
+enumMemberValues.enabled = true
+
+[language-server.vtsls.config.vtsls]
+autoUseWorkspaceTsdk = true
+
+[language-server.vtsls.config.vtsls.experimental.completion]
+enableServerSideFuzzyMatch = true
+entriesLimit = 5000
+
+[language-server.basedpyright.config.basedpyright]
+disableOrganizeImports = true
+
+[language-server.basedpyright.config.basedpyright.analysis]
+autoSearchPaths = true
+diagnosticMode = "openFilesOnly"
+typeCheckingMode = "standard"
+
+[language-server.rust-analyzer.config.check]
+command = "clippy"
+features = "all"
+
+[language-server.sqls]
+command = "sqls"
+
+[language-server.steel-language-server]
+command = "steel-language-server"
+
+[[language]]
+name = "python"
+scope = "source.python"
+language-servers = ["basedpyright", "ruff"]
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "go"
+scope = "source.go"
+language-servers = ["gopls"]
+
+[[language]]
+name = "javascript"
+scope = "source.js"
+language-servers = ["vtsls"]
+formatter = { command = "helix-web-format", args = ["%{buffer_name}"] }
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "jsx"
+scope = "source.jsx"
+language-servers = ["vtsls", "tailwindcss-ls"]
+formatter = { command = "helix-web-format", args = ["%{buffer_name}"] }
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "typescript"
+scope = "source.ts"
+language-servers = ["vtsls"]
+formatter = { command = "helix-web-format", args = ["%{buffer_name}"] }
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "tsx"
+scope = "source.tsx"
+language-servers = ["vtsls", "tailwindcss-ls"]
+formatter = { command = "helix-web-format", args = ["%{buffer_name}"] }
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "html"
+scope = "text.html.basic"
+language-servers = ["vscode-html-language-server", "tailwindcss-ls"]
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "css"
+scope = "source.css"
+language-servers = ["vscode-css-language-server"]
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "astro"
+scope = "source.astro"
+language-servers = ["tailwindcss-ls"]
+formatter = { command = "helix-web-format", args = ["%{buffer_name}"] }
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "svelte"
+scope = "source.svelte"
+language-servers = ["tailwindcss-ls"]
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "lua"
+scope = "source.lua"
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "markdown"
+scope = "source.md"
+language-servers = ["marksman"]
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "yaml"
+scope = "source.yaml"
+language-servers = ["yaml-language-server"]
+formatter = { command = "cat" }
+auto-format = false
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "sql"
+scope = "source.sql"
+language-servers = ["sqls"]
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "bash"
+scope = "source.bash"
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "json"
+scope = "source.json"
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "toml"
+scope = "source.toml"
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "scheme"
+scope = "source.scheme"
+language-servers = ["steel-language-server"]
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "hcl"
+scope = "source.hcl"
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+name = "gleam"
+scope = "source.gleam"
+indent = { tab-width = 2, unit = "  " }

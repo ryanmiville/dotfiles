@@ -115,6 +115,8 @@ cask "altair-graphql-client"
 cask "aws-vpn-client"
 # Ghostty-based terminal with vertical tabs and notifications for AI coding agents
 cask "cmux"
+# Per-application volume mixer, equalizer, and audio router
+cask "finetune"
 cask "font-jetbrains-mono-nerd-font"
 cask "font-maple-mono-nf"
 # Desktop client for GitHub repositories

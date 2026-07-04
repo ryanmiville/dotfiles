@@ -9,7 +9,6 @@
  *
  * Does not affect the session context.
  */
-import { complete, getModel } from "@earendil-works/pi-ai";
 import type { ExtensionAPI, ExtensionCommandContext } from "@earendil-works/pi-coding-agent";
 import { spawnSync } from "node:child_process";
 import { basename, resolve } from "node:path";
@@ -52,60 +51,17 @@ function getLastAssistantText(ctx: ExtensionCommandContext): string | undefined 
   return undefined;
 }
 
-/** Use a cheap model to extract the most obvious URL or file path from text. */
-async function inferTarget(
-  text: string,
-  ctx: ExtensionCommandContext,
-): Promise<string | undefined> {
-  const model =
-    ctx.modelRegistry.find("anthropic", "claude-haiku-4-5") ??
-    getModel("anthropic", "claude-haiku-4-5");
+/** Extract the last URL or file path from text using simple pattern matching. */
+function inferTarget(text: string): string | undefined {
+  // Find all URLs — take the last one (most likely the "result" link)
+  const urls = text.match(/https?:\/\/[^\s)\]>"'`]+/g);
+  if (urls && urls.length > 0) return urls[urls.length - 1];
 
-  if (!model) return undefined;
+  // Fall back to file paths (absolute or ~/ prefixed)
+  const paths = text.match(/(?:~\/|\/)\S+/g);
+  if (paths && paths.length > 0) return paths[paths.length - 1];
 
-  const auth = await ctx.modelRegistry.getApiKeyAndHeaders(model);
-  if (!auth.ok || !auth.apiKey) return undefined;
-
-  // Truncate to keep it cheap — last 4k chars is plenty of context
-  const truncated = text.length > 4000 ? text.slice(-4000) : text;
-
-  const response = await complete(
-    model,
-    {
-      messages: [
-        {
-          role: "user" as const,
-          content: [
-            {
-              type: "text" as const,
-              text: `Given the following assistant message, extract the single most obvious URL or file path the user would want to open. This could be a GitHub/GitLab repo URL, PR/MR link, pipeline URL, file path, or any other link that is the primary subject of the message.
-
-Respond with ONLY the raw URL or file path — nothing else. No markdown, no explanation, no quotes. If there is no obvious target, respond with exactly "NONE".
-
-<message>
-${truncated}
-</message>`,
-            },
-          ],
-          timestamp: Date.now(),
-        },
-      ],
-    },
-    {
-      apiKey: auth.apiKey,
-      headers: auth.headers,
-      maxTokens: 256,
-    },
-  );
-
-  const result = response.content
-    .filter((c): c is { type: "text"; text: string } => c.type === "text")
-    .map((c) => c.text.trim())
-    .join("")
-    .trim();
-
-  if (!result || result === "NONE") return undefined;
-  return result;
+  return undefined;
 }
 
 function openUrl(target: string, ctx: ExtensionCommandContext) {
@@ -191,8 +147,7 @@ export default function (pi: ExtensionAPI) {
         return;
       }
 
-      ctx.ui.notify("Inferring target…", "info");
-      const inferred = await inferTarget(lastText, ctx);
+      const inferred = inferTarget(lastText);
 
       if (!inferred) {
         ctx.ui.notify("Could not infer a URL or file to open", "error");
