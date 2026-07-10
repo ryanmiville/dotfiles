@@ -9,7 +9,7 @@ export PATH=$PATH:$GOPATH/bin
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$PATH:/Users/ryanmiville/.local/bin"
 
-export EDITOR="nvim"
+export EDITOR="hx"
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then

@@ -1,6 +1,7 @@
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 
 type GitAction = "commit" | "push";
+type HerdrBlockedEvent = { active: true; label: string } | { active: false };
 
 const GIT_ACTIONS = new Set<GitAction>(["commit", "push"]);
 const GIT_OPTIONS_WITH_VALUE = new Set([
@@ -113,6 +114,10 @@ function formatActionList(actions: readonly GitAction[]): string {
 	return actions.map((action) => `git ${action}`).join(" / ");
 }
 
+function setHerdrBlocked(pi: ExtensionAPI, event: HerdrBlockedEvent): void {
+	pi.events.emit("herdr:blocked", event);
+}
+
 async function confirmGitCommand(
 	ctx: { hasUI: boolean; ui: { confirm(title: string, body: string): Promise<boolean> } },
 	command: string,
@@ -137,7 +142,13 @@ export default function confirmGitExtension(pi: ExtensionAPI) {
 			};
 		}
 
-		const confirmed = await confirmGitCommand(ctx, command, actions);
+		let confirmed = false;
+		setHerdrBlocked(pi, { active: true, label: `Confirm ${formatActionList(actions)}` });
+		try {
+			confirmed = await confirmGitCommand(ctx, command, actions);
+		} finally {
+			setHerdrBlocked(pi, { active: false });
+		}
 		if (confirmed) return;
 
 		ctx.ui.notify(`Denied ${formatActionList(actions)}. agent stopped.`, "warning");
