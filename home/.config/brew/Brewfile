@@ -117,6 +117,8 @@ cask "aws-vpn-client"
 cask "cmux"
 # Per-application volume mixer, equalizer, and audio router
 cask "finetune"
+# Offline voice-to-text dictation app with AI enhancement
+cask "fluidvoice"
 cask "font-jetbrains-mono-nerd-font"
 cask "font-maple-mono-nf"
 # Desktop client for GitHub repositories
