@@ -14,8 +14,6 @@
   "extensions": [
     "~/dev/agent-stuff/extensions/answer.ts",
     "~/dev/agent-stuff/extensions/btw.ts",
-    "~/dev/agent-stuff/extensions/todos.ts",
-    "~/dev/agent-stuff/extensions/prompt-editor.ts",
     "~/dev/agent-stuff/extensions/whimsical.ts"
   ],
   "packages": [
@@ -24,24 +22,13 @@
       "skills": []
     },
     "npm:pi-mcp-adapter",
-    "~/dev/pi-review",
-    {
-      "source": "npm:pi-autoresearch",
-      "skills": [
-        "-skills/autoresearch-create",
-        "-skills/autoresearch-finalize",
-        "-skills/autoresearch-hooks"
-      ]
-    },
     "npm:pi-sidequest"
   ],
   "hideThinkingBlock": true,
   "terminal": {
     "showImages": true
   },
-  "skills": [
-    "-skills/handoff"
-  ],
+  "skills": [],
   "treeFilterMode": "no-tools",
   "editorPaddingX": 1,
   "showHardwareCursor": false
