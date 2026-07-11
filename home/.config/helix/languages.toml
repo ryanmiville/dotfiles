@@ -138,6 +138,7 @@ name = "markdown"
 scope = "source.md"
 language-servers = ["marksman"]
 indent = { tab-width = 2, unit = "  " }
+soft-wrap.enable = true
 
 [[language]]
 name = "yaml"

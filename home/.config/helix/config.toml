@@ -87,6 +87,7 @@ L = "goto_next_buffer"
 w = ":write"
 q = ":quit"
 o = ":oil"
+x = ":buffer-close"
 
 [keys.normal.g]
 k = "copy_selection_on_prev_line"
