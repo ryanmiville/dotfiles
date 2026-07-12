@@ -1,70 +1,62 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  // "theme": "catppuccin",
-  "autoshare": false,
+  "share": "disabled",
   "autoupdate": true,
   "disabled_providers": [
     "google-vertex-anthropic",
     "gitlab"
   ],
-  "agent": {
+  "agents": {
     "explore": {
       "model": "anthropic/claude-haiku-4-5"
     }
   },
   "mcp": {
-    "context7": {
-      "type": "remote",
-      "url": "https://mcp.context7.com/mcp",
-      "enabled": false
-    },
-    "grep_app": {
-      "type": "remote",
-      "url": "https://mcp.grep.app",
-      "enabled": false
-    },
-    "opensrc": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "opensrc-mcp"
-      ],
-      "enabled": false
-    },
-    "playwriter": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "playwriter@latest"
-      ],
-      "enabled": false
-    },
-    "atlassian-rovo": {
-      "type": "remote",
-      "url": "https://mcp.atlassian.com/v1/mcp",
-      "enabled": false,
-      "oauth": {}
+    "servers": {
+      "context7": {
+        "type": "remote",
+        "url": "https://mcp.context7.com/mcp",
+        "disabled": true
+      },
+      "grep_app": {
+        "type": "remote",
+        "url": "https://mcp.grep.app",
+        "disabled": true
+      },
+      "opensrc": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "opensrc-mcp"
+        ],
+        "disabled": true
+      },
+      "playwriter": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "playwriter@latest"
+        ],
+        "disabled": true
+      },
+      "atlassian-rovo": {
+        "type": "remote",
+        "url": "https://mcp.atlassian.com/v1/mcp",
+        "disabled": true,
+        "oauth": {}
+      }
     }
   },
-  "permission": {
-    "read": {
-      "*": "allow",
-      "*.env": "deny",
-      "*.env.*": "deny",
-      "*.envrc": "deny",
-      "*.secrets": "deny",
-      "secrets/*": "deny"
-    },
-    "external_directory": {
-      "*": "allow",
-      "/Users/ryanmiville/dev/opencode/*": "allow",
-      "/Users/ryanmiville/.dotfiles/home/.config/opencode/*": "allow",
-      "/Users/ryanmiville/.config/opencode/*": "allow"
+  "permissions": [
+    {
+      "action": "*",
+      "resource": "*",
+      "effect": "allow"
     }
-  },
-  "plugin": [
+  ],
+  "plugins": [
     "@plannotator/opencode@latest"
   ]
 }

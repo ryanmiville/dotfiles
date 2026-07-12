@@ -113,9 +113,10 @@ mouse_capture = true
 right_click_passthrough_modifier = "ctrl"
 # mouse_scroll_lines = 3
 # tmux close/kill bindings do not prompt; match that behavior.
-confirm_close = false
+confirm_close = true
 prompt_new_tab_name = true
 agent_panel_scope = "all"
+sidebar_collapsed_mode = "hidden"
 # accent = "#c6a0f6"
 
 agent_panel_sort = "spaces"
@@ -124,7 +125,7 @@ agent_panel_sort = "spaces"
 # herdr = show in-app toasts
 # terminal = ask the outer terminal to show a desktop notification
 # system = ask the OS notification service directly
-delivery = "terminal"
+delivery = "system"
 # delay_seconds = 1
 
 [ui.toast.herdr]
