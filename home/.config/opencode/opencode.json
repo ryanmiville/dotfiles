@@ -51,6 +51,11 @@
   },
   "permissions": [
     {
+      "action": "external_directory",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
       "action": "*",
       "resource": "*",
       "effect": "allow"
