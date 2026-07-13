@@ -115,6 +115,8 @@ cask "altair-graphql-client"
 cask "aws-vpn-client"
 # Ghostty-based terminal with vertical tabs and notifications for AI coding agents
 cask "cmux"
+# Menu bar usage monitor for Codex and Claude
+cask "codexbar"
 # Per-application volume mixer, equalizer, and audio router
 cask "finetune"
 # Offline voice-to-text dictation app with AI enhancement
