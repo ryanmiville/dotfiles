@@ -56,7 +56,7 @@
       "effect": "allow"
     }
   ],
-  "plugins": [
-    "@plannotator/opencode@latest"
+  "plugin": [
+    ["@plannotator/opencode@latest", { "workflow": "plan-agent", "planningAgents": ["plan"] }]
   ]
 }

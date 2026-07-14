@@ -23,7 +23,8 @@
     },
     "npm:pi-mcp-adapter",
     "npm:pi-sidequest",
-    "npm:pi-command-palette"
+    "npm:pi-command-palette",
+    "git:github.com/injaneity/pi-computer-use@v0.4.3"
   ],
   "hideThinkingBlock": true,
   "terminal": {
