@@ -6,6 +6,9 @@
     "google-vertex-anthropic",
     "gitlab"
   ],
+  "references": {
+    "effect": "github.com/Effect-TS/effect-smol",
+  },
   "mcp": {
     "servers": {
       "context7": {
@@ -56,7 +59,7 @@
       "effect": "allow"
     }
   ],
-  "plugin": [
-    ["@plannotator/opencode@latest", { "workflow": "plan-agent", "planningAgents": ["plan"] }]
+  "plugins": [
+    "@plannotator/opencode@latest"
   ]
 }
