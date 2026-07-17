@@ -27,8 +27,8 @@ name = "tokyo-night"
 channel = "stable"
 
 [keys]
-# prefix = "cmd+alt+shift+ctrl+backspace"
-prefix = "ctrl+;"
+prefix = "cmd+alt+shift+ctrl+backspace"
+# prefix = "ctrl+;"
 
 # tmux-style basics.
 help = "prefix+?"
@@ -125,7 +125,7 @@ agent_panel_sort = "spaces"
 # herdr = show in-app toasts
 # terminal = ask the outer terminal to show a desktop notification
 # system = ask the OS notification service directly
-delivery = "system"
+delivery = "terminal"
 # delay_seconds = 1
 
 [ui.toast.herdr]
