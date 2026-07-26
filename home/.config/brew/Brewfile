@@ -79,6 +79,8 @@ brew "node"
 brew "nushell"
 # Manage multiple Node.js versions
 brew "nvm"
+# Development kit for the Java programming language
+brew "openjdk@17"
 # CLI for Postgres with auto-completion and syntax highlighting
 brew "pgcli"
 # Object-relational database system
@@ -160,6 +162,7 @@ cargo "squawk"
 cargo "steel-forge"
 cargo "steel-interpreter"
 cargo "steel-language-server"
+cargo "terminal-control"
 uv "poetry"
 uv "prek"
 uv "pytest"
