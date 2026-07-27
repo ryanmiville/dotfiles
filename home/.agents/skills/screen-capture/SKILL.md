@@ -1,6 +1,7 @@
 ---
 name: screen-capture
 description: Captures macOS screenshots and fixed-duration screen recordings to deterministic paths, including specific windows, displays, regions, and Herdr activity. Use when a user asks an agent to screenshot, record, document, demonstrate, or produce visual evidence of work on macOS.
+disable-model-invocation: true
 compatibility: Requires macOS, /usr/sbin/screencapture, and a Swift toolchain. The agent's host terminal must have Screen Recording permission.
 ---
 

@@ -1,8 +1,8 @@
 /**
- * /open command — open a file in nvim (new herdr tab) or a URL in the browser.
+ * /open command — open a file in $EDITOR (new herdr tab) or a URL in the browser.
  *
  * Usage:
- *   /open path/to/file.rs      → nvim in a new herdr tab in the same workspace
+ *   /open path/to/file.rs      → $EDITOR in a new herdr tab in the same workspace
  *   /open ~/path/to/file.rs    → tilde expanded to home dir
  *   /open https://example.com  → opens in default browser via macOS `open`
  *   /open                      → infers the most relevant URL/file from the last assistant message
@@ -70,8 +70,14 @@ function openUrl(target: string, ctx: ExtensionCommandContext) {
 }
 
 function openFile(target: string, ctx: ExtensionCommandContext) {
+  const editor = process.env.EDITOR;
+  if (!editor) {
+    ctx.ui.notify("EDITOR is not set", "error");
+    return;
+  }
+
   if (process.env.HERDR_ENV !== "1") {
-    ctx.ui.notify(`Not in herdr — run: nvim ${target}`, "warn");
+    ctx.ui.notify(`Not in herdr — run: ${editor} ${target}`, "warn");
     return;
   }
 
@@ -115,7 +121,7 @@ function openFile(target: string, ctx: ExtensionCommandContext) {
   const newPaneId: string = tabJson.root_pane.pane_id;
   const newTabId: string = tabJson.tab.tab_id;
 
-  const cmd = `nvim ${shellQuote(absPath)}; herdr tab focus ${originalTabId}; herdr tab close ${newTabId}`;
+  const cmd = `${editor} ${shellQuote(absPath)}; herdr tab focus ${originalTabId}; herdr tab close ${newTabId}`;
   spawnSync("herdr", ["pane", "run", newPaneId, cmd], { encoding: "utf-8" });
 
   ctx.ui.notify(`Opened ${target}`, "info");
@@ -131,7 +137,7 @@ function openTarget(target: string, ctx: ExtensionCommandContext) {
 
 export default function (pi: ExtensionAPI) {
   pi.registerCommand("open", {
-    description: "Open a file in nvim or a URL in the browser (infers from context if no argument)",
+    description: "Open a file in $EDITOR or a URL in the browser (infers from context if no argument)",
     handler: async (args, ctx) => {
       const target = args.trim();
 
