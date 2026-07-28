@@ -2,7 +2,7 @@
   "lastChangelogVersion": "0.82.1",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-terra",
-  "defaultThinkingLevel": "low",
+  "defaultThinkingLevel": "high",
   "theme": "opencode-tokyonight",
   "enabledModels": [
     "anthropic/claude-sonnet-4-6",
@@ -26,7 +26,8 @@
     "npm:pi-command-palette",
     "git:github.com/injaneity/pi-computer-use@v0.4.3",
     "git:github.com/algal/pi-openai-server-compaction",
-    "npm:@gotgenes/pi-anthropic-auth"
+    "npm:@gotgenes/pi-anthropic-auth",
+    "git:github.com/earendil-works/pi-review-loop"
   ],
   "hideThinkingBlock": false,
   "terminal": {
@@ -35,5 +36,8 @@
   "skills": [],
   "treeFilterMode": "no-tools",
   "editorPaddingX": 1,
-  "showHardwareCursor": false
+  "showHardwareCursor": false,
+  "warnings": {
+    "anthropicExtraUsage": false
+  }
 }
