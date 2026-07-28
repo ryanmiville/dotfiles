@@ -122,8 +122,9 @@ keymap = [
 	# Goto
 	{ on = [ "g", "h" ],       run = "cd ~",             desc = "Go home" },
 	{ on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Goto ~/.config" },
-	{ on = [ "g", "d" ],       run = "cd ~/dev",   desc = "Goto ~/dev" },
+	{ on = [ "g", "d" ],       run = "cd ~/dev",         desc = "Goto ~/dev" },
 	{ on = [ "g", "D" ],       run = "cd ~/Downloads",   desc = "Goto ~/Downloads" },
+	{ on = [ "g", "u" ],       run = 'shell -- ya emit cd "$(git rev-parse --show-toplevel)"',   desc = "Goto git root" },
 	{ on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Jump interactively" },
 
 	# Tabs
