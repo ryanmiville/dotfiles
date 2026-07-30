@@ -1,15 +1,16 @@
 {
   "lastChangelogVersion": "0.82.1",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-6",
+  "defaultModel": "claude-opus-5",
   "defaultThinkingLevel": "high",
   "theme": "opencode-tokyonight",
   "enabledModels": [
     "anthropic/claude-sonnet-4-6",
     "anthropic/claude-opus-4-6",
-    "anthropic/claude-opus-4-8",
     "openai-codex/gpt-5.6-sol",
-    "openai-codex/gpt-5.6-terra"
+    "openai-codex/gpt-5.6-terra",
+    "anthropic/claude-fable-5",
+    "anthropic/claude-opus-5"
   ],
   "extensions": [
     "~/dev/agent-stuff/extensions/answer.ts",
