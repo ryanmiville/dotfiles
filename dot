@@ -727,8 +727,10 @@ cmd_init() {
 }
 
 cmd_update() {
-    local assume_yes=false
-    local no_backup=false
+    # Updating is intentionally non-interactive: this is the normal daily
+    # maintenance path for this dotfiles repository.
+    local assume_yes=true
+    local no_backup=true
     
     while [[ $# -gt 0 ]]; do
         case "$1" in
@@ -763,7 +765,7 @@ cmd_update() {
     if [[ "$assume_yes" == true ]] || confirm "Update Homebrew packages?" "y"; then
         print_info "Updating Homebrew..."
         brew update
-        brew upgrade
+        brew upgrade --yes
         print_success "Packages updated"
     fi
     
@@ -2053,15 +2055,15 @@ cmd_help() {
     echo "    -h, --help      Show this help message"
     echo ""
     echo -e "${BOLD}UPDATE OPTIONS:${RESET}"
-    echo "    -y, --yes       Run update package/stow steps without prompts"
-    echo "    --no-backup     Skip stow conflict backups during update"
+    echo "    -y, --yes       (Default) Run update package/stow steps without prompts"
+    echo "    --no-backup     (Default) Skip stow conflict backups during update"
     echo ""
     
     echo -e "${BOLD}EXAMPLES:${RESET}"
     echo "    ${SCRIPT_NAME} init                      # Full initialization"
     echo "    ${SCRIPT_NAME} init --skip-ssh           # Initialize without SSH setup"
-    echo "    ${SCRIPT_NAME} update                    # Update everything"
-    echo "    ${SCRIPT_NAME} update --yes --no-backup  # Non-interactive, no stow backups"
+    echo "    ${SCRIPT_NAME} update                    # Update everything non-interactively"
+    echo "    ${SCRIPT_NAME} update --yes --no-backup  # Explicit equivalent of the default"
     echo "    ${SCRIPT_NAME} doctor                    # Check installation health"
     echo "    ${SCRIPT_NAME} package list              # List all packages"
     echo "    ${SCRIPT_NAME} package add git           # Add git package to base bundle"

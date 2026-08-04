@@ -32,7 +32,7 @@ dot doctor
 - `dot package update <name>` - Update specific package
 
 ### System Management
-- `dot update` - Pull repo changes, update packages, re-stow dotfiles
+- `dot update` - Pull repo changes, update packages, and re-stow dotfiles without prompts or backups
 - `dot doctor` - Comprehensive health check (Homebrew, Stow, OpenCode, SSH, dev tools)
 - `dot stow` - Create/refresh symlinks for dotfiles
 - `dot check-packages` - Show installed vs missing packages from bundles
