@@ -244,7 +244,7 @@
         }
       }
     ],
-    "checkedAt": 1785941003357,
+    "checkedAt": 1786021399834,
     "lastModified": 1785502727000,
     "etag": "W/\"400cac2d73673d9fff4c7d0ed22691b0\""
   },
@@ -321,52 +321,6 @@
         },
         "contextWindow": 200000,
         "maxTokens": 64000,
-        "compat": {
-          "supportsStrictTools": true
-        }
-      },
-      {
-        "id": "claude-opus-4-1",
-        "name": "Claude Opus 4.1 (latest)",
-        "api": "anthropic-messages",
-        "provider": "anthropic",
-        "baseUrl": "https://api.anthropic.com",
-        "reasoning": true,
-        "input": [
-          "text",
-          "image"
-        ],
-        "cost": {
-          "input": 15,
-          "output": 75,
-          "cacheRead": 1.5,
-          "cacheWrite": 18.75
-        },
-        "contextWindow": 200000,
-        "maxTokens": 32000,
-        "compat": {
-          "supportsStrictTools": true
-        }
-      },
-      {
-        "id": "claude-opus-4-1-20250805",
-        "name": "Claude Opus 4.1",
-        "api": "anthropic-messages",
-        "provider": "anthropic",
-        "baseUrl": "https://api.anthropic.com",
-        "reasoning": true,
-        "input": [
-          "text",
-          "image"
-        ],
-        "cost": {
-          "input": 15,
-          "output": 75,
-          "cacheRead": 1.5,
-          "cacheWrite": 18.75
-        },
-        "contextWindow": 200000,
-        "maxTokens": 32000,
         "compat": {
           "supportsStrictTools": true
         }
@@ -633,9 +587,9 @@
         }
       }
     ],
-    "checkedAt": 1785941011119,
-    "lastModified": 1785146159000,
-    "etag": "W/\"2955a0a2593d701973abef2d80e4a8e0\""
+    "checkedAt": 1786021399862,
+    "lastModified": 1786021090000,
+    "etag": "W/\"2174ed7392c0d5376beba2c4ee0b170f\""
   },
   "amazon-bedrock": {
     "models": [
@@ -3255,7 +3209,7 @@
         }
       }
     ],
-    "checkedAt": 1785941003346,
+    "checkedAt": 1786021400088,
     "lastModified": 1785502698000,
     "etag": "W/\"36fe44c2fc5d1f6a418551012f1d2e94\""
   }

@@ -13,6 +13,15 @@
     "atlassian-rovo": {
       "url": "https://mcp.atlassian.com/v1/mcp",
       "directTools": false
+    },
+    "computer": {
+      "type": "local",
+      "command": [
+        "open-computer-use",
+        "mcp"
+      ],
+      "enabled": true,
+      "timeout": 60000
     }
   }
 }

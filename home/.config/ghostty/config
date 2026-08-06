@@ -67,6 +67,8 @@ keybind = alt+[=resize_split:left,10
 keybind = alt+==resize_split:down,10
 keybind = alt+-=resize_split:up,10
 
+# herdr prefix
+keybind = ctrl+semicolon=text:\x1b[127;16u
 # new line
 # keybind = shift+enter=text:\n
 
