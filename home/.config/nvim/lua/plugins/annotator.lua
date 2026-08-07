@@ -1,3 +1,4 @@
+--foo
 return {
 	"ryanmiville/annotator.nvim",
 	keys = { "<leader>aa", "<leader>ax" },
