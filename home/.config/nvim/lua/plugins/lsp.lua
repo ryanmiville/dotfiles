@@ -17,8 +17,6 @@ return {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			-- Integrate blink w/ LSP
-			"hrsh7th/cmp-nvim-lsp",
 			-- Progress indicator for LSP
 			{ "j-hui/fidget.nvim" },
 		},
@@ -156,15 +154,11 @@ return {
 			--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
 			--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			-- Use Blink.cmp capabilities if available, fallback to cmp_nvim_lsp
-			local has_blink, blink = pcall(require, "blink.cmp")
-			if has_blink then
-				capabilities = vim.tbl_deep_extend("force", capabilities, blink.get_lsp_capabilities())
-			else
-				local has_cmp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
-				if has_cmp then
-					capabilities = vim.tbl_deep_extend("force", capabilities, cmp_lsp.default_capabilities())
-				end
+			-- Do not load Blink just to compute capabilities during BufReadPre.
+			-- Use its capabilities only if it was already loaded; otherwise use
+			-- Neovim's built-in capabilities and let Blink load on InsertEnter.
+			if package.loaded["blink.cmp"] then
+				capabilities = vim.tbl_deep_extend("force", capabilities, require("blink.cmp").get_lsp_capabilities())
 			end
 
 			-- Setup LspAttach autocmd for keybindings (replaces on_attach)

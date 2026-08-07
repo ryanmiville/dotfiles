@@ -1,5 +1,6 @@
 return {
 	"declancm/maximize.nvim",
+	event = "VeryLazy",
 	config = function()
 		require("maximize").setup({
 			plugins = {

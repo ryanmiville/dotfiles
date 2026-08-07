@@ -299,7 +299,7 @@ export CPPFLAGS="-I$PG_ROOT/include"
 export PKG_CONFIG_PATH="$PG_ROOT/lib/pkgconfig"
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 
-alias yolo='claude --dangerously-skip-permissions'
+alias yolo='claude --dangerously-skip-permissions --model claude-opus-4-6 --effort high'
 
 export H3_CLI_HOME=/Users/ryanmiville/dev/h3-cli
 export PATH="$H3_CLI_HOME/bin:$PATH"

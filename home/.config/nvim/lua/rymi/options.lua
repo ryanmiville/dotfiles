@@ -4,6 +4,9 @@
 --  For more options, you can see `:help option-list`
 
 vim.opt.winborder = "rounded"
+
+-- Python support is provided by LSP; don't probe/load Neovim's remote Python host.
+vim.g.loaded_python3_provider = 0
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.

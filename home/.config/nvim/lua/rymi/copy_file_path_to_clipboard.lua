@@ -1,17 +1,10 @@
-local Path = require("plenary.path")
-
 vim.api.nvim_create_user_command("CopyFilePathToClipboard", function()
 	-- Get the current buffer's file path
-	local file_path = vim.api.nvim_buf_get_name(0)
+	local file_path = vim.fs.normalize(vim.api.nvim_buf_get_name(0))
 
-	-- Create a Path object for the current directory and get the parent directory
-	local project_root_parent_dir = Path:new(vim.fn.getcwd()):parent():absolute()
-
-	-- Create a Path object for the file
-	local path_obj = Path:new(file_path)
-
-	-- Get the relative path from the project root
-	local relative_path = path_obj:make_relative(project_root_parent_dir)
+	-- Keep the existing behavior of making paths relative to the cwd's parent.
+	local project_root_parent_dir = vim.fs.dirname(vim.fs.normalize(vim.fn.getcwd()))
+	local relative_path = vim.fs.relpath(project_root_parent_dir, file_path) or file_path
 
 	-- Copy the relative path to the system clipboard
 	vim.fn.setreg("+", relative_path)
