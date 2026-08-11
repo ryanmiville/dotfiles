@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.84.1",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.6-terra",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-5",
   "defaultThinkingLevel": "medium",
   "theme": "opencode-tokyonight",
   "enabledModels": [

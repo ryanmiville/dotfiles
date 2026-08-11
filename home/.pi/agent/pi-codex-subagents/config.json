@@ -1,0 +1,5 @@
+{
+  "defaults": {
+    "extensions": ["@gotgenes/pi-anthropic-auth"]
+  }
+}

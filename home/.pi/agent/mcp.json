@@ -12,6 +12,11 @@
     },
     "atlassian-rovo": {
       "url": "https://mcp.atlassian.com/v1/mcp",
+      "oauth": {
+        "clientId": "80zqYCWEdKtjFN9P",
+        "redirectUri": "http://localhost:3118/callback",
+        "skipIssuerMetadataValidation": true
+      },
       "directTools": false
     },
     "computer": {

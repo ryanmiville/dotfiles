@@ -7,6 +7,7 @@ home/.pi/agent/sessions/
 home/.pi/agent/pi-codex-subagents/
 home/.pi/agent/.cache/
 home/.pi/agent/mcp-cache.json
+home/.pi/agent/models-store.json
 .DS_Store
 node_modules
 .opencode/plans/
