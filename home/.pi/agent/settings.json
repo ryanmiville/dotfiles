@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.84.1",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-5",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-terra",
   "defaultThinkingLevel": "medium",
   "theme": "opencode-tokyonight",
   "enabledModels": [
@@ -24,12 +24,9 @@
       "skills": []
     },
     "npm:pi-mcp-adapter",
-    "npm:pi-sidequest",
-    "npm:pi-command-palette",
     "git:github.com/injaneity/pi-computer-use@v0.4.3",
     "git:github.com/algal/pi-openai-server-compaction",
-    "npm:@gotgenes/pi-anthropic-auth",
-    "git:github.com/earendil-works/pi-review-loop"
+    "npm:@gotgenes/pi-anthropic-auth"
   ],
   "hideThinkingBlock": false,
   "terminal": {
