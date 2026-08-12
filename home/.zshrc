@@ -34,8 +34,27 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
-# Starship prompt
-eval "$(starship init zsh)"
+# Starship prompt (its ZLE setup is not safe to run more than once)
+if (( ! ${+_DOTFILES_STARSHIP_INITIALIZED} )) &&
+   command -v starship >/dev/null 2>&1; then
+    if eval "$(starship init zsh)"; then
+        typeset -g _DOTFILES_STARSHIP_INITIALIZED=1
+    fi
+fi
+
+# zsh-vi-mode customization (set before loading the plugin)
+# These colors apply to the selected text in visual/visual-line mode.
+ZVM_VI_HIGHLIGHT_BACKGROUND='#005f87'
+ZVM_VI_HIGHLIGHT_FOREGROUND='#ffffff'
+ZVM_VI_HIGHLIGHT_EXTRASTYLE='bold'
+
+# Lazy keybindings are installed when normal mode is first entered.
+function zvm_after_lazy_keybindings() {
+    # Press `g` then `l` in normal mode to move to end-of-line (`$`).
+    zvm_bindkey vicmd 'gl' vi-end-of-line
+    # Press `g` then `h` in normal mode to move to beginning-of-line (`^`).
+    zvm_bindkey vicmd 'gh' vi-first-non-blank
+}
 
 # Load zsh-vi-mode synchronously so cursor shape is set before first prompt
 zinit light jeffreytse/zsh-vi-mode

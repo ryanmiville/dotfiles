@@ -5,7 +5,7 @@ tap "dmmulroy/tap"
 tap "hashicorp/tap"
 tap "jnsahaj/lumen"
 tap "manaflow-ai/cmux"
-tap "ryanmiville/tap"
+tap "ryanmiville/tap", trusted: true
 tap "tansu-io/tap"
 # Code searching, linting, rewriting
 brew "ast-grep"
@@ -111,6 +111,8 @@ brew "zig"
 brew "zoxide"
 # Terminal UI for Code Reviews - review AI-generated diffs like a GitHub PR
 brew "agavra/tap/tuicr"
+# a small CLI for data pipelines powered by DuckDB
+brew "ryanmiville/tap/dq"
 # GraphQL client
 cask "altair-graphql-client"
 # Managed client-based VPN service to securely access AWS resources
@@ -157,11 +159,11 @@ vscode "usernamehw.errorlens"
 vscode "vscodevim.vim"
 go "github.com/google/go-containerregistry/cmd/crane"
 cargo "cargo-nextest"
-cargo "cargo-steel-lib"
+cargo "cargo-steel-lib", source: "https://github.com/mattwparas/steel.git"
 cargo "squawk"
-cargo "steel-forge"
-cargo "steel-interpreter"
-cargo "steel-language-server"
+cargo "steel-forge", source: "https://github.com/mattwparas/steel.git"
+cargo "steel-interpreter", source: "https://github.com/mattwparas/steel.git"
+cargo "steel-language-server", source: "https://github.com/mattwparas/steel.git"
 cargo "terminal-control"
 uv "poetry"
 uv "prek"
