@@ -68,5 +68,8 @@
   ],
   "plugins": [
     "@plannotator/opencode@latest"
-  ]
+  ],
+  "websearch": {
+    "provider": "random"
+  }
 }
