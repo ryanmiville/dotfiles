@@ -1,12 +1,14 @@
 tap "agavra/tap", trusted: true
 tap "coursier/formulas", trusted: { formulae: ["coursier"] }
-tap "datadog-labs/pack"
-tap "dmmulroy/tap"
-tap "hashicorp/tap"
-tap "jnsahaj/lumen"
+tap "datadog-labs/pack", trusted: true
+tap "dmmulroy/tap", trusted: true
+tap "hashicorp/tap", trusted: true
+tap "jnsahaj/lumen", trusted: true
 tap "manaflow-ai/cmux"
 tap "ryanmiville/tap", trusted: true
-tap "tansu-io/tap"
+tap "tansu-io/tap", trusted: true
+# Static checker for GitHub Actions workflow files
+brew "actionlint"
 # Code searching, linting, rewriting
 brew "ast-grep"
 # Official Amazon AWS command-line interface
@@ -111,8 +113,18 @@ brew "zig"
 brew "zoxide"
 # Terminal UI for Code Reviews - review AI-generated diffs like a GitHub PR
 brew "agavra/tap/tuicr"
-# a small CLI for data pipelines powered by DuckDB
-brew "ryanmiville/tap/dq"
+# Go-based command-line wrapper for easy interaction with Datadog APIs
+brew "datadog-labs/pack/pup"
+# Local Markdown Viewer - view and edit markdown files in your browser
+brew "dmmulroy/tap/lmv"
+# Terraform
+brew "hashicorp/tap/terraform"
+# lumen is a command-line tool that can show pretty diff, generate commit messages with AI, summarise diffs / commits, and more without requiring an API key.
+brew "jnsahaj/lumen/lumen"
+# Shell-first data pipelines powered by DuckDB
+brew "ryanmiville/tap/dq", trusted: true
+# a super simple, stateless, Kafka-compatible broker with pluggable storage (PostgreSQL, SQLite, S3, memory)
+brew "tansu-io/tap/tansu"
 # GraphQL client
 cask "altair-graphql-client"
 # Managed client-based VPN service to securely access AWS resources

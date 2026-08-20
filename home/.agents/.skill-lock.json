@@ -130,6 +130,56 @@
       "pluginName": "mattpocock-skills",
       "installedAt": "2026-06-09T01:22:39.954Z",
       "updatedAt": "2026-06-09T01:22:39.954Z"
+    },
+    "bro": {
+      "source": "backnotprop/bro",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/backnotprop/bro.git",
+      "skillPath": "skills/bro/SKILL.md",
+      "skillFolderHash": "19def6229f89686253063fb9d795a6d45a246046",
+      "pluginName": "bro",
+      "installedAt": "2026-08-20T01:51:55.271Z",
+      "updatedAt": "2026-08-20T01:51:55.271Z"
+    },
+    "clean-room": {
+      "source": "backnotprop/bro",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/backnotprop/bro.git",
+      "skillPath": "skills/clean-room/SKILL.md",
+      "skillFolderHash": "2982c2c52db3a68fde6b20f63ef24a71f2411312",
+      "pluginName": "bro",
+      "installedAt": "2026-08-20T01:51:55.274Z",
+      "updatedAt": "2026-08-20T01:51:55.274Z"
+    },
+    "facts": {
+      "source": "backnotprop/bro",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/backnotprop/bro.git",
+      "skillPath": "skills/facts/SKILL.md",
+      "skillFolderHash": "506010476ff11a7f91dd30d73bc59f642b5bec76",
+      "pluginName": "bro",
+      "installedAt": "2026-08-20T01:51:55.276Z",
+      "updatedAt": "2026-08-20T01:51:55.276Z"
+    },
+    "readback": {
+      "source": "backnotprop/bro",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/backnotprop/bro.git",
+      "skillPath": "skills/readback/SKILL.md",
+      "skillFolderHash": "fc70783c5f47782c162037cec1221020cbc0facc",
+      "pluginName": "bro",
+      "installedAt": "2026-08-20T01:51:55.276Z",
+      "updatedAt": "2026-08-20T01:51:55.276Z"
+    },
+    "recap": {
+      "source": "backnotprop/bro",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/backnotprop/bro.git",
+      "skillPath": "skills/recap/SKILL.md",
+      "skillFolderHash": "59dce45959f6cada691e30349b0ce22ac7834062",
+      "pluginName": "bro",
+      "installedAt": "2026-08-20T01:51:55.277Z",
+      "updatedAt": "2026-08-20T01:51:55.277Z"
     }
   },
   "dismissed": {
@@ -148,7 +198,6 @@
     "kimi-code-cli",
     "opencode",
     "warp",
-    "zed",
-    "pi"
+    "zed"
   ]
 }
