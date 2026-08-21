@@ -23,6 +23,7 @@ name = "tokyo-night"
 # red = "#ed8796"
 # yellow = "#eed49f"
 
+auto_switch = false
 [update]
 channel = "stable"
 
