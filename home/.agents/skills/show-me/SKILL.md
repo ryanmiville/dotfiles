@@ -44,7 +44,7 @@ src/
 └── transport/      # sends API requests
 ```
 
-- Show component interaction, control flow, or data flow with Mermaid:
+- Show component interaction, control flow, or data flow with compact, terminal-friendly Mermaid:
 
 ```mermaid
 sequenceDiagram
@@ -55,6 +55,17 @@ sequenceDiagram
     UI->>Daemon: send expanded prompt
     Daemon-->>UI: stream result
 ```
+
+Pi renders Mermaid as terminal text using a limited Mermaid subset:
+
+- Prefer `flowchart TB`; use `LR` only for a short linear flow.
+- Use Mermaid ASCII operators such as `-->`, `-.->`, and `->>`. Use Unicode arrows only inside label text.
+- Keep node, message, and note labels short. Put explanations in prose next to the diagram.
+- In sequence diagrams, `<br/>` does not wrap messages or notes. Split long content into shorter messages or notes.
+- Use flowchart, sequence, state, class, or ER diagrams without styling directives, custom classes, or advanced Mermaid syntax.
+- Aim for output under 100 terminal columns. If relationships require long labels or many horizontal branches, use a text diagram or focused HTML artifact instead.
+
+A Mermaid visual is complete only when every connection uses supported ASCII syntax, labels are concise, and the expected terminal width is under 100 columns. Otherwise, use a text diagram.
 
 - Use `diff` when the point is what changes and the surrounding shape already exists. Match the diff shape to the topic.
 

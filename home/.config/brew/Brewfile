@@ -1,3 +1,4 @@
+tap "abue-ammar/tinycast", trusted: true
 tap "agavra/tap", trusted: true
 tap "coursier/formulas", trusted: { formulae: ["coursier"] }
 tap "datadog-labs/pack", trusted: true
@@ -155,6 +156,8 @@ cask "scroll-reverser"
 cask "superwhisper"
 # Native database client for many database types
 cask "tablepro"
+# Tiny, fully native launcher, hotkeys, and clipboard history
+cask "abue-ammar/tinycast/tinycast"
 vscode "aaron-bond.better-comments"
 vscode "anthropic.claude-code"
 vscode "anysphere.cursorpyright"
