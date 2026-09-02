@@ -18,6 +18,11 @@
   },
   "mcp": {
     "servers": {
+      "datadog": {
+        "type": "remote",
+        "url": "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp",
+        "codemode": true
+      },
       "context7": {
         "type": "remote",
         "url": "https://mcp.context7.com/mcp",

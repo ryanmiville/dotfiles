@@ -1,8 +1,8 @@
 {
   "lastChangelogVersion": "0.84.3",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.6-terra",
-  "defaultThinkingLevel": "xhigh",
+  "defaultModel": "gpt-5.6-sol",
+  "defaultThinkingLevel": "high",
   "theme": "opencode-tokyonight",
   "enabledModels": [
     "anthropic/claude-sonnet-4-6",
@@ -14,8 +14,6 @@
     "openai-codex/gpt-5.6-luna"
   ],
   "extensions": [
-    "~/dev/agent-stuff/extensions/answer.ts",
-    "~/dev/agent-stuff/extensions/btw.ts",
     "~/dev/agent-stuff/extensions/whimsical.ts"
   ],
   "packages": [
@@ -27,7 +25,8 @@
     "git:github.com/injaneity/pi-computer-use@v0.4.3",
     "git:github.com/algal/pi-openai-server-compaction",
     "npm:@gotgenes/pi-anthropic-auth",
-    "npm:pi-clarify"
+    "npm:pi-clarify",
+    "npm:pi-sidequest"
   ],
   "hideThinkingBlock": false,
   "terminal": {

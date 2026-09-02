@@ -6,6 +6,7 @@ tap "dmmulroy/tap", trusted: true
 tap "hashicorp/tap", trusted: true
 tap "jnsahaj/lumen", trusted: true
 tap "manaflow-ai/cmux"
+tap "plannotator/tap", trusted: true
 tap "ryanmiville/tap", trusted: true
 tap "tansu-io/tap", trusted: true
 # Static checker for GitHub Actions workflow files
@@ -122,6 +123,8 @@ brew "dmmulroy/tap/lmv"
 brew "hashicorp/tap/terraform"
 # lumen is a command-line tool that can show pretty diff, generate commit messages with AI, summarise diffs / commits, and more without requiring an API key.
 brew "jnsahaj/lumen/lumen"
+# Annotate Markdown in the terminal and send the review to your agent
+brew "plannotator/tap/plannotator-tui", trusted: true
 # Shell-first data pipelines powered by DuckDB
 brew "ryanmiville/tap/dq", trusted: true
 # a super simple, stateless, Kafka-compatible broker with pluggable storage (PostgreSQL, SQLite, S3, memory)
