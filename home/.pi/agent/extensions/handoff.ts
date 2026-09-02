@@ -78,10 +78,35 @@ function quoteFocus(focus: string): string {
 	return trimmed ? `\n\nUser steering / next-session focus:\n${trimmed}` : "";
 }
 
-function buildFreshSummaryInstructions(focus: string): string {
-	return `Write handoff context for a fresh Pi branch.
+function getLastAssistantText(ctx: ExtensionContext): string | undefined {
+	const branch = ctx.sessionManager.getBranch();
+	for (let i = branch.length - 1; i >= 0; i--) {
+		const entry = branch[i];
+		if (entry?.type !== "message" || entry.message.role !== "assistant") continue;
 
-Summarize only what a new agent needs to continue from here. Do not write a temp file. Do not duplicate content already captured in artifacts (PRDs, plans, ADRs, issues, commits, diffs); reference those by path or URL instead.
+		const text = entry.message.content
+			.filter((part): part is { type: "text"; text: string } => part.type === "text")
+			.map((part) => part.text)
+			.join("\n");
+		if (text) return text;
+	}
+	return undefined;
+}
+
+function buildFreshSummaryInstructions(focus: string, lastAssistantText?: string): string {
+	const verbatimLastMessage = lastAssistantText
+		? `
+
+Begin with the following exact last agent message, copied verbatim. Do not summarize, rewrite, omit, or alter it; preserve its Markdown, punctuation, and line breaks. Put the handoff context after this message.
+
+--- BEGIN VERBATIM LAST AGENT MESSAGE ---
+${lastAssistantText}
+--- END VERBATIM LAST AGENT MESSAGE ---`
+		: "";
+
+	return `Write handoff context for a fresh Pi branch.${verbatimLastMessage}
+
+For the handoff context, summarize only what a new agent needs to continue from here. Do not write a temp file. Do not duplicate content already captured in artifacts (PRDs, plans, ADRs, issues, commits, diffs); reference those by path or URL instead.
 
 Include:
 - Goal / current task
@@ -94,10 +119,10 @@ Include:
 Be concise but complete. Preserve exact paths, command names, identifiers, and error messages where useful.${quoteFocus(focus)}`;
 }
 
-function buildFreshKickoffPrompt(focus: string): string {
+function buildFreshKickoffPrompt(focus: string, hasLastAssistantMessage: boolean): string {
 	return `We are now in a handoff branch with fresh context.
 
-Use the handoff summary attached to this branch as the source of truth. Do not assume omitted prior conversation unless it is referenced by path, URL, commit, diff, issue, or artifact.
+Use the handoff summary attached to this branch as the source of truth${hasLastAssistantMessage ? ". It begins with the exact last agent message from the original branch, followed by the condensed handoff context" : ""}. Do not assume omitted prior conversation unless it is referenced by path, URL, commit, diff, issue, or artifact.
 ${focus.trim() ? `\nFocus / steering:\n${focus.trim()}\n` : ""}
 Start by briefly restating the actionable context and next step, then proceed if the task is clear. If not, ask one concise clarifying question.`;
 }
@@ -164,6 +189,7 @@ async function startFreshHandoff(
 	focus: string,
 ): Promise<boolean> {
 	const targetId = firstUserMessageId(ctx);
+	const lastAssistantText = getLastAssistantText(ctx);
 	const lockedOriginId = originId;
 
 	if (targetId) {
@@ -172,7 +198,7 @@ async function startFreshHandoff(
 			targetId,
 			{
 				summarize: true,
-				customInstructions: buildFreshSummaryInstructions(focus),
+				customInstructions: buildFreshSummaryInstructions(focus, lastAssistantText),
 				replaceInstructions: true,
 				label: "handoff",
 			},
@@ -197,7 +223,7 @@ async function startFreshHandoff(
 
 	appendHandoffState(pi, lockedOriginId);
 	setHandoffWidget(ctx, true);
-	pi.sendUserMessage(buildFreshKickoffPrompt(focus));
+	pi.sendUserMessage(buildFreshKickoffPrompt(focus, lastAssistantText !== undefined));
 	return true;
 }
 
