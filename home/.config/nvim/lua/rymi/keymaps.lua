@@ -279,6 +279,25 @@ vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true })
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selected block down" })
 vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selected block up" })
 
+vim.keymap.set("x", "<leader>y", function()
+	local start = vim.fn.getpos("v")
+	local finish = vim.fn.getpos(".")
+	local start_line = math.min(start[2], finish[2])
+	local end_line = math.max(start[2], finish[2])
+	local filename = vim.fn.expand("%:p")
+	if filename == "" then
+		filename = "[No Name]"
+	end
+	local line_reference = filename .. ":" .. start_line
+	if end_line ~= start_line then
+		line_reference = line_reference .. "-" .. end_line
+	end
+
+	vim.cmd("normal! y")
+	local selection = vim.fn.getreg('"')
+	vim.fn.setreg("+", line_reference .. "\n\n" .. selection)
+end, { desc = "Copy selection with filename and line numbers" })
+
 vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without overwriting register" })
 
 return M

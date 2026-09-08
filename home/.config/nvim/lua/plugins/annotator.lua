@@ -1,6 +1,7 @@
 --foo
 return {
-	"ryanmiville/annotator.nvim",
+	enabled = false,
+	"ryanmiville/fooannotator.nvim",
 	keys = { "<leader>aa", "<leader>ax" },
 	cmd = {
 		"AnnotatorAdd",
