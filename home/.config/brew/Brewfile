@@ -147,6 +147,8 @@ cask "font-maple-mono-nf"
 cask "github"
 # Keyboard customiser
 cask "karabiner-elements"
+# Intercept, modify, replay, save HTTP/S traffic
+cask "mitmproxy"
 # AI coding agent desktop client
 cask "opencode-desktop"
 # Replacement for Docker Desktop

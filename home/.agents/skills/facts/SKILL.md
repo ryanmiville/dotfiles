@@ -4,7 +4,7 @@ description: Give a capable engineer a terse, jargon-free briefing on the critic
 disable-model-invocation: true
 ---
 
-What are the most important facts I should know about we plan to build in this subject scope/next phase (or after if we've completed the subject scope). Instead of an exhaustive list, list only the most critical things with implications across any existing part of the system or future part - for development but also end use. Every fact must be terse, direct, and stated without jargon. Assume I am new here, but am a capable engineer: do not use sloganese or chiasmus, be clear&direct and as minimally verbose as possible (concise but coherent).
+What are the most important facts I should know about what we plan to build in this subject scope/next phase (or after if we've completed the subject scope). Instead of an exhaustive list, list only the most critical things with implications across any existing part of the system or future part - for development but also end use. Every fact must be terse, direct, and stated without jargon. Assume I am new here, but am a capable engineer: do not use sloganese or chiasmus, be clear&direct and as minimally verbose as possible (concise but coherent).
 
 <meta-rule>
 This is a skill invocation. The user is asking for either what exactly is about to happen or what just happened. The user may invoke this either before or after work. This is not a holistic fact gathering exercise.
