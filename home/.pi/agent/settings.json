@@ -1,18 +1,16 @@
 {
   "lastChangelogVersion": "0.85.0",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-6-astra",
-  "defaultThinkingLevel": "high",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-sonnet-5",
+  "defaultThinkingLevel": "medium",
   "theme": "opencode-tokyonight",
   "enabledModels": [
-    "anthropic/claude-sonnet-4-6",
-    "anthropic/claude-opus-4-6",
     "openai-codex/gpt-5.6-sol",
-    "openai-codex/gpt-5.6-terra",
-    "anthropic/claude-fable-5",
     "anthropic/claude-opus-5",
     "openai-codex/gpt-5.6-luna",
-    "openai-codex/gpt-6-astra"
+    "openai-codex/gpt-6-astra",
+    "anthropic/claude-sonnet-5",
+    "anthropic/claude-fable-5-1"
   ],
   "extensions": [
     "~/dev/agent-stuff/extensions/whimsical.ts"

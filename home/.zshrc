@@ -260,6 +260,10 @@ sso() {
             export AWS_PROFILE="eu"
             export AWS_DEFAULT_REGION="eu-central-1"
             ;;
+        "au")
+            export AWS_PROFILE="au"
+            export AWS_DEFAULT_REGION="ap-southeast-2"
+            ;;
         *)
             echo "No matching profile and region for argument $1"
             return 1
