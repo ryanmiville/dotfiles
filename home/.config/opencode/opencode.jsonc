@@ -19,6 +19,12 @@
         "url": "https://mcp.datadoghq.com/v1/mcp",
         "codemode": true
       },
+      "browser-control": {
+        "type": "local",
+        "command": [
+          "browser-control-mcp"
+        ]
+      },
       "context7": {
         "type": "remote",
         "url": "https://mcp.context7.com/mcp",
@@ -50,8 +56,10 @@
       "atlassian-rovo": {
         "type": "remote",
         "url": "https://mcp.atlassian.com/v1/mcp",
-        "disabled": true,
-        "oauth": {}
+        "timeout": {
+          "startup": 90000,
+          "catalog": 60000
+        }
       }
     }
   },
